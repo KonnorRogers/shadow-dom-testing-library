@@ -4,13 +4,16 @@
 
   "compilerOptions": {
     "lib": ["es2021", "ESNext", "DOM"],
-    "module": "commonjs",
+    "module": "ESNext",
     "target": "es2021",
+    "allowJs": true,
 
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "jsx": "react"
+
   }
 }
