@@ -1,0 +1,8 @@
+.DS_Store
+.parcel-cache
+.eslintcache
+# We don't use yarn and want to ensure no one commits this if they happen to use it
+yarn.lock
+/dist
+/node_modules
+*~
