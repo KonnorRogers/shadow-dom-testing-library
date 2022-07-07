@@ -132,27 +132,3 @@ Recursing through the Shadow DOM can be expensive if you
 render a large number of elements in an element. Benchmarks
 have not been measured, but it will easily be much worse
 than a regular `querySelector` call.
-
-## Known Issues
-
-### Types
-
-The types generated for the queries do not have an optional
-3rd argument due to how the queries are generated. An issue
-has been filed with DOM-testing-library.
-
-<https://github.com/testing-library/dom-testing-library/issues/1145>
-
-To work around this, a `// @ts-expect-error` is needed.
-
-Example:
-
-```ts
-test('byShadowLabelText', async () => {
-  const { container } = render(<TextArea />)
-
-  // Types shipped by DOM-testing-library with buildQueries don't have options attached to them.
-  // @ts-expect-error
-  expect(await findByShadowLabelText(container, /omments/, {exact: false})).toBeInTheDocument()
-})
-```
