@@ -31,15 +31,16 @@ npm install -D shadow-dom-testing-library
 ## Example usage
 
 ```js
-// my-button
+// my-button.jsx
 export default () => <sl-button>I get wrapped by a button in the shadowRoot!</sl-button>
 
-// my-button.test.tsx
+// my-button.test.jsx
 import { render } from "@testing-library/react"
 import { screen } from "shadow-dom-testing-library"
 import Button from "./my-button"
 
 test("Find the button in the shadow root", async () => {
+  render(<Button />)
   const btn = await screen.findByShadowRole("button")
   expect(btn).toBeInTheDocument()
 })
@@ -58,11 +59,11 @@ import { render } from "@testing-library/react"
 import { getByShadowRole, findByShadowLabelText, queryAllByShadowTitle } from "shadow-dom-testing-library"
 
 test("Find the button", () => {
-  const { baseElement } = render(<Button />)
+  const { container } = render(<Button />)
 
-  getByShadowRole(baseElement, "button")
-  await findByShadowLabelText(baseElement, /Car Manufacturer/i)
-  queryAllByShadowTitle(baseElement, "delete")
+  getByShadowRole(container, "button")
+  await findByShadowLabelText(container, /Car Manufacturer/i)
+  queryAllByShadowTitle(container, "delete")
 })
 ```
 
@@ -131,3 +132,27 @@ Recursing through the Shadow DOM can be expensive if you
 render a large number of elements in an element. Benchmarks
 have not been measured, but it will easily be much worse
 than a regular `querySelector` call.
+
+## Known Issues
+
+### Types
+
+The types generated for the queries do not have an optional
+3rd argument due to how the queries are generated. An issue
+has been filed with DOM-testing-library.
+
+<https://github.com/testing-library/dom-testing-library/issues/1145>
+
+To work around this, a `// @ts-expect-error` is needed.
+
+Example:
+
+```ts
+test('byShadowLabelText', async () => {
+  const { container } = render(<TextArea />)
+
+  // Types shipped by DOM-testing-library with buildQueries don't have options attached to them.
+  // @ts-expect-error
+  expect(await findByShadowLabelText(container, /omments/, {exact: false})).toBeInTheDocument()
+})
+```

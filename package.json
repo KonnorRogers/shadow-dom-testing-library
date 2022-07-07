@@ -13,6 +13,8 @@
   },
   "scripts": {
     "test": "jest",
+    "vitest": "vitest",
+    "jest-preview": "jest-preview",
     "start": "npm run clean && parcel",
     "build": "npm run clean && parcel build",
     "clean": "rm -rf dist",
@@ -50,15 +52,18 @@
     "@types/node": "^18.0.3",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^1.3.2",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^28.1.2",
     "jest-environment-jsdom": "^28.1.2",
+    "jest-preview": "^0.2.6",
     "parcel": "^2.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "standard-version": "^9.5.0",
     "ts-jest": "^28.0.5",
     "tslib": "^2.4.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "vitest": "^0.17.1"
   }
 }
