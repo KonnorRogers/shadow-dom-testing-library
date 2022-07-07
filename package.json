@@ -18,11 +18,11 @@
     "start": "npm run clean && parcel",
     "build": "npm run clean && parcel build",
     "clean": "rm -rf dist",
-    "deploy": "npm build && standard-version --release-as",
-    "deploy:beta": "npm build && standard-version --prerelease beta",
-    "deploy:patch": "npm build && standard-version --release-as patch",
-    "deploy:minor": "npm build && standard-version --release-as minor",
-    "deploy:major": "npm build && standard-version --release-as major",
+    "deploy": "npm run build && standard-version --release-as",
+    "deploy:beta": "npm run build && standard-version --prerelease beta",
+    "deploy:patch": "npm run build && standard-version --release-as patch",
+    "deploy:minor": "npm run build && standard-version --release-as minor",
+    "deploy:major": "npm run build && standard-version --release-as major",
     "push": "git push --follow-tags origin main && npm publish"
   },
   "files": [
