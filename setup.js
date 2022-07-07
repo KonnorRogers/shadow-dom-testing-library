@@ -3,6 +3,8 @@ import '@testing-library/jest-dom'
 // jestPreviewConfigure({ autoPreview: true })
 
 export function setup(viOrJest) {
+  if (window == null) throw Error("`window` is null. Perhaps you are not using JSDOM? Or perhaps you are calling this function before the window has been mocked by JSDOM.")
+
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
     value: viOrJest.fn().mockImplementation(query => ({
