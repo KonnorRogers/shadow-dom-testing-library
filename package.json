@@ -12,8 +12,9 @@
     "npm": ">= 7"
   },
   "scripts": {
-    "test": "jest",
-    "vitest": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "jest": "jest",
     "jest-preview": "jest-preview",
     "start": "npm run clean && parcel",
     "build": "npm run clean && parcel build",
