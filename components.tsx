@@ -1,5 +1,15 @@
 import * as React from "react"
-import { SlTextarea, SlButton } from "@shoelace-style/shoelace/dist/react"
+import { SlAnimatedImage, SlAvatar, SlButton, SlTextarea } from "@shoelace-style/shoelace/dist/react"
+
+export function SimpleButton () {
+  const [count, setCount] = React.useState(0)
+
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      {count}
+    </button>
+  );
+}
 
 export function Button() {
   const [count, setCount] = React.useState(0)
@@ -11,6 +21,12 @@ export function Button() {
   );
 }
 
-export function TextArea () {
-  return <SlTextarea label="Comments" />
-}
+export const TextArea = () => <SlTextarea label="Comments" />
+export const Avatar = ({...props}) => <SlAvatar label={props.label} {...props} />;
+
+export const AnimatedImage = () => (
+  <SlAnimatedImage
+    src="https://shoelace.style/assets/images/walk.gif"
+    alt="Animation of untied shoes walking on pavement"
+  />
+);
