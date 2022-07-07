@@ -132,3 +132,33 @@ Recursing through the Shadow DOM can be expensive if you
 render a large number of elements in an element. Benchmarks
 have not been measured, but it will easily be much worse
 than a regular `querySelector` call.
+
+## Additional notes
+
+`Shadow` queries will work for both Light DOM and for
+Shadow DOM elements. For example you can search for a
+"button" in the Light DOM.
+
+### Example of light dom query
+
+```jsx
+function SimpleButton () {
+  const [count, setCount] = React.useState(0)
+
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      {count}
+    </button>
+  );
+}
+
+
+import { screen } from "shadow-dom-testing-library"
+
+test("Regular buttons should also work with shadow query", async () => {
+  render(<SimpleButton />)
+  fireEvent.click(await screen.findByRole('button'))
+  const el = await screen.findByText(/1/)
+  expect(el).toBeInTheDocument()
+})
+```

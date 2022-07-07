@@ -1,12 +1,10 @@
-import * as React from "react"
-
+import { Avatar } from "../components"
 import { render } from '@testing-library/react'
 import { findByShadowLabelText, screen } from "../src/index"
-import { TextArea } from "../components"
 
-describe("ByShadowLabelText()", () => {
-  it('should work with all queries', async () => {
-    const { container } = render(<TextArea />)
+describe("ShadowAltText()", () => {
+  it("should work with all queries", () => {
+    const { container } = render(<Avatar label="User comments" />)
 
     const findContainerLabel = await findByShadowLabelText(container, /omments/, {exact: false})
     expect(findContainerLabel).toBeInTheDocument()
