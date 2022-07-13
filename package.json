@@ -6,7 +6,7 @@
   "source": "src/index.ts",
   "main": "dist/shadow-dom-testing-library.cjs",
   "module": "dist/shadow-dom-testing-library.js",
-  "types": "dist/types.d.ts",
+  "types": "dist/shadow-dom-testing-library.d.ts",
   "engines": {
     "node": ">= 14",
     "npm": ">= 7"

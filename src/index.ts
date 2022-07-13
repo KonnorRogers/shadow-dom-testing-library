@@ -2,12 +2,11 @@ import {waitForOptions, buildQueries, screen, ByRoleMatcher, ByRoleOptions, quer
 
 export type Container = HTMLElement | Document | ShadowRoot
 
-export type ShadowOptions = { shallow?: boolean }
-
 // Allow shallow queries to be appended to the default options of DOM testing library
-export type ShadowByRoleOptions = ByRoleOptions & ShadowOptions
-export type ShadowMatcherOptions = MatcherOptions & ShadowOptions
-export type ShadowSelectorMatcherOptions = SelectorMatcherOptions & ShadowOptions
+export interface ShadowOptions { shallow?: boolean }
+export interface ShadowByRoleOptions extends ByRoleOptions, ShadowOptions {}
+export interface ShadowMatcherOptions extends MatcherOptions, ShadowOptions {}
+export interface ShadowSelectorMatcherOptions extends SelectorMatcherOptions, ShadowOptions {}
 
 // For queryBy / getBy queries
 export type ShadowRoleMatcherParams = [container: HTMLElement, ...args: ScreenShadowRoleMatcherParams]
@@ -74,44 +73,18 @@ function queryAllByShadowRole<T extends HTMLElement = HTMLElement>(...args: Shad
   return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByRole(el as HTMLElement, role, options)).flat(Infinity) as T[]
 }
 
-const getMultipleRoleError = (_c: Element | null, role: string) =>
+const getMultipleRoleError = (_c: Element | null, role: ByRoleMatcher) =>
   `Found multiple elements with the role of: ${role}`
-const getMissingRoleError = (_c: Element | null, role: string) =>
+const getMissingRoleError = (_c: Element | null, role: ByRoleMatcher) =>
   `Unable to find an element with the role of: ${role}`
 
 const [
-  _queryByShadowRole,
-  _getAllByShadowRole,
-  _getByShadowRole,
-  _findAllByShadowRole,
-  _findByShadowRole,
-] = buildQueries(queryAllByShadowRole, getMultipleRoleError, getMissingRoleError)
-
-const queryByShadowRole = <T extends HTMLElement = HTMLElement> (...args: ShadowRoleMatcherParams): T | null => {
-  // @ts-expect-error
-  return _queryByShadowRole(...args) as T
-}
-
-const getByShadowRole = <T extends HTMLElement = HTMLElement> (...args: ShadowRoleMatcherParams): T => {
-  // @ts-expect-error
-  return _getByShadowRole(...args) as T
-}
-
-const getAllByShadowRole = <T extends HTMLElement = HTMLElement> (...args: ShadowRoleMatcherParams): T[] => {
-  // @ts-expect-error
-  return _getAllByShadowRole(...args) as T[]
-}
-
-const findByShadowRole = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowRoleMatcherParams): Promise<T> => {
-  // @ts-expect-error
-  return _findByShadowRole(...args) as Promise<T>
-}
-
-const findAllByShadowRole = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowRoleMatcherParams): Promise<T[]> => {
-  // @ts-expect-error
-  return _findAllByShadowRole(...args) as Promise<T[]>
-}
-
+  queryByShadowRole,
+  getAllByShadowRole,
+  getByShadowRole,
+  findAllByShadowRole,
+  findByShadowRole,
+] = buildQueries<ScreenShadowRoleMatcherParams>(queryAllByShadowRole, getMultipleRoleError, getMissingRoleError)
 
 
 // Label Text
@@ -129,37 +102,12 @@ const getMissingLabelTextError = (_c: Element | null, id: Matcher) =>
   `Unable to find an element with the label text of: ${id}`
 
 const [
-  _queryByShadowLabelText,
-  _getAllByShadowLabelText,
-  _getByShadowLabelText,
-  _findAllByShadowLabelText,
-  _findByShadowLabelText,
-] = buildQueries(queryAllByShadowLabelText, getMultipleLabelTextError, getMissingLabelTextError)
-
-const queryByShadowLabelText = <T extends HTMLElement = HTMLElement> (...args: ShadowSelectorMatcherParams): T | null => {
-  // @ts-expect-error
-  return _queryByShadowLabelText(...args) as T
-}
-
-const getByShadowLabelText = <T extends HTMLElement = HTMLElement> (...args: ShadowSelectorMatcherParams): T => {
-  // @ts-expect-error
-  return _getByShadowLabelText(...args) as T
-}
-
-const getAllByShadowLabelText = <T extends HTMLElement = HTMLElement> (...args: ShadowSelectorMatcherParams): T[] => {
-  // @ts-expect-error
-  return _getAllByShadowLabelText(...args) as T[]
-}
-
-const findByShadowLabelText = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowSelectorMatcherParams): Promise<T> => {
-  // @ts-expect-error
-  return _findByShadowLabelText(...args) as Promise<T>
-}
-
-const findAllByShadowLabelText = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowSelectorMatcherParams): Promise<T[]> => {
-  // @ts-expect-error
-  return _findAllByShadowLabelText(...args) as Promise<T[]>
-}
+  queryByShadowLabelText,
+  getAllByShadowLabelText,
+  getByShadowLabelText,
+  findAllByShadowLabelText,
+  findByShadowLabelText,
+] = buildQueries<ScreenShadowSelectorMatcherParams>(queryAllByShadowLabelText, getMultipleLabelTextError, getMissingLabelTextError)
 
 
 // Placeholder Text
@@ -175,39 +123,12 @@ const getMissingPlaceholderTextError = (_c: Element | null, id: Matcher) =>
   `Unable to find an element with the placeholder text of: ${id}`
 
 const [
-  _queryByShadowPlaceholderText,
-  _getAllByShadowPlaceholderText,
-  _getByShadowPlaceholderText,
-  _findAllByShadowPlaceholderText,
-  _findByShadowPlaceholderText,
-] = buildQueries(queryAllByShadowPlaceholderText, getMultiplePlaceholderTextError, getMissingPlaceholderTextError)
-
-
-const queryByShadowPlaceholderText = <T extends HTMLElement = HTMLElement> (...args: ShadowMatcherParams): T | null => {
-  // @ts-expect-error
-  return _queryByShadowPlaceholderText(...args) as T
-}
-
-const getByShadowPlaceholderText = <T extends HTMLElement = HTMLElement> (...args: ShadowMatcherParams): T => {
-  // @ts-expect-error
-  return _getByShadowPlaceholderText(...args) as T
-}
-
-const getAllByShadowPlaceholderText = <T extends HTMLElement = HTMLElement> (...args: ShadowMatcherParams): T[] => {
-  // @ts-expect-error
-  return _getAllByShadowPlaceholderText(...args) as T[]
-}
-
-const findByShadowPlaceholderText = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowMatcherParams): Promise<T> => {
-  // @ts-expect-error
-  return _findByShadowPlaceholderText(...args) as Promise<T>
-}
-
-const findAllByShadowPlaceholderText = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowMatcherParams): Promise<T[]> => {
-  // @ts-expect-error
-  return _findAllByShadowPlaceholderText(...args) as Promise<T[]>
-}
-
+  queryByShadowPlaceholderText,
+  getAllByShadowPlaceholderText,
+  getByShadowPlaceholderText,
+  findAllByShadowPlaceholderText,
+  findByShadowPlaceholderText,
+] = buildQueries<ScreenShadowSelectorMatcherParams>(queryAllByShadowPlaceholderText, getMultiplePlaceholderTextError, getMissingPlaceholderTextError)
 
 // Text
 function queryAllByShadowText<T extends HTMLElement = HTMLElement>(...args: ShadowSelectorMatcherParams): T[] {
@@ -222,37 +143,12 @@ const getMissingTextError = (_c: Element | null, id: Matcher) =>
   `Unable to find an element with the text of: ${id}`
 
 const [
-  _queryByShadowText,
-  _getAllByShadowText,
-  _getByShadowText,
-  _findAllByShadowText,
-  _findByShadowText,
-] = buildQueries(queryAllByShadowText, getMultipleTextError, getMissingTextError)
-
-const queryByShadowText = <T extends HTMLElement = HTMLElement> (...args: ShadowSelectorMatcherParams): T | null => {
-  // @ts-expect-error
-  return _queryByShadowText(...args) as T
-}
-
-const getByShadowText = <T extends HTMLElement = HTMLElement> (...args: ShadowSelectorMatcherParams): T => {
-  // @ts-expect-error
-  return _getByShadowText(...args) as T
-}
-
-const getAllByShadowText = <T extends HTMLElement = HTMLElement> (...args: ShadowSelectorMatcherParams): T[] => {
-  // @ts-expect-error
-  return _getAllByShadowText(...args) as T[]
-}
-
-const findByShadowText = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowSelectorMatcherParams): Promise<T> => {
-  // @ts-expect-error
-  return _findByShadowText(...args) as Promise<T>
-}
-
-const findAllByShadowText = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowSelectorMatcherParams): Promise<T[]> => {
-  // @ts-expect-error
-  return _findAllByShadowText(...args) as Promise<T[]>
-}
+  queryByShadowText,
+  getAllByShadowText,
+  getByShadowText,
+  findAllByShadowText,
+  findByShadowText,
+] = buildQueries<ScreenShadowSelectorMatcherParams>(queryAllByShadowText, getMultipleTextError, getMissingTextError)
 
 
 
@@ -270,38 +166,12 @@ const getMissingDisplayValueError = (_c: Element | null, id: Matcher) =>
   `Unable to find an element with the display value of: ${id}`
 
 const [
-  _queryByShadowDisplayValue,
-  _getAllByShadowDisplayValue,
-  _getByShadowDisplayValue,
-  _findAllByShadowDisplayValue,
-  _findByShadowDisplayValue,
-] = buildQueries(queryAllByShadowDisplayValue, getMultipleDisplayValueError, getMissingDisplayValueError)
-
-
-const queryByShadowDisplayValue = <T extends HTMLElement = HTMLElement> (...args: ShadowSelectorMatcherParams): T | null => {
-  // @ts-expect-error
-  return _queryByShadowDisplayValue(...args) as T
-}
-
-const getByShadowDisplayValue = <T extends HTMLElement = HTMLElement> (...args: ShadowSelectorMatcherParams): T => {
-  // @ts-expect-error
-  return _getByShadowDisplayValue(...args) as T
-}
-
-const getAllByShadowDisplayValue = <T extends HTMLElement = HTMLElement> (...args: ShadowSelectorMatcherParams): T[] => {
-  // @ts-expect-error
-  return _getAllByShadowDisplayValue(...args) as T[]
-}
-
-const findByShadowDisplayValue = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowSelectorMatcherParams): Promise<T> => {
-  // @ts-expect-error
-  return _findByShadowDisplayValue(...args) as Promise<T>
-}
-
-const findAllByShadowDisplayValue = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowSelectorMatcherParams): Promise<T[]> => {
-  // @ts-expect-error
-  return _findAllByShadowDisplayValue(...args) as Promise<T[]>
-}
+  queryByShadowDisplayValue,
+  getAllByShadowDisplayValue,
+  getByShadowDisplayValue,
+  findAllByShadowDisplayValue,
+  findByShadowDisplayValue,
+] = buildQueries<ScreenShadowSelectorMatcherParams>(queryAllByShadowDisplayValue, getMultipleDisplayValueError, getMissingDisplayValueError)
 
 
 // Alt Text
@@ -316,37 +186,12 @@ const getMissingAltTextError = (_c: Element | null, id: Matcher) =>
   `Unable to find an element with the alt text of: ${id}`
 
 const [
-  _queryByShadowAltText,
-  _getAllByShadowAltText,
-  _getByShadowAltText,
-  _findAllByShadowAltText,
-  _findByShadowAltText,
-] = buildQueries(queryAllByShadowAltText, getMultipleAltTextError, getMissingAltTextError)
-
-const queryByShadowAltText = <T extends HTMLElement = HTMLElement> (...args: ShadowMatcherParams): T | null => {
-  // @ts-expect-error
-  return _queryByShadowAltText(...args) as T
-}
-
-const getByShadowAltText = <T extends HTMLElement = HTMLElement> (...args: ShadowMatcherParams): T => {
-  // @ts-expect-error
-  return _getByShadowAltText(...args) as T
-}
-
-const getAllByShadowAltText = <T extends HTMLElement = HTMLElement> (...args: ShadowMatcherParams): T[] => {
-  // @ts-expect-error
-  return _getAllByShadowAltText(...args) as T[]
-}
-
-const findByShadowAltText = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowMatcherParams): Promise<T> => {
-  // @ts-expect-error
-  return _findByShadowAltText(...args) as Promise<T>
-}
-
-const findAllByShadowAltText = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowMatcherParams): Promise<T[]> => {
-  // @ts-expect-error
-  return _findAllByShadowAltText(...args) as Promise<T[]>
-}
+  queryByShadowAltText,
+  getAllByShadowAltText,
+  getByShadowAltText,
+  findAllByShadowAltText,
+  findByShadowAltText,
+] = buildQueries<ScreenShadowMatcherParams>(queryAllByShadowAltText, getMultipleAltTextError, getMissingAltTextError)
 
 
 // Title
@@ -362,39 +207,12 @@ const getMissingTitleError = (_c: Element | null, id: Matcher) =>
   `Unable to find an element with the title of: ${id}`
 
 const [
-  _queryByShadowTitle,
-  _getAllByShadowTitle,
-  _getByShadowTitle,
-  _findAllByShadowTitle,
-  _findByShadowTitle,
-] = buildQueries(queryAllByShadowTitle, getMultipleTitleError, getMissingTitleError)
-
-const queryByShadowTitle = <T extends HTMLElement = HTMLElement> (...args: ShadowMatcherParams): T | null => {
-  // @ts-expect-error
-  return _queryByShadowTitle(...args) as T
-}
-
-const getByShadowTitle = <T extends HTMLElement = HTMLElement> (...args: ShadowMatcherParams): T => {
-  // @ts-expect-error
-  return _getByShadowTitle(...args) as T
-}
-
-const getAllByShadowTitle = <T extends HTMLElement = HTMLElement> (...args: ShadowMatcherParams): T[] => {
-  // @ts-expect-error
-  return _getAllByShadowTitle(...args) as T[]
-}
-
-const findByShadowTitle = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowMatcherParams): Promise<T> => {
-  // @ts-expect-error
-  return _findByShadowTitle(...args) as Promise<T>
-}
-
-const findAllByShadowTitle = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowMatcherParams): Promise<T[]> => {
-  // @ts-expect-error
-  return _findAllByShadowTitle(...args) as Promise<T[]>
-}
-
-
+  queryByShadowTitle,
+  getAllByShadowTitle,
+  getByShadowTitle,
+  findAllByShadowTitle,
+  findByShadowTitle,
+] = buildQueries<ScreenShadowMatcherParams>(queryAllByShadowTitle, getMultipleTitleError, getMissingTitleError)
 
 // Test Id
 function queryAllByShadowTestId<T extends HTMLElement = HTMLElement>(...args: ShadowMatcherParams): T[] {
@@ -409,39 +227,12 @@ const getMissingTestIdError = (_c: Element | null, id: Matcher) =>
   `Unable to find an element with the test id of: ${id}`
 
 const [
-  _queryByShadowTestId,
-  _getAllByShadowTestId,
-  _getByShadowTestId,
-  _findAllByShadowTestId,
-  _findByShadowTestId,
-] = buildQueries(queryAllByShadowTestId, getMultipleTestIdError, getMissingTestIdError)
-
-const queryByShadowTestId = <T extends HTMLElement = HTMLElement> (...args: ShadowMatcherParams): T | null => {
-  // @ts-expect-error
-  return _queryByShadowTestId(...args) as T
-}
-
-const getByShadowTestId = <T extends HTMLElement = HTMLElement> (...args: ShadowMatcherParams): T => {
-  // @ts-expect-error
-  return _getByShadowTestId(...args) as T
-}
-
-const getAllByShadowTestId = <T extends HTMLElement = HTMLElement> (...args: ShadowMatcherParams): T[] => {
-  // @ts-expect-error
-  return _getAllByShadowTestId(...args) as T[]
-}
-
-const findByShadowTestId = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowMatcherParams): Promise<T> => {
-  // @ts-expect-error
-  return _findByShadowTestId(...args) as Promise<T>
-}
-
-const findAllByShadowTestId = <T extends HTMLElement = HTMLElement> (...args: AsyncShadowMatcherParams): Promise<T[]> => {
-  // @ts-expect-error
-  return _findAllByShadowTestId(...args) as Promise<T[]>
-}
-
-
+  queryByShadowTestId,
+  getAllByShadowTestId,
+  getByShadowTestId,
+  findAllByShadowTestId,
+  findByShadowTestId,
+] = buildQueries<ScreenShadowMatcherParams>(queryAllByShadowTestId, getMultipleTestIdError, getMissingTestIdError)
 
 // Shadows the following: https://testing-library.com/docs/queries/about/#priority
 let myScreen = {
