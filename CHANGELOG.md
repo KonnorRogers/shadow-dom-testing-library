@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/ParamagicDev/shadow-dom-testing-library/compare/v1.1.0...v1.1.1) (2022-07-14)
+
+
+### Bug Fixes
+
+* deepQuerySelectorAll now accounts for containers with shadowRoots and shadowRoot elements passed in. ([#4](https://github.com/ParamagicDev/shadow-dom-testing-library/issues/4)) ([aa4eddb](https://github.com/ParamagicDev/shadow-dom-testing-library/commit/aa4eddb85d7ac91cff7328c4ed9a5c00c90b3d95))
+
 ## [1.1.0](https://github.com/ParamagicDev/shadow-dom-testing-library/compare/v1.0.0...v1.1.0) (2022-07-07)
 
 ### Bug Fixes
