@@ -26,6 +26,37 @@ export type AsyncScreenShadowRoleMatcherParams = [role: ByRoleMatcher, options?:
 export type AsyncScreenShadowSelectorMatcherParams = [id: Matcher, options?: ShadowSelectorMatcherOptions | undefined, waitForOptions?: waitForOptions | undefined]
 export type AsyncScreenShadowMatcherParams = [id: Matcher, options?: ShadowMatcherOptions | undefined, waitForOptions?: waitForOptions | undefined]
 
+
+// Amazingly fun hack to trick DOM testing libraries internal type checking logic.
+// https://github.com/testing-library/dom-testing-library/blob/73a5694529dbfff289f3d7a01470c45ef5c77715/src/queries/text.ts#L34-L36
+// https://github.com/testing-library/dom-testing-library/blob/73a5694529dbfff289f3d7a01470c45ef5c77715/src/pretty-dom.js#L50-L54
+function trickDOMTestingLibrary () {
+  if (typeof ShadowRoot == "undefined") return
+
+  // @ts-expect-error
+  if (typeof ShadowRoot.prototype.matches !== "undefined") {
+    return
+  }
+
+  // @ts-expect-error
+  ShadowRoot.prototype.matches = function(string: string) {
+    const str = string.trim()
+    if (str === "*") return true
+
+    return this.querySelector(string) != null ? true : false
+  }
+
+  Object.defineProperties(ShadowRoot.prototype, {
+    outerHTML: {
+      get () {
+        return this.innerHTML
+      }
+    },
+  })
+}
+
+trickDOMTestingLibrary()
+
 export function deepQuerySelector (container: Container, selectors: string, options: ShadowOptions = { shallow: false }, elements: (Element | ShadowRoot)[] = []) {
   const els = deepQuerySelectorAll(container, selectors, options, elements)
 
@@ -42,9 +73,17 @@ export function deepQuerySelectorAll (container: Container, selectors: string, o
     container = document.documentElement
   }
 
+  // Accounts for if the container houses a textNode
+  // @ts-expect-error
+  if (container.shadowRoot != null && container.shadowRoot.mode !== "closed") elements.push(container.shadowRoot)
+
+  // If you pass in a shadowRoot container, you should still be able to find the text nodes.
+  if (container instanceof ShadowRoot) elements.push(container)
+
   container.querySelectorAll(selectors).forEach((el: Element | HTMLElement) => {
     if (el.shadowRoot == null || el.shadowRoot.mode === "closed") {
       elements.push(el)
+      console.log(el)
       return
     }
 
@@ -57,10 +96,12 @@ export function deepQuerySelectorAll (container: Container, selectors: string, o
       return
     }
 
+    el.shadowRoot.querySelectorAll(selectors).forEach((el) => elements.push(el))
     deepQuerySelectorAll(el.shadowRoot, selectors, options, elements)
   })
 
-  return elements
+  // We can sometimes hit duplicate nodes this way, lets stop that.
+  return [...new Set(elements)]
 }
 
 // Prevent duplicate elements by using ":scope *"
