@@ -83,7 +83,6 @@ export function deepQuerySelectorAll (container: Container, selectors: string, o
   container.querySelectorAll(selectors).forEach((el: Element | HTMLElement) => {
     if (el.shadowRoot == null || el.shadowRoot.mode === "closed") {
       elements.push(el)
-      console.log(el)
       return
     }
 
