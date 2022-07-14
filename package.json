@@ -4,9 +4,9 @@
   "description": "An extension of DOM-testing-library to provide hooks into the shadow dom",
   "type": "module",
   "source": "src/index.ts",
-  "main": "dist/shadow-dom-testing-library.js",
-  "module": "dist/shadow-dom-testing-library.js",
-  "types": "dist/shadow-dom-testing-library.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "engines": {
     "node": ">= 14",
     "npm": ">= 7"
