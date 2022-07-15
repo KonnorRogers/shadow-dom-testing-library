@@ -108,7 +108,13 @@ const scopeQuery = ":scope *"
 
 // Role
 function queryAllByShadowRole<T extends HTMLElement = HTMLElement>(...args: ShadowRoleMatcherParams): T[] {
-  const [container, role, options] = args
+  let [container, role, options] = args
+
+  if (options == null) {
+    options = {}
+  }
+
+  options.suggest = false
 
   return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByRole(el as HTMLElement, role, options)).flat(Infinity) as T[]
 }
@@ -129,11 +135,15 @@ const [
 
 // Label Text
 function queryAllByShadowLabelText<T extends HTMLElement = HTMLElement>(...args: ShadowSelectorMatcherParams): T[] {
-  const [container, id, options] = args
+  let [container, id, options] = args
 
-  const elements = deepQuerySelectorAll(container, ":scope *")
+  if (options == null) {
+    options = {}
+  }
 
-  return elements.map((el) => queryAllByLabelText(el as HTMLElement, id, options)).flat(Infinity) as T[]
+  options.suggest = false
+
+  return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByLabelText(el as HTMLElement, id, options)).flat(Infinity) as T[]
 }
 
 const getMultipleLabelTextError = (_c: Element | null, id: Matcher) =>
@@ -152,7 +162,13 @@ const [
 
 // Placeholder Text
 function queryAllByShadowPlaceholderText<T extends HTMLElement = HTMLElement>(...args: ShadowMatcherParams): T[] {
-  const [container, id, options] = args
+  let [container, id, options] = args
+
+  if (options == null) {
+    options = {}
+  }
+
+  options.suggest = false
 
   return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByPlaceholderText(el as HTMLElement, id, options)).flat(Infinity) as T[]
 }
@@ -172,7 +188,13 @@ const [
 
 // Text
 function queryAllByShadowText<T extends HTMLElement = HTMLElement>(...args: ShadowSelectorMatcherParams): T[] {
-  const [container, id, options] = args
+  let [container, id, options] = args
+
+  if (options == null) {
+    options = {}
+  }
+
+  options.suggest = false
 
   return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByText(el as HTMLElement, id, options)).flat(Infinity) as T[]
 }
@@ -194,10 +216,15 @@ const [
 
 // Display Value
 function queryAllByShadowDisplayValue<T extends HTMLElement = HTMLElement>(...args: ShadowSelectorMatcherParams): T[] {
-  const [container, id, options] = args
+  let [container, id, options] = args
 
-  // @ts-expect-error
-  return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByDisplayValue(el, id, options)).flat(Infinity) as T[]
+  if (options == null) {
+    options = {}
+  }
+
+  options.suggest = false
+
+  return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByDisplayValue(el as HTMLElement, id, options)).flat(Infinity) as T[]
 }
 
 const getMultipleDisplayValueError = (_c: Element | null, id: Matcher) =>
@@ -216,7 +243,14 @@ const [
 
 // Alt Text
 function queryAllByShadowAltText<T extends HTMLElement = HTMLElement>(...args: ShadowMatcherParams): T[] {
-  const [container, id, options] = args
+  let [container, id, options] = args
+
+  if (options == null) {
+    options = {}
+  }
+
+  options.suggest = false
+
   return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByAltText(el as HTMLElement, id, options)).flat(Infinity) as T[]
 }
 
@@ -236,7 +270,13 @@ const [
 
 // Title
 function queryAllByShadowTitle<T extends HTMLElement = HTMLElement>(...args: ShadowMatcherParams): T[] {
-  const [container, id, options] = args
+  let [container, id, options] = args
+
+  if (options == null) {
+    options = {}
+  }
+
+  options.suggest = false
 
   return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByTitle(el as HTMLElement, id, options)).flat(Infinity) as T[]
 }
@@ -256,7 +296,13 @@ const [
 
 // Test Id
 function queryAllByShadowTestId<T extends HTMLElement = HTMLElement>(...args: ShadowMatcherParams): T[] {
-  const [container, id, options] = args
+  let [container, id, options] = args
+
+  if (options == null) {
+    options = {}
+  }
+
+  options.suggest = false
 
   return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByTestId(el as HTMLElement, id, options)).flat(Infinity) as T[]
 }
