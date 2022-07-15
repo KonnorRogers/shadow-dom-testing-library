@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.4](https://github.com/ParamagicDev/shadow-dom-testing-library/compare/v1.1.3...v1.1.4) (2022-07-15)
+
+
+### Bug Fixes
+
+* use suggest: false for shadow queries ([#5](https://github.com/ParamagicDev/shadow-dom-testing-library/issues/5)) ([e6047f9](https://github.com/ParamagicDev/shadow-dom-testing-library/commit/e6047f917ef533ab3e4af9af52a2a8da7eaa48bf))
+
 ### [1.1.3](https://github.com/ParamagicDev/shadow-dom-testing-library/compare/v1.1.2...v1.1.3) (2022-07-14)
 
 
