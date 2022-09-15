@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.5](https://github.com/ParamagicDev/shadow-dom-testing-library/compare/v1.1.4...v1.1.5) (2022-09-15)
+
+
+### Bug Fixes
+
+* add a CJS import path ([b4aff6b](https://github.com/ParamagicDev/shadow-dom-testing-library/commit/b4aff6be7997324f31f9ee5a6e4a71c4ab2eaca6))
+
 ### [1.1.4](https://github.com/ParamagicDev/shadow-dom-testing-library/compare/v1.1.3...v1.1.4) (2022-07-15)
 
 
