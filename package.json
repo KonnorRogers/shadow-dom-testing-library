@@ -1,6 +1,6 @@
 {
   "name": "shadow-dom-testing-library",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "An extension of DOM-testing-library to provide hooks into the shadow dom",
   "type": "module",
   "source": "src/index.ts",
@@ -41,9 +41,9 @@
   ],
   "author": "Konnor Rogers",
   "license": "MIT",
-	"homepage": "https://github.com/paramagicdev/shadow-dom-testing-library",
-	"url" : "https://github.com/paramagicdev/shadow-dom-testing-library/issues",
-	"repository": "github:paramagicev/shadow-dom-testing-library",
+  "homepage": "https://github.com/paramagicdev/shadow-dom-testing-library",
+  "url": "https://github.com/paramagicdev/shadow-dom-testing-library/issues",
+  "repository": "github:paramagicev/shadow-dom-testing-library",
   "dependencies": {
     "@testing-library/dom": "^8.14.0"
   },

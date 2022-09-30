@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.6](https://github.com/paramagicev/shadow-dom-testing-library/compare/v1.1.5...v1.1.6) (2022-09-30)
+
+
+### Bug Fixes
+
+* add urls to package.json ([d61cfa0](https://github.com/paramagicev/shadow-dom-testing-library/commit/d61cfa0f9e65107fd37fd0e8cfa00e4375dcbd1d))
+* add urls to package.json ([ae36ba8](https://github.com/paramagicev/shadow-dom-testing-library/commit/ae36ba81be8e762a514632d90705463701d316c6))
+
 ### [1.1.5](https://github.com/ParamagicDev/shadow-dom-testing-library/compare/v1.1.4...v1.1.5) (2022-09-15)
 
 
