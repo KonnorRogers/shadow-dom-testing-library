@@ -41,9 +41,9 @@
   ],
   "author": "Konnor Rogers",
   "license": "MIT",
-  "homepage": "https://github.com/paramagicdev/shadow-dom-testing-library",
-  "url": "https://github.com/paramagicdev/shadow-dom-testing-library/issues",
-  "repository": "github:paramagicev/shadow-dom-testing-library",
+  "homepage": "https://github.com/konnorrogers/shadow-dom-testing-library",
+  "url": "https://github.com/konnorrogers/shadow-dom-testing-library/issues",
+  "repository": "github:konnorrogers/shadow-dom-testing-library",
   "dependencies": {
     "@testing-library/dom": "^8.14.0"
   },
