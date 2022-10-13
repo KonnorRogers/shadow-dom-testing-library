@@ -1,6 +1,6 @@
 {
   "name": "shadow-dom-testing-library",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "An extension of DOM-testing-library to provide hooks into the shadow dom",
   "type": "module",
   "source": "src/index.ts",
