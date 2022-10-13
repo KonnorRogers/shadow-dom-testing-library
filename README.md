@@ -78,7 +78,7 @@ import { render } from "@testing-library/react"
 import { screen } from "shadow-dom-testing-library"
 
 test("Lets test some rendering", () => {
-  render(<Button />
+  render(<Button />)
   screen.getByShadowRole("button")
   await screen.findByShadowLabelText(/Car Manufacturer/i)
   screen.queryAllByShadowTitle("delete")
@@ -115,6 +115,22 @@ import { deepQuerySelector, deepQuerySelectorAll } from "shadow-dom-testing-libr
 const elements = deepQuerySelectorAll(document, "my-button")
 const element = deepQuerySelector(document, "my-button", { shallow: true })
 ```
+
+A `within` function is exported to provide the `<ByShadow>` queries
+bound to a particular container element.
+
+```jsx
+import { render } from "@testing-library/react"
+import { screen, within } from "shadow-dom-testing-library"
+
+test("Lets test some rendering", () => {
+  render(<ComplicatedControl />)
+  const fieldGroup = screen.getByShadowRole("group")
+
+  const nameInput = within(fieldGroup).getByShadowRole('textbox', { name: 'foobar' });
+})
+```
+
 
 ## Caution
 
