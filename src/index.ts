@@ -1,4 +1,4 @@
-import {waitForOptions, buildQueries, screen, ByRoleMatcher, ByRoleOptions, queryAllByRole, SelectorMatcherOptions, queryAllByLabelText, Matcher, queryAllByPlaceholderText, MatcherOptions, queryAllByText, queryAllByDisplayValue, queryAllByAltText, queryAllByTitle, queryAllByTestId} from '@testing-library/dom'
+import {waitForOptions, buildQueries, screen, ByRoleMatcher, ByRoleOptions, queryAllByRole, SelectorMatcherOptions, queryAllByLabelText, Matcher, queryAllByPlaceholderText, MatcherOptions, queryAllByText, queryAllByDisplayValue, queryAllByAltText, queryAllByTitle, queryAllByTestId, queries, within} from '@testing-library/dom'
 
 export type Container = HTMLElement | Document | ShadowRoot
 
@@ -388,8 +388,82 @@ let myScreen = {
   findByShadowTestId: (...args: AsyncScreenShadowMatcherParams) => findByShadowTestId(document.documentElement, args[0], args[1], args[2]),
 }
 
+const allQueries = {
+  ...queries,
+
+  // Role
+  queryAllByShadowRole,
+  queryByShadowRole,
+  getAllByShadowRole,
+  getByShadowRole,
+  findAllByShadowRole,
+  findByShadowRole,
+
+  // Label Text
+  queryAllByShadowLabelText,
+  queryByShadowLabelText,
+  getAllByShadowLabelText,
+  getByShadowLabelText,
+  findAllByShadowLabelText,
+  findByShadowLabelText,
+
+  // Placeholder Text
+  queryAllByShadowPlaceholderText,
+  queryByShadowPlaceholderText,
+  getAllByShadowPlaceholderText,
+  getByShadowPlaceholderText,
+  findAllByShadowPlaceholderText,
+  findByShadowPlaceholderText,
+
+  // Text
+  queryAllByShadowText,
+  queryByShadowText,
+  getAllByShadowText,
+  getByShadowText,
+  findAllByShadowText,
+  findByShadowText,
+
+  // Display Value
+  queryAllByShadowDisplayValue,
+  queryByShadowDisplayValue,
+  getAllByShadowDisplayValue,
+  getByShadowDisplayValue,
+  findAllByShadowDisplayValue,
+  findByShadowDisplayValue,
+
+  // Alt Text
+  queryAllByShadowAltText,
+  queryByShadowAltText,
+  getAllByShadowAltText,
+  getByShadowAltText,
+  findAllByShadowAltText,
+  findByShadowAltText,
+
+  // Title
+  queryAllByShadowTitle,
+  queryByShadowTitle,
+  getAllByShadowTitle,
+  getByShadowTitle,
+  findAllByShadowTitle,
+  findByShadowTitle,
+
+  // Test Id
+  queryAllByShadowTestId,
+  queryByShadowTestId,
+  getAllByShadowTestId,
+  getByShadowTestId,
+  findAllByShadowTestId,
+  findByShadowTestId,
+};
+
+function customWithin(element: HTMLElement) {
+  return within(element, allQueries);
+}
+
 export {
   myScreen as screen,
+
+  customWithin as within,
 
   // Role
   queryAllByShadowRole,
