@@ -116,7 +116,7 @@ function queryAllByShadowRole<T extends HTMLElement = HTMLElement>(...args: Shad
 
   options.suggest = false
 
-  return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByRole(el as HTMLElement, role, options)).flat(Infinity) as T[]
+  return [...new Set(deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByRole(el as HTMLElement, role, options)).flat(Infinity))] as T[]
 }
 
 const getMultipleRoleError = (_c: Element | null, role: ByRoleMatcher) =>
@@ -143,7 +143,7 @@ function queryAllByShadowLabelText<T extends HTMLElement = HTMLElement>(...args:
 
   options.suggest = false
 
-  return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByLabelText(el as HTMLElement, id, options)).flat(Infinity) as T[]
+  return [...new Set(deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByLabelText(el as HTMLElement, id, options)).flat(Infinity))] as T[]
 }
 
 const getMultipleLabelTextError = (_c: Element | null, id: Matcher) =>
@@ -170,7 +170,7 @@ function queryAllByShadowPlaceholderText<T extends HTMLElement = HTMLElement>(..
 
   options.suggest = false
 
-  return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByPlaceholderText(el as HTMLElement, id, options)).flat(Infinity) as T[]
+  return [...new Set(deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByPlaceholderText(el as HTMLElement, id, options)).flat(Infinity))] as T[]
 }
 
 const getMultiplePlaceholderTextError = (_c: Element | null, id: Matcher) =>
@@ -196,7 +196,7 @@ function queryAllByShadowText<T extends HTMLElement = HTMLElement>(...args: Shad
 
   options.suggest = false
 
-  return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByText(el as HTMLElement, id, options)).flat(Infinity) as T[]
+  return [...new Set(deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByText(el as HTMLElement, id, options)).flat(Infinity))] as T[]
 }
 
 const getMultipleTextError = (_c: Element | null, id: Matcher) =>
@@ -224,7 +224,7 @@ function queryAllByShadowDisplayValue<T extends HTMLElement = HTMLElement>(...ar
 
   options.suggest = false
 
-  return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByDisplayValue(el as HTMLElement, id, options)).flat(Infinity) as T[]
+  return [...new Set(deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByDisplayValue(el as HTMLElement, id, options)).flat(Infinity))] as T[]
 }
 
 const getMultipleDisplayValueError = (_c: Element | null, id: Matcher) =>
@@ -251,7 +251,7 @@ function queryAllByShadowAltText<T extends HTMLElement = HTMLElement>(...args: S
 
   options.suggest = false
 
-  return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByAltText(el as HTMLElement, id, options)).flat(Infinity) as T[]
+  return [...new Set(deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByAltText(el as HTMLElement, id, options)).flat(Infinity))] as T[]
 }
 
 const getMultipleAltTextError = (_c: Element | null, id: Matcher) =>
@@ -278,7 +278,7 @@ function queryAllByShadowTitle<T extends HTMLElement = HTMLElement>(...args: Sha
 
   options.suggest = false
 
-  return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByTitle(el as HTMLElement, id, options)).flat(Infinity) as T[]
+  return [...new Set(deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByTitle(el as HTMLElement, id, options)).flat(Infinity))] as T[]
 }
 
 const getMultipleTitleError = (_c: Element | null, id: Matcher) =>
@@ -304,7 +304,7 @@ function queryAllByShadowTestId<T extends HTMLElement = HTMLElement>(...args: Sh
 
   options.suggest = false
 
-  return deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByTestId(el as HTMLElement, id, options)).flat(Infinity) as T[]
+  return [...new Set(deepQuerySelectorAll(container, scopeQuery, options).map((el) => queryAllByTestId(el as HTMLElement, id, options)).flat(Infinity))] as T[]
 }
 
 const getMultipleTestIdError = (_c: Element | null, id: Matcher) =>
