@@ -1,5 +1,5 @@
 import React from "react"
-import { prettyDOM, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { screen } from "../src/index";
 import { Duplicates } from "../components";
 
