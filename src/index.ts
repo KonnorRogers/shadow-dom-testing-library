@@ -27,12 +27,6 @@ export type AsyncScreenShadowSelectorMatcherParams = [id: Matcher, options?: Sha
 export type AsyncScreenShadowMatcherParams = [id: Matcher, options?: ShadowMatcherOptions | undefined, waitForOptions?: waitForOptions | undefined]
 
 
-declare global {
-	interface ShadowRoot {
-		matches: HTMLElement["matches"]
-	}
-}
-
 // Amazingly fun hack to trick DOM testing libraries internal type checking logic.
 // https://github.com/testing-library/dom-testing-library/blob/73a5694529dbfff289f3d7a01470c45ef5c77715/src/queries/text.ts#L34-L36
 // https://github.com/testing-library/dom-testing-library/blob/73a5694529dbfff289f3d7a01470c45ef5c77715/src/pretty-dom.js#L50-L54
