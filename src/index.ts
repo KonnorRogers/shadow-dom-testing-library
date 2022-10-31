@@ -31,22 +31,19 @@ export type AsyncScreenShadowMatcherParams = [id: Matcher, options?: ShadowMatch
 // https://github.com/testing-library/dom-testing-library/blob/73a5694529dbfff289f3d7a01470c45ef5c77715/src/queries/text.ts#L34-L36
 // https://github.com/testing-library/dom-testing-library/blob/73a5694529dbfff289f3d7a01470c45ef5c77715/src/pretty-dom.js#L50-L54
 function trickDOMTestingLibrary () {
-  if (typeof ShadowRoot == "undefined") return
-
-  // @ts-expect-error
-  if (typeof ShadowRoot.prototype.matches !== "undefined") {
-    return
-  }
-
-  // @ts-expect-error
-  ShadowRoot.prototype.matches = function(string: string) {
-    const str = string.trim()
-    if (str === "*") return true
-
-    return this.querySelector(string) != null ? true : false
-  }
+  if (typeof ShadowRoot == "undefined") throw "Your environment does not support shadow roots."
 
   Object.defineProperties(ShadowRoot.prototype, {
+  	matches: {
+  		get () {
+  			return function (this: ShadowRoot, string: string): boolean {
+    			const str = string.trim()
+    			if (str === "*") return true
+
+    			return this.querySelector(string) != null ? true : false
+  			}
+  		}
+  	},
     outerHTML: {
       get () {
         return this.innerHTML
