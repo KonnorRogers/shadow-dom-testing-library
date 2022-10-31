@@ -1,6 +1,7 @@
 import React from "react"
-import { render } from "@testing-library/react";
+import { prettyDOM, render } from "@testing-library/react";
 import { screen } from "../src/index";
+import { Duplicates } from "../components";
 
 // @see https://github.com/KonnorRogers/shadow-dom-testing-library/issues/10
 test("Should only return 1 node instead of checking both", async () => {
@@ -19,4 +20,10 @@ test("Should error if two similiar nodes actually exist", async () => {
 
 	expect(() => screen.getByShadowText("Hello")).toThrow(/multiple elements/i)
 	await expect(() => screen.findByShadowText("Hello")).rejects.toThrow(/multiple elements/i)
+})
+
+test("Should error if two similar nodes are in shadow root", async () => {
+	render(<Duplicates />)
+	expect(() => screen.getByShadowRole("button")).toThrow(/multiple elements/i)
+	await expect(() => screen.findByShadowRole("button")).rejects.toThrow(/multiple elements/i)
 })
