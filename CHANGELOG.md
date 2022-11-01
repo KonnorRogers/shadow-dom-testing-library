@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.2.0...v1.3.0) (2022-11-01)
+
+
+### Features
+
+* enable screen debug and custom element serialization ([#18](https://github.com/konnorrogers/shadow-dom-testing-library/issues/18)) ([7d71736](https://github.com/konnorrogers/shadow-dom-testing-library/commit/7d717369339c42aaed0b3fa897a14bf0e585ce70))
+
 ## [1.2.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.1.8...v1.2.0) (2022-10-13)
 
 
