@@ -32,18 +32,20 @@ npm install -D shadow-dom-testing-library
 
 ```js
 // my-button.jsx
-export default () => <sl-button>I get wrapped by a button in the shadowRoot!</sl-button>
+export default () => (
+  <sl-button>I get wrapped by a button in the shadowRoot!</sl-button>
+);
 
 // my-button.test.jsx
-import { render } from "@testing-library/react"
-import { screen } from "shadow-dom-testing-library"
-import Button from "./my-button"
+import { render } from "@testing-library/react";
+import { screen } from "shadow-dom-testing-library";
+import Button from "./my-button";
 
 test("Find the button in the shadow root", async () => {
-  render(<Button />)
-  const btn = await screen.findByShadowRole("button")
-  expect(btn).toBeInTheDocument()
-})
+  render(<Button />);
+  const btn = await screen.findByShadowRole("button");
+  expect(btn).toBeInTheDocument();
+});
 ```
 
 ## API
@@ -102,7 +104,6 @@ test("Lets test some rendering", () => {
 })
 ```
 
-
 ### Additional APIs
 
 Shadow DOM testing library also ships its own
@@ -110,27 +111,31 @@ Shadow DOM testing library also ships its own
 for if you need more fine-grained access to the DOM.
 
 ```js
-import { deepQuerySelector, deepQuerySelectorAll } from "shadow-dom-testing-library"
+import {
+  deepQuerySelector,
+  deepQuerySelectorAll,
+} from "shadow-dom-testing-library";
 
-const elements = deepQuerySelectorAll(document, "my-button")
-const element = deepQuerySelector(document, "my-button", { shallow: true })
+const elements = deepQuerySelectorAll(document, "my-button");
+const element = deepQuerySelector(document, "my-button", { shallow: true });
 ```
 
 A `within` function is exported to provide the `<ByShadow>` queries
 bound to a particular container element.
 
 ```jsx
-import { render } from "@testing-library/react"
-import { screen, within } from "shadow-dom-testing-library"
+import { render } from "@testing-library/react";
+import { screen, within } from "shadow-dom-testing-library";
 
 test("Lets test some rendering", () => {
-  render(<ComplicatedControl />)
-  const fieldGroup = screen.getByShadowRole("group")
+  render(<ComplicatedControl />);
+  const fieldGroup = screen.getByShadowRole("group");
 
-  const nameInput = within(fieldGroup).getByShadowRole('textbox', { name: 'foobar' });
-})
+  const nameInput = within(fieldGroup).getByShadowRole("textbox", {
+    name: "foobar",
+  });
+});
 ```
-
 
 ## Caution
 
@@ -158,23 +163,62 @@ Shadow DOM elements. For example you can search for a
 ### Example of light dom query
 
 ```jsx
-function SimpleButton () {
-  const [count, setCount] = React.useState(0)
+function SimpleButton() {
+  const [count, setCount] = React.useState(0);
 
-  return (
-    <button onClick={() => setCount(count + 1)}>
-      {count}
-    </button>
-  );
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
 }
 
-
-import { screen } from "shadow-dom-testing-library"
+import { screen } from "shadow-dom-testing-library";
 
 test("Regular buttons should also work with shadow query", async () => {
-  render(<SimpleButton />)
-  fireEvent.click(await screen.findByRole('button'))
-  const el = await screen.findByText(/1/)
-  expect(el).toBeInTheDocument()
-})
+  render(<SimpleButton />);
+  fireEvent.click(await screen.findByRole("button"));
+  const el = await screen.findByText(/1/);
+  expect(el).toBeInTheDocument();
+});
+```
+
+## Debug
+
+Shadow-dom-testing-library supports serializing shadow
+doms. To do so, it ships its own "debug" function attached
+to the screen.
+
+### Examples using Debug
+
+```js
+import { screen, render } from "shadow-dom-testing-library";
+test("Debug", () => {
+  render(<my-element />);
+
+  screen.debug();
+});
+
+// Calling debug directly
+import { debug, render } from "shadow-dom-testing-library";
+test("Debug", () => {
+  render(<my-element />);
+
+  debug();
+});
+
+// Changing indentation
+import { screen, render } from "shadow-dom-testing-library";
+test("Debug", () => {
+  render(<my-element />);
+
+  debug(document.documentElement, undefined, { indent: 4 });
+});
+
+// Changing max depth
+import { screen, render } from "shadow-dom-testing-library";
+test("Debug", () => {
+  render(<my-element />);
+
+  debug(document.documentElement, undefined, {
+    // default is 7000.
+    maxDepth: 100,
+  });
+});
 ```

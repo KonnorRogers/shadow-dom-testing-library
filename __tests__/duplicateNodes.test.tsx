@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { render } from "@testing-library/react";
 import { screen } from "../src/index";
 import { Duplicates } from "../components";
@@ -11,19 +11,23 @@ test("Should only return 1 node instead of checking both", async () => {
 });
 
 test("Should error if two similiar nodes actually exist", async () => {
-	render(
-		<>
-			<h2>Hello</h2>
-			<h2>Hello</h2>
-		</>
-	)
+  render(
+    <>
+      <h2>Hello</h2>
+      <h2>Hello</h2>
+    </>
+  );
 
-	expect(() => screen.getByShadowText("Hello")).toThrow(/multiple elements/i)
-	await expect(() => screen.findByShadowText("Hello")).rejects.toThrow(/multiple elements/i)
-})
+  expect(() => screen.getByShadowText("Hello")).toThrow(/multiple elements/i);
+  await expect(() => screen.findByShadowText("Hello")).rejects.toThrow(
+    /multiple elements/i
+  );
+});
 
 test("Should error if two similar nodes are in shadow root", async () => {
-	render(<Duplicates />)
-	expect(() => screen.getByShadowRole("button")).toThrow(/multiple elements/i)
-	await expect(() => screen.findByShadowRole("button")).rejects.toThrow(/multiple elements/i)
-})
+  render(<Duplicates />);
+  expect(() => screen.getByShadowRole("button")).toThrow(/multiple elements/i);
+  await expect(() => screen.findByShadowRole("button")).rejects.toThrow(
+    /multiple elements/i
+  );
+});

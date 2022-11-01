@@ -93,9 +93,13 @@ class DuplicateButtons extends HTMLElement {
 		if (this.isConnected === false) return ""
 
     this.shadowRoot.innerHTML = `
+			<slot name="start"></slot>
 			<button>Button One</button>
 			<br>
+			<slot></slot>
+			<br>
 			<button>Button Two</button>
+			<slot name="end"></slot>
 		`;
 	}
 }
@@ -152,4 +156,4 @@ export const AnimatedImage = () => (
   />
 );
 
-export const Duplicates = () => <duplicate-buttons />
+export const Duplicates = (props: Record<string, any>) => <duplicate-buttons {...props} />

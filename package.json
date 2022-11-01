@@ -14,7 +14,7 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:ci": "npm run build && npm run test",
+    "test:ci": "npm run build && npm run test && npm run jest",
     "jest": "jest",
     "jest-preview": "jest-preview",
     "build": "tsup src/index.ts --format esm,cjs --clean --sourcemap --minify --metafile --dts",
@@ -44,12 +44,14 @@
   "homepage": "https://github.com/konnorrogers/shadow-dom-testing-library",
   "url": "https://github.com/konnorrogers/shadow-dom-testing-library/issues",
   "repository": "github:konnorrogers/shadow-dom-testing-library",
-  "dependencies": {
-    "@testing-library/dom": "^8.14.0"
+  "peerDependencies": {
+    "@testing-library/dom": ">= 8",
+    "jsdom": ">= 20"
   },
   "devDependencies": {
     "@open-wc/testing-helpers": "^2.1.2",
     "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/dom": ">= 8",
     "@testing-library/react": "^13.3.0",
     "@types/jest": "^28.1.4",
     "@types/node": "^18.0.3",
@@ -60,6 +62,7 @@
     "jest": "^28.1.2",
     "jest-environment-jsdom": "^28.1.2",
     "jest-preview": "^0.2.6",
+    "jsdom": ">= 20",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "standard-version": "^9.5.0",
