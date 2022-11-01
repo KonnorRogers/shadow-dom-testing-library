@@ -146,6 +146,7 @@ export function deepQuerySelectorAll(
   // Accounts for if the container houses a textNode
   // @ts-expect-error
   if (container.shadowRoot != null && container.shadowRoot.mode !== "closed")
+   // @ts-expect-error
     elements.push(container.shadowRoot);
 
   // If you pass in a shadowRoot container, you should still be able to find the text nodes.
