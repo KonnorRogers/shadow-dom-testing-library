@@ -178,3 +178,48 @@ test("Regular buttons should also work with shadow query", async () => {
   expect(el).toBeInTheDocument()
 })
 ```
+
+## Debug
+
+Shadow-dom-testing-library supports serializing shadow
+doms. To do so, it ships its own "debug" function attached
+to the screen.
+
+### Examples using Debug
+
+```js
+import { screen, render } from "shadow-dom-testing-library"
+test("Debug", () => {
+	render(<my-element />)
+
+	screen.debug()
+})
+
+// Calling debug directly
+import { debug, render } from "shadow-dom-testing-library"
+test("Debug", () => {
+	render(<my-element />)
+
+	debug()
+})
+
+
+// Changing indentation
+import { screen, render } from "shadow-dom-testing-library"
+test("Debug", () => {
+	render(<my-element />)
+
+	debug(document.documentElement, undefined, { indent: 4 })
+})
+
+// Changing max depth
+import { screen, render } from "shadow-dom-testing-library"
+test("Debug", () => {
+	render(<my-element />)
+
+	debug(document.documentElement, undefined, {
+		// default is 7000.
+		maxDepth: 100
+	})
+})
+```

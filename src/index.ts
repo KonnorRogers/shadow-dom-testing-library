@@ -1,4 +1,5 @@
 import {waitForOptions, buildQueries, screen, ByRoleMatcher, ByRoleOptions, queryAllByRole, SelectorMatcherOptions, queryAllByLabelText, Matcher, queryAllByPlaceholderText, MatcherOptions, queryAllByText, queryAllByDisplayValue, queryAllByAltText, queryAllByTitle, queryAllByTestId, queries, within} from '@testing-library/dom'
+import { debug } from './debug';
 
 export type Container = HTMLElement | Document | ShadowRoot
 
@@ -318,8 +319,9 @@ const [
 ] = buildQueries<ScreenShadowMatcherParams>(queryAllByShadowTestId, getMultipleTestIdError, getMissingTestIdError)
 
 // Shadows the following: https://testing-library.com/docs/queries/about/#priority
-let myScreen = {
+let customScreen = {
   ...screen,
+  debug,
   // Role
   queryAllByShadowRole: (...args: ScreenShadowRoleMatcherParams) => queryAllByShadowRole(document.documentElement, args[0], args[1]),
   queryByShadowRole: (...args: ScreenShadowRoleMatcherParams) => queryByShadowRole(document.documentElement, args[0], args[1]),
@@ -458,9 +460,9 @@ function customWithin(element: HTMLElement) {
 }
 
 export {
-  myScreen as screen,
-
+  customScreen as screen,
   customWithin as within,
+  debug,
 
   // Role
   queryAllByShadowRole,
