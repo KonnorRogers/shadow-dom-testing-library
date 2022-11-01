@@ -1,5 +1,5 @@
 import "./jsdom-setup"
-import { logDOM, prettyDOM } from "@testing-library/react";
+import { logDOM, prettyDOM } from "@testing-library/dom";
 import { JSDOM } from "jsdom";
 
 /**
@@ -23,8 +23,7 @@ export function prettyShadowDOM(...args: Parameters<typeof prettyDOM>): void {
       const tempNode = document.createElement("div");
       tempNode.innerHTML = node.outerHTML;
 
-      // Shadow roots are easy to lose, lets add an obvious character!
-      const shadowRootPseudoNode = document.createElement("shadow-🥷-root");
+      const shadowRootPseudoNode = document.createElement("shadow-root");
       shadowRootPseudoNode.innerHTML = node.shadowRoot.innerHTML;
       tempNode.firstElementChild!.insertBefore(
         shadowRootPseudoNode,
