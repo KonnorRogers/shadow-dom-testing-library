@@ -14,7 +14,7 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:ci": "npm run build && npm run test",
+    "test:ci": "npm run build && npm run test && npm run jest",
     "jest": "jest",
     "jest-preview": "jest-preview",
     "build": "tsup src/index.ts --format esm,cjs --clean --sourcemap --minify --metafile --dts",

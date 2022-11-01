@@ -156,4 +156,4 @@ export const AnimatedImage = () => (
   />
 );
 
-export const Duplicates = (props) => <duplicate-buttons {...props} />
+export const Duplicates = (props: Record<string, any>) => <duplicate-buttons {...props} />

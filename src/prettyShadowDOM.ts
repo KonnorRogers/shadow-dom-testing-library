@@ -1,3 +1,4 @@
+import "./jsdom-setup"
 import { logDOM, prettyDOM } from "@testing-library/react";
 import { JSDOM } from "jsdom";
 
