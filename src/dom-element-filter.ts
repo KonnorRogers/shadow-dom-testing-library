@@ -186,6 +186,12 @@ function nodeIsFragment(node: HandledType): node is DocumentFragment {
   return node.nodeType === FRAGMENT_NODE
 }
 
+function getShadowChildren (node: HTMLElement) {
+	if (node.shadowRoot == null) return []
+	
+	return node.shadowRoot.childNodes || node.shadowRoot.children
+}
+
 export default function createDOMElementFilter(
   filterNode: (node: Element) => boolean,
 ): NewPlugin {
@@ -239,15 +245,21 @@ export default function createDOMElementFilter(
           printer,
         ),
         printChildren(
-          Array.prototype.slice
-            .call(node.childNodes || node.children)
-            .filter(filterNode),
+          [
+          	...Array.prototype.slice
+            	.call(node.childNodes || node.children)
+            	.filter(filterNode),
+          	...Array.prototype.slice
+            	.call(getShadowChildren(node as HTMLElement))
+            	.filter(filterNode),
+          ],
           config,
           indentation + config.indent,
           depth,
           refs,
           printer,
         ),
+
         config,
         indentation,
       )

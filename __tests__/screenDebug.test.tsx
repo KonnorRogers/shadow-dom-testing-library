@@ -1,5 +1,6 @@
 import React from "react"
-import { render, getConfig, prettyDOM, PrettyDOMOptions, logDOM, prettyFormat } from "@testing-library/react";
+import { render } from "@testing-library/react";
+import { logDOM } from "../src/scratch"
 
 // getDocument
 import { screen } from "../src/index";
@@ -34,32 +35,10 @@ import { Duplicates } from "../components";
 
 screen.debug = function (...args: Parameters<typeof screen.debug>) {
   let [element, maxLength, options] = args
-	const {DOMElement, DOMCollection} = prettyFormat.plugins
-	if (options == null) {
-		options = {}
-	}
-	if (options.plugins == null) {
-		options.plugins = [];
-	}
-
-	options.plugins.push(DOMCollection, DOMElement)
-	console.log({options})
 
 	Array.isArray(element)
     ? element.forEach(el => logDOM(el, maxLength, options))
     : logDOM(element, maxLength, options);
-
-		// JASON
- //  if (Array.isArray(element)) {
-	// 	element.forEach((elem) => {
-	// 		screen.debug(elem);
-	// 	});
-	// 	return;
-	// }
-	// const DOMString = prettyPrintDOM(element instanceof Document ? element.body : element);
-	// // Turns the string into a RegEx with the symbols escaped. It is safe to allow this message since the screen.debug() call itself is blocked via an ESLint rule.
-	// _allowConsoleMessage(new RegExp(DOMString.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
-	// console.log(DOMString);
 }
 
 

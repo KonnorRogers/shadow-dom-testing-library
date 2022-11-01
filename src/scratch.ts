@@ -39,7 +39,7 @@ function getDocument(): Document {
  // https://github.com/facebook/jest/blob/615084195ae1ae61ddd56162c62bbdda17587569/packages/pretty-format/src/plugins/DOMElement.ts#L50
  function filterCommentsAndDefaultIgnoreTagsTags(value: Element) {
    return (
-     value.nodeType !== COMMENT_NODE &&
+     value.nodeType !== COMMENT_NODE
      (value.nodeType !== ELEMENT_NODE ||
        !value.matches(getConfig().defaultIgnore))
    )
