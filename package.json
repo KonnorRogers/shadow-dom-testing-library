@@ -45,7 +45,8 @@
   "url": "https://github.com/konnorrogers/shadow-dom-testing-library/issues",
   "repository": "github:konnorrogers/shadow-dom-testing-library",
   "dependencies": {
-    "@testing-library/dom": "^8.14.0"
+    "@testing-library/dom": "^8.14.0",
+    "jsdom": "^20.0.2"
   },
   "devDependencies": {
     "@open-wc/testing-helpers": "^2.1.2",
