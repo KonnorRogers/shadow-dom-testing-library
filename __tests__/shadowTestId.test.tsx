@@ -1,4 +1,3 @@
 describe("ShadowTestId()", () => {
-  it("should work with all queries", () => {
-  })
-})
+  it("should work with all queries", () => {});
+});
