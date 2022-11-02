@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { screen } from "../src/index";
-import { Duplicates } from "../components";
+import { Duplicates, NestedShadowRoots, TripleShadowRoots } from "../components";
 
 // @see https://github.com/KonnorRogers/shadow-dom-testing-library/issues/10
 test("Should only return 1 node instead of checking both", async () => {
@@ -31,3 +31,21 @@ test("Should error if two similar nodes are in shadow root", async () => {
     /multiple elements/i
   );
 });
+
+test("Should find duplicate nodes in a double nested shadow root", async () => {
+	render(<NestedShadowRoots />)
+
+  expect(() => screen.getByShadowRole("button")).toThrow(/multiple elements/i);
+  await expect(() => screen.findByShadowRole("button")).rejects.toThrow(
+    /multiple elements/i
+  );
+})
+
+test("Should find duplicate nodes in a triple nested shadow root", async () => {
+	render(<TripleShadowRoots />)
+
+  expect(() => screen.getByShadowRole("button")).toThrow(/multiple elements/i);
+  await expect(() => screen.findByShadowRole("button")).rejects.toThrow(
+    /multiple elements/i
+  );
+})

@@ -179,8 +179,7 @@ export function deepQuerySelectorAll(
   return [...new Set(elements)];
 }
 
-// Prevent duplicate elements by using ":scope *"
-const scopeQuery = ":scope *";
+const scopeQuery = "*";
 
 // Role
 function queryAllByShadowRole<T extends HTMLElement = HTMLElement>(
