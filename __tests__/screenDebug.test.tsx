@@ -1,9 +1,25 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import { Duplicates } from "../components";
+import { Duplicates, NestedShadowRoots, TripleShadowRoots } from "../components";
 import { screen } from "../src/index";
 
-test.skip("Should error if two similar nodes are in shadow root", async () => {
+test.skip("Triple shadow roots", async () => {
+  render(
+  	<TripleShadowRoots />
+  );
+
+  screen.debug();
+})
+
+test.skip("Double shadow root", async () => {
+  render(
+  	<NestedShadowRoots />
+  );
+
+  screen.debug();
+})
+
+test.skip("Single shadow root", async () => {
   render(
     <Duplicates>
       <div slot="start">Start Slot</div>
@@ -23,7 +39,7 @@ test.skip("Should error if two similar nodes are in shadow root", async () => {
   // <body>
   // 	<div>
   //   	<duplicate-buttons>
-  //     	<shadow-🥷-root>
+  //     	<shadow-root>
   //       	<slot
   //         	name="start"
   //       	/>
@@ -39,7 +55,7 @@ test.skip("Should error if two similar nodes are in shadow root", async () => {
   //       	<slot
   //         	name="end"
   //       	/>
-  //     	</shadow-🥷-root>
+  //     	</shadow-root>
   //     	<div
   //       	slot="start"
   //     	>

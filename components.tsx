@@ -104,6 +104,38 @@ class DuplicateButtons extends HTMLElement {
 	}
 }
 
+class NestedShadowRootsElement extends HTMLElement {
+	connectedCallback () {
+    this.attachShadow({mode: 'open'});
+    this.render()
+	}
+
+	render () {
+		if (this.shadowRoot == null) return ""
+		if (this.isConnected === false) return ""
+
+    this.shadowRoot.innerHTML = `
+			<duplicate-buttons></duplicate-buttons>
+		`;
+	}
+}
+
+class TripleShadowRootsElement extends HTMLElement {
+	connectedCallback () {
+    this.attachShadow({mode: 'open'});
+    this.render()
+	}
+
+	render () {
+		if (this.shadowRoot == null) return ""
+		if (this.isConnected === false) return ""
+
+    this.shadowRoot.innerHTML = `
+			<nested-shadow-roots></nested-shadow-roots>
+		`;
+	}
+}
+
 /* Custom element declarations */
 type CustomEvents<K extends string> = { [key in K] : (event: CustomEvent) => void };
 type CustomElement<T, K extends string = string> = Partial<T & React.DOMAttributes<T> & { children: any } & CustomEvents<`on${K}`>>;
@@ -112,6 +144,8 @@ window.customElements.define("my-button", class extends MyButton {})
 window.customElements.define("my-image", class extends MyImage {})
 window.customElements.define("my-text-area", class extends MyTextArea {})
 window.customElements.define("duplicate-buttons", class extends DuplicateButtons {})
+window.customElements.define("nested-shadow-roots", class extends NestedShadowRootsElement {})
+window.customElements.define("triple-shadow-roots", class extends TripleShadowRootsElement {})
 
 declare global {
   namespace JSX {
@@ -120,6 +154,8 @@ declare global {
       ['my-image']: CustomElement<MyImage>;
       ['my-text-area']: CustomElement<MyTextArea>;
       ['duplicate-buttons']: CustomElement<DuplicateButtons>;
+      ['nested-shadow-roots']: CustomElement<NestedShadowRootsElement>;
+      ['triple-shadow-roots']: CustomElement<TripleShadowRootsElement>;
     }
   }
 }
@@ -157,3 +193,6 @@ export const AnimatedImage = () => (
 );
 
 export const Duplicates = (props: Record<string, any>) => <duplicate-buttons {...props} />
+
+export const NestedShadowRoots = (props: Record<string, any>) => <nested-shadow-roots {...props} />
+export const TripleShadowRoots = (props: Record<string, any>) => <triple-shadow-roots {...props} />
