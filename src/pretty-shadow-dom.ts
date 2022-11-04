@@ -1,13 +1,16 @@
 import "./jsdom-setup"
-import { logDOM, prettyDOM } from "@testing-library/dom";
+import { prettyDOM } from "@testing-library/dom";
 import { JSDOM } from "jsdom";
-import { deepQuerySelectorAll } from ".";
 
 /**
  * This is an extension of prettyDOM / logDOM that provides proper printing of shadow roots.
  */
-export function prettyShadowDOM(...args: Parameters<typeof prettyDOM>): void {
-  let [element, maxLength, options] = args;
+export function prettyShadowDOM(...args: Parameters<typeof prettyDOM>): ReturnType<typeof prettyDOM> {
+	const [element, maxLength, options] = args
+  return prettyDOM(toJSDOM(element), maxLength, options);
+}
+
+export function toJSDOM (element?: Element | Document | undefined): HTMLElement {
   if (element == null) element = document.documentElement;
 
   let htmlString: string = "";
@@ -25,20 +28,7 @@ export function prettyShadowDOM(...args: Parameters<typeof prettyDOM>): void {
   htmlString = htmlString.replace(/>\s+</g, "><");
 
   const dom = new JSDOM(htmlString);
-  const copiedDocument = dom.window.document;
-
-  /**
-   * Remove large, invisible elements which aren't useful for debugging.
-   * Maybe allow introduce a new field called: options.ignoredNodes? options.ignoreQuery? options.filterQuery?
-   * Usually this is handled by a "filterNode" which isnt a string.
-   * https://github.com/testing-library/dom-testing-library/blob/edffb7c5ec2e4afd7f6bedf842c669ddbfb73297/src/pretty-dom.js#L35-L42
-   * https://github.com/testing-library/dom-testing-library/blob/edffb7c5ec2e4afd7f6bedf842c669ddbfb73297/src/pretty-dom.js#L74
-   */
-  copiedDocument.querySelectorAll("script, style").forEach((elem) => {
-    elem.remove();
-  });
-
-  logDOM(copiedDocument.body, maxLength, options);
+  return dom.window.document.body;
 }
 
 function processNodes (element: Element | Document | ShadowRoot, stringBuffer: string = "", nodes: Array<Element | ShadowRoot> = Array.from(element.children)) {

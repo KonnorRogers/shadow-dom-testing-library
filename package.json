@@ -18,7 +18,7 @@
     "jest": "jest",
     "jest-preview": "jest-preview",
     "build": "tsup src/index.ts --format esm,cjs --clean --sourcemap --minify --metafile --dts",
-    "start": "tsup src/index.ts --format esm,cjs --watch --clean --onSuccess \"node dist/index.js\"",
+    "start": "tsup src/index.ts --format esm,cjs --watch --clean --onSuccess \"echo 'Build Success!!'\"",
     "clean": "rm -rf dist",
     "deploy": "npm run build && standard-version --release-as",
     "deploy:beta": "npm run build && standard-version --prerelease beta",
