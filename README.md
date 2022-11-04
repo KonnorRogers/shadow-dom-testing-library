@@ -222,3 +222,32 @@ test("Debug", () => {
   });
 });
 ```
+
+## logShadowDOM
+
+This is the equivalent of `logDOM` from "@testing-library/dom"
+
+`logShadowDOM` will log to the console the state of the DOM
+and internally calls `prettyShadowDOM`. This is called via `screen.debug()`
+
+### Example of logShadowDOM
+
+```js
+import { logShadowDOM } from "shadow-dom-testing-library"
+
+logShadowDOM(element, maxLength, options) // void; calls console.log()
+```
+
+## prettyShadowDOM
+
+This is the equivalent of `prettyDOM` from "@testing-library/dom". This is called by `logShadowDOM`.
+`prettyShadowDOM` returns `string | false` and does not automatically log to the console.
+This is useful for custom error messages for elements.
+
+### Example of prettyShadowDOM
+
+```js
+import { prettyShadowDOM } from "shadow-dom-testing-library"
+
+prettyShadowDOM(element, maxLength, options) // => string | false
+```
