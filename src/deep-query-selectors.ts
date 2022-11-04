@@ -26,11 +26,15 @@ export function deepQuerySelectorAll(
     container = document.documentElement;
   }
 
-	// Make sure we're checking the container element!
+  // Make sure we're checking the container element!
   elements.push(container);
 
   // Accounts for if the container houses a textNode
-  if (container instanceof HTMLElement && container.shadowRoot != null && container.shadowRoot.mode !== "closed") {
+  if (
+    container instanceof HTMLElement &&
+    container.shadowRoot != null &&
+    container.shadowRoot.mode !== "closed"
+  ) {
     elements.push(container.shadowRoot);
   }
 
@@ -60,4 +64,3 @@ export function deepQuerySelectorAll(
   // We can sometimes hit duplicate nodes this way, lets stop that.
   return [...new Set(elements)];
 }
-

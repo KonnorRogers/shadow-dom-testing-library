@@ -1,23 +1,23 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import { Duplicates, NestedShadowRoots, TripleShadowRoots } from "../components";
+import {
+  Duplicates,
+  NestedShadowRoots,
+  TripleShadowRoots,
+} from "../components";
 import { screen } from "../src/index";
 
 test.skip("Triple shadow roots", async () => {
-  render(
-  	<TripleShadowRoots />
-  );
+  render(<TripleShadowRoots />);
 
   screen.debug();
-})
+});
 
 test.skip("Double shadow root", async () => {
-  render(
-  	<NestedShadowRoots />
-  );
+  render(<NestedShadowRoots />);
 
   screen.debug();
-})
+});
 
 test.skip("Single shadow root", async () => {
   render(

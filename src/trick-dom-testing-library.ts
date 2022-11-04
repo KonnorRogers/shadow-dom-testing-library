@@ -1,8 +1,8 @@
 declare global {
-	interface ShadowRoot {
-		matches?: (this: ShadowRoot, string: string) => boolean
-		outerHTML?: string
-	}
+  interface ShadowRoot {
+    matches?: (this: ShadowRoot, string: string) => boolean;
+    outerHTML?: string;
+  }
 }
 
 // Amazingly fun hack to trick DOM testing libraries internal type checking logic.
@@ -12,30 +12,28 @@ export function trickDOMTestingLibrary() {
   if (typeof ShadowRoot == "undefined")
     throw "Your environment does not support shadow roots.";
 
+  if (ShadowRoot.prototype.matches == null) {
+    Object.defineProperties(ShadowRoot.prototype, {
+      matches: {
+        get() {
+          return function (this: ShadowRoot, string: string): boolean {
+            const str = string.trim();
+            if (str === "*") return true;
 
-	if (ShadowRoot.prototype.matches == null) {
-  	Object.defineProperties(ShadowRoot.prototype, {
-    	matches: {
-      	get() {
-        	return function (this: ShadowRoot, string: string): boolean {
-          	const str = string.trim();
-          	if (str === "*") return true;
-
-          	return this.querySelector(string) != null ? true : false;
-        	};
-      	},
-    	},
-  	});
+            return this.querySelector(string) != null ? true : false;
+          };
+        },
+      },
+    });
   }
 
-	if (ShadowRoot.prototype.outerHTML == null) {
-  	Object.defineProperties(ShadowRoot.prototype, {
-    	outerHTML: {
-      	get() {
-        	return this.innerHTML;
-      	},
-    	},
-  	});
+  if (ShadowRoot.prototype.outerHTML == null) {
+    Object.defineProperties(ShadowRoot.prototype, {
+      outerHTML: {
+        get() {
+          return this.innerHTML;
+        },
+      },
+    });
   }
 }
-
