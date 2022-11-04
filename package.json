@@ -13,6 +13,7 @@
   },
   "scripts": {
     "test": "vitest run",
+    "format": "npx prettier ./src ./__tests__ ./README.md --write",
     "test:watch": "vitest",
     "test:ci": "npm run build && npm run test && npm run jest",
     "jest": "jest",

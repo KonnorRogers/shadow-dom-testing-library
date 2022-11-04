@@ -10,14 +10,14 @@ describe("within", () => {
 
     render(
       <Select label={selectLabel}>
-        <option>Option one</option>
+        <option>{optionLabel}</option>
         <option>Option two</option>
       </Select>
     );
 
-    const shadowSelect = await screen.findByShadowRole("combobox");
-    // 	name: selectLabel
-    // });
+    const shadowSelect = await screen.findByShadowRole("combobox", {
+      name: selectLabel,
+    });
 
     // @ts-expect-error
     const select = shadowSelect.getRootNode().host as MySelect;
