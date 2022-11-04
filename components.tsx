@@ -136,6 +136,36 @@ class TripleShadowRootsElement extends HTMLElement {
 	}
 }
 
+export class MySelect extends HTMLElement {
+	_label: string = ""
+
+	get label () {
+		return this._label
+	}
+
+	set label (value: string) {
+		this._label = value
+		this.render()
+	}
+
+	connectedCallback () {
+    this.attachShadow({mode: 'open'});
+    this.render()
+	}
+
+	render () {
+		if (this.shadowRoot == null) return ""
+		if (this.isConnected === false) return ""
+
+    this.shadowRoot.innerHTML = `
+    	<label for="select">${this.label}</label>
+			<select id="select">
+				<slot></slot>
+			</select>
+		`;
+	}
+}
+
 /* Custom element declarations */
 type CustomEvents<K extends string> = { [key in K] : (event: CustomEvent) => void };
 type CustomElement<T, K extends string = string> = Partial<T & React.DOMAttributes<T> & { children: any } & CustomEvents<`on${K}`>>;
@@ -146,6 +176,7 @@ window.customElements.define("my-text-area", class extends MyTextArea {})
 window.customElements.define("duplicate-buttons", class extends DuplicateButtons {})
 window.customElements.define("nested-shadow-roots", class extends NestedShadowRootsElement {})
 window.customElements.define("triple-shadow-roots", class extends TripleShadowRootsElement {})
+window.customElements.define("my-select", class extends MySelect {})
 
 declare global {
   namespace JSX {
@@ -156,6 +187,7 @@ declare global {
       ['duplicate-buttons']: CustomElement<DuplicateButtons>;
       ['nested-shadow-roots']: CustomElement<NestedShadowRootsElement>;
       ['triple-shadow-roots']: CustomElement<TripleShadowRootsElement>;
+      ['my-select']: CustomElement<MySelect>
     }
   }
 }
@@ -196,3 +228,4 @@ export const Duplicates = (props: Record<string, any>) => <duplicate-buttons {..
 
 export const NestedShadowRoots = (props: Record<string, any>) => <nested-shadow-roots {...props} />
 export const TripleShadowRoots = (props: Record<string, any>) => <triple-shadow-roots {...props} />
+export const Select = (props: Record<string, any>) => <my-select {...props} />

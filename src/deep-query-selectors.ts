@@ -26,14 +26,13 @@ export function deepQuerySelectorAll(
     container = document.documentElement;
   }
 
-  // Accounts for if the container houses a textNode
-  // @ts-expect-error
-  if (container.shadowRoot != null && container.shadowRoot.mode !== "closed")
-   // @ts-expect-error
-    elements.push(container.shadowRoot);
+	// Make sure we're checking the container element!
+  elements.push(container);
 
-  // If you pass in a shadowRoot container, you should still be able to find the text nodes.
-  if (container instanceof ShadowRoot) elements.push(container);
+  // Accounts for if the container houses a textNode
+  if (container instanceof HTMLElement && container.shadowRoot != null && container.shadowRoot.mode !== "closed") {
+    elements.push(container.shadowRoot);
+  }
 
   container.querySelectorAll(selectors).forEach((el: Element | HTMLElement) => {
     if (el.shadowRoot == null || el.shadowRoot.mode === "closed") {
