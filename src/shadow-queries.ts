@@ -13,7 +13,14 @@ import {
 } from "@testing-library/dom";
 
 import { deepQuerySelectorAll } from "./deep-query-selectors";
-import { ScreenShadowMatcherParams, ScreenShadowRoleMatcherParams, ScreenShadowSelectorMatcherParams, ShadowMatcherParams, ShadowRoleMatcherParams, ShadowSelectorMatcherParams } from "./types";
+import {
+  ScreenShadowMatcherParams,
+  ScreenShadowRoleMatcherParams,
+  ScreenShadowSelectorMatcherParams,
+  ShadowMatcherParams,
+  ShadowRoleMatcherParams,
+  ShadowSelectorMatcherParams,
+} from "./types";
 
 const scopeQuery = "*";
 
@@ -321,8 +328,6 @@ const [
   getMissingTestIdError
 );
 
-
-
 export {
   // Role
   queryAllByShadowRole,
@@ -387,4 +392,4 @@ export {
   getByShadowTestId,
   findAllByShadowTestId,
   findByShadowTestId,
-}
+};

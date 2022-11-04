@@ -1,4 +1,11 @@
-import { ByRoleOptions, MatcherOptions, SelectorMatcherOptions, ByRoleMatcher, Matcher, waitForOptions } from "@testing-library/dom"
+import {
+  ByRoleOptions,
+  MatcherOptions,
+  SelectorMatcherOptions,
+  ByRoleMatcher,
+  Matcher,
+  waitForOptions,
+} from "@testing-library/dom";
 
 export type Container = HTMLElement | Document | ShadowRoot;
 
@@ -68,4 +75,3 @@ export type AsyncScreenShadowMatcherParams = [
   options?: ShadowMatcherOptions | undefined,
   waitForOptions?: waitForOptions | undefined
 ];
-
