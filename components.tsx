@@ -158,10 +158,12 @@ export class MySelect extends HTMLElement {
 		if (this.isConnected === false) return ""
 
     this.shadowRoot.innerHTML = `
-    	<label for="select">${this.label}</label>
-			<select id="select">
-				<slot></slot>
-			</select>
+    	<label>
+				${this.label}
+				<select>
+					<slot></slot>
+				</select>
+			</label>
 		`;
 	}
 }

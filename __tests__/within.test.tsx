@@ -15,16 +15,12 @@ describe("within", () => {
       </Select>
     );
 
-    const shadowSelect = await screen.findByShadowRole("combobox", {
-      name: selectLabel,
-    });
+    const shadowSelect = await screen.findByShadowRole("combobox")
 
     // @ts-expect-error
     const select = shadowSelect.getRootNode().host as MySelect;
 
-    const option = within(select).getByShadowRole("option", {
-      name: optionLabel,
-    });
+    const option = within(select).getByShadowRole("option", { name: optionLabel })
     expect(option).toBeInTheDocument();
   });
 });
