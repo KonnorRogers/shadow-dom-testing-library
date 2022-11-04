@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.4.0...v1.4.1) (2022-11-04)
+
+
+### Bug Fixes
+
+* 'within' now pushes to host element into the array of elements ([#25](https://github.com/konnorrogers/shadow-dom-testing-library/issues/25)) ([2c73eca](https://github.com/konnorrogers/shadow-dom-testing-library/commit/2c73eca76810a6a9b38ca79f7bb7b2a39eb9c371))
+
 ## [1.4.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.3.1...v1.4.0) (2022-11-04)
 
 
