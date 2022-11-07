@@ -27,5 +27,22 @@ test("Should test shadow roots of passing in element", async () => {
 	// @ts-expect-error
 	const str = prettyShadowDOM(button.getRootNode().host) as string
 
+	console.log(str)
+	expect(str.includes("my-button")).toBe(true)
 	expect(str.includes("shadow-root")).toBe(true)
+	expect(str.includes("body")).toBe(false)
+	expect(str.includes("div")).toBe(false)
+})
+
+test("Should render body if passed in", () => {
+	render(<Button />)
+
+	const str = prettyShadowDOM(document.body) as string
+
+	console.log(str)
+
+	// expect(str.includes("div")).toBe(false)
+	expect(str.includes("my-button")).toBe(true)
+	expect(str.includes("shadow-root")).toBe(true)
+	expect(str.includes("body")).toBe(true)
 })

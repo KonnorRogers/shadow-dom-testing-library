@@ -30,7 +30,18 @@ export function toJSDOM(element?: Element | Document | undefined): HTMLElement {
   htmlString = htmlString.replace(/>\s+</g, "><");
 
   const dom = new JSDOM(htmlString);
-  return dom.window.document.body;
+
+	// HTMLHtmlElement is document.documentElement
+  if (element instanceof Document || element instanceof HTMLHtmlElement) {
+  	// @ts-expect-error
+  	return dom.window.document as HTMLElement
+	}
+
+	if (element instanceof HTMLBodyElement) {
+		return dom.window.document.body
+	}
+
+	return dom.window.document.body.firstElementChild as HTMLElement
 }
 
 function processNodes(
@@ -47,16 +58,17 @@ function processNodes(
   while (nodes.length > 0) {
     const node = nodes.shift()!;
     if (node && "shadowRoot" in node && node.shadowRoot != null) {
-      const tempNode = document.createElement("div");
-      tempNode.innerHTML = node.outerHTML;
+      const outerHTML = node.outerHTML
 
       const shadowRootPseudoNode = document.createElement("shadow-root");
       shadowRootPseudoNode.innerHTML = node.shadowRoot.innerHTML;
-      tempNode.firstElementChild!.insertBefore(
+
+      node.insertAdjacentElement(
+      	"afterbegin",
         shadowRootPseudoNode,
-        tempNode.firstElementChild!.firstChild
       );
-      stringBuffer = stringBuffer.replace(node.outerHTML, tempNode.innerHTML);
+
+      stringBuffer = stringBuffer.replace(outerHTML, node.outerHTML);
       nodes.push(...Array.from(node.shadowRoot.children));
     }
     nodes.push(...Array.from(node.children));
