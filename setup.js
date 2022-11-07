@@ -1,6 +1,10 @@
+import { configure } from '@testing-library/dom';
 import '@testing-library/jest-dom'
+configure
 // import { jestPreviewConfigure } from 'jest-preview'
 // jestPreviewConfigure({ autoPreview: true })
+
+configure({ throwSuggestions: true })
 
 export function setup(viOrJest) {
   if (window == null) throw Error("`window` is null. Perhaps you are not using JSDOM? Or perhaps you are calling this function before the window has been mocked by JSDOM.")

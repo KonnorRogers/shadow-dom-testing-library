@@ -37,4 +37,15 @@ describe("ShadowText()", () => {
     await findByShadowText(el, "Hi there");
     await screen.findByShadowText("Hi there");
   });
+
+  it("should not suggest light dom queries", async () => {
+    const el = (await fixture(
+      html`<shadow-text></shadow-text>`
+    )) as HTMLElement;
+    await nextFrame();
+
+    // await findByShadowText(el.shadowRoot, "Hi there");
+    await findByShadowText(el, "H there");
+    await screen.findByShadowText("H there");
+  });
 });

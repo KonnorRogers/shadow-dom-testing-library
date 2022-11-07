@@ -10,6 +10,8 @@ import {
   queryAllByAltText,
   queryAllByTitle,
   queryAllByTestId,
+  configure,
+  BuiltQueryMethods,
 } from "@testing-library/dom";
 
 import { deepQuerySelectorAll } from "./deep-query-selectors";
@@ -23,6 +25,54 @@ import {
 } from "./types";
 
 const scopeQuery = "*";
+
+// configure({
+// 	throwSuggestions: false
+// })
+
+// function toQuery<T extends BuiltQueryMethods<ScreenShadowRoleMatcherParams>, U extends keyof T> (callback: T[U]): ReturnType<T[U]> {
+// 	return function (...args: Parameters<T[U]>): ReturnType<T[U]> {
+// 		let [container, finder, options, ...rest] = args
+//
+// 		if (options == null) {
+// 			options = {}
+// 		}
+//
+// 		options.suggest = false
+// 		return callback(...[container, finder, options, rest] as Parameters<T>) as ReturnType<T[U]>
+// 	} as T
+// }
+
+// function toQuery<T extends BuiltQueryMethods<ScreenShadowRoleMatcherParams>, U extends keyof T> (callback: T[U]): (...args: Parameters<T[U]>) => T[U] {
+// 	return function (...args: Parameters<T[U]>): T[U] {
+// 		let [container, finder, options, ...rest] = args
+//
+// 		if (options == null) {
+// 			options = {}
+// 		}
+//
+// 		options.suggest = false
+// 		return callback(container, finder, options, rest) // as (...args: Parameters<T[U]>) => T[U]
+// 	}
+// }
+
+// type Queries = keyof BuiltQueryMethods<ScreenShadowMatcherParams | ScreenShadowRoleMatcherParams | ScreenShadowRoleMatcherParams | ScreenShadowSelectorMatcherParams>
+
+
+
+// function toQuery<T extends Function> (callback: T): (...args: Parameters<T>) => T {
+// 	return function (...args: Parameters<T>): T {
+// 		let [container, finder, options, ...rest] = args
+//
+// 		if (options == null) {
+// 			options = {}
+// 		}
+//
+// 		options.suggest = false
+//
+// 		return callback(...[container, finder, options, rest] as Parameters<T>)
+// 	}
+// }
 
 // Role
 function queryAllByShadowRole<T extends HTMLElement = HTMLElement>(
@@ -50,6 +100,7 @@ const getMultipleRoleError = (_c: Element | null, role: ByRoleMatcher) =>
 const getMissingRoleError = (_c: Element | null, role: ByRoleMatcher) =>
   `Unable to find an element with the role of: ${role}`;
 
+
 const [
   queryByShadowRole,
   getAllByShadowRole,
@@ -60,7 +111,19 @@ const [
   queryAllByShadowRole,
   getMultipleRoleError,
   getMissingRoleError
-);
+).map((fn) => {
+	return ((...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
+		let [arg1, arg2, options, ...rest] = args
+
+		if (options == null) {
+			options = {}
+		}
+
+		options.suggest = false
+		return fn(arg1, arg2, options, ...rest)
+	})
+})
+
 
 // Label Text
 function queryAllByShadowLabelText<T extends HTMLElement = HTMLElement>(
@@ -98,7 +161,18 @@ const [
   queryAllByShadowLabelText,
   getMultipleLabelTextError,
   getMissingLabelTextError
-);
+).map((fn) => {
+	return ((...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
+		let [arg1, arg2, options, ...rest] = args
+
+		if (options == null) {
+			options = {}
+		}
+
+		options.suggest = false
+		return fn(arg1, arg2, options, ...rest)
+	})
+})
 
 // Placeholder Text
 function queryAllByShadowPlaceholderText<T extends HTMLElement = HTMLElement>(
