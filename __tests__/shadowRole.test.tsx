@@ -51,7 +51,7 @@ describe("ShadowRole()", () => {
     render(<SimpleButton />);
     fireEvent.click((await screen.findByRole("button")) as HTMLElement);
 
-    const el = await screen.findByRole("button", {name: /1/i})
+    const el = await screen.findByRole("button", { name: /1/i });
     expect(el).toBeInTheDocument();
   });
 });

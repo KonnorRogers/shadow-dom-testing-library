@@ -1,6 +1,5 @@
 import { configure } from '@testing-library/dom';
 import '@testing-library/jest-dom'
-configure
 // import { jestPreviewConfigure } from 'jest-preview'
 // jestPreviewConfigure({ autoPreview: true })
 

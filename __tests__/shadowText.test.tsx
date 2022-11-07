@@ -24,10 +24,10 @@ customElements.define("shadow-text", ShadowText);
 
 describe("ShadowText()", () => {
   it("should work with all queries", async () => {
-		// suggestions call "getAttribute" which wont work here.
-  	configure({
-  		throwSuggestions: false
-  	})
+    // suggestions call "getAttribute" which wont work here.
+    configure({
+      throwSuggestions: false,
+    });
 
     const el = (await fixture(
       html`<shadow-text></shadow-text>`
@@ -43,9 +43,9 @@ describe("ShadowText()", () => {
     await findByShadowText(el, "Hi there");
     await screen.findByShadowText("Hi there");
 
-  	configure({
-  		throwSuggestions: true
-  	})
+    configure({
+      throwSuggestions: true,
+    });
   });
 
   it("should not suggest light dom queries", async () => {

@@ -52,7 +52,6 @@ const getMultipleRoleError = (_c: Element | null, role: ByRoleMatcher) =>
 const getMissingRoleError = (_c: Element | null, role: ByRoleMatcher) =>
   `Unable to find an element with the role of: ${role}`;
 
-
 const [
   queryByShadowRole,
   getAllByShadowRole,
@@ -64,18 +63,17 @@ const [
   getMultipleRoleError,
   getMissingRoleError
 ).map((fn) => {
-	return ((...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-		let [arg1, arg2, options, ...rest] = args
+  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
+    let [arg1, arg2, options, ...rest] = args;
 
-		if (options == null) {
-			options = {}
-		}
+    if (options == null) {
+      options = {};
+    }
 
-		options.suggest = false
-		return fn(arg1, arg2, options, ...rest)
-	})
-})
-
+    options.suggest = false;
+    return fn(arg1, arg2, options, ...rest);
+  };
+});
 
 // Label Text
 function queryAllByShadowLabelText<T extends HTMLElement = HTMLElement>(
@@ -114,17 +112,17 @@ const [
   getMultipleLabelTextError,
   getMissingLabelTextError
 ).map((fn) => {
-	return ((...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-		let [arg1, arg2, options, ...rest] = args
+  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
+    let [arg1, arg2, options, ...rest] = args;
 
-		if (options == null) {
-			options = {}
-		}
+    if (options == null) {
+      options = {};
+    }
 
-		options.suggest = false
-		return fn(arg1, arg2, options, ...rest)
-	})
-})
+    options.suggest = false;
+    return fn(arg1, arg2, options, ...rest);
+  };
+});
 
 // Placeholder Text
 function queryAllByShadowPlaceholderText<T extends HTMLElement = HTMLElement>(
@@ -163,16 +161,16 @@ const [
   getMultiplePlaceholderTextError,
   getMissingPlaceholderTextError
 ).map((fn) => {
-	return ((...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-		let [arg1, arg2, options, ...rest] = args
+  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
+    let [arg1, arg2, options, ...rest] = args;
 
-		if (options == null) {
-			options = {}
-		}
+    if (options == null) {
+      options = {};
+    }
 
-		options.suggest = false
-		return fn(arg1, arg2, options, ...rest)
-	})
+    options.suggest = false;
+    return fn(arg1, arg2, options, ...rest);
+  };
 });
 
 // Text
@@ -212,17 +210,17 @@ const [
   getMultipleTextError,
   getMissingTextError
 ).map((fn) => {
-	return ((...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-		let [arg1, arg2, options, ...rest] = args
+  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
+    let [arg1, arg2, options, ...rest] = args;
 
-		if (options == null) {
-			options = {}
-		}
+    if (options == null) {
+      options = {};
+    }
 
-		options.suggest = false
+    options.suggest = false;
 
-		return fn(arg1, arg2, options, ...rest)
-	})
+    return fn(arg1, arg2, options, ...rest);
+  };
 });
 
 // Display Value
@@ -262,16 +260,16 @@ const [
   getMultipleDisplayValueError,
   getMissingDisplayValueError
 ).map((fn) => {
-	return ((...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-		let [arg1, arg2, options, ...rest] = args
+  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
+    let [arg1, arg2, options, ...rest] = args;
 
-		if (options == null) {
-			options = {}
-		}
+    if (options == null) {
+      options = {};
+    }
 
-		options.suggest = false
-		return fn(arg1, arg2, options, ...rest)
-	})
+    options.suggest = false;
+    return fn(arg1, arg2, options, ...rest);
+  };
 });
 
 // Alt Text
@@ -311,16 +309,16 @@ const [
   getMultipleAltTextError,
   getMissingAltTextError
 ).map((fn) => {
-	return ((...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-		let [arg1, arg2, options, ...rest] = args
+  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
+    let [arg1, arg2, options, ...rest] = args;
 
-		if (options == null) {
-			options = {}
-		}
+    if (options == null) {
+      options = {};
+    }
 
-		options.suggest = false
-		return fn(arg1, arg2, options, ...rest)
-	})
+    options.suggest = false;
+    return fn(arg1, arg2, options, ...rest);
+  };
 });
 
 // Title
@@ -360,16 +358,16 @@ const [
   getMultipleTitleError,
   getMissingTitleError
 ).map((fn) => {
-	return ((...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-		let [arg1, arg2, options, ...rest] = args
+  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
+    let [arg1, arg2, options, ...rest] = args;
 
-		if (options == null) {
-			options = {}
-		}
+    if (options == null) {
+      options = {};
+    }
 
-		options.suggest = false
-		return fn(arg1, arg2, options, ...rest)
-	})
+    options.suggest = false;
+    return fn(arg1, arg2, options, ...rest);
+  };
 });
 
 // Test Id
@@ -409,16 +407,16 @@ const [
   getMultipleTestIdError,
   getMissingTestIdError
 ).map((fn) => {
-	return ((...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-		let [arg1, arg2, options, ...rest] = args
+  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
+    let [arg1, arg2, options, ...rest] = args;
 
-		if (options == null) {
-			options = {}
-		}
+    if (options == null) {
+      options = {};
+    }
 
-		options.suggest = false
-		return fn(arg1, arg2, options, ...rest)
-	})
+    options.suggest = false;
+    return fn(arg1, arg2, options, ...rest);
+  };
 });
 
 export {
