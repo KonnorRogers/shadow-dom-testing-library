@@ -31,13 +31,7 @@ export function toJSDOM(element?: Element | Document | undefined): HTMLElement {
 
   const dom = new JSDOM(htmlString);
 
-	// HTMLHtmlElement is document.documentElement
-  if (element instanceof Document || element instanceof HTMLHtmlElement) {
-  	// @ts-expect-error
-  	return dom.window.document as HTMLElement
-	}
-
-	if (element instanceof HTMLBodyElement) {
+	if (element instanceof Document || element instanceof HTMLHtmlElement || element instanceof HTMLBodyElement) {
 		return dom.window.document.body
 	}
 
