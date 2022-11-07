@@ -10,8 +10,6 @@ import {
   queryAllByAltText,
   queryAllByTitle,
   queryAllByTestId,
-  configure,
-  BuiltQueryMethods,
 } from "@testing-library/dom";
 
 import { deepQuerySelectorAll } from "./deep-query-selectors";
