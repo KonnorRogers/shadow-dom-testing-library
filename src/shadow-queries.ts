@@ -24,6 +24,17 @@ import {
 
 const scopeQuery = "*";
 
+function toShadowQueries<T extends Function[]>(queries: T): T {
+  return queries.map((query): Function => {
+    return (...args: any[]): unknown => {
+      let [arg1, arg2, options, ...rest] = args;
+      if (options == null) options = {};
+      options.suggest = false;
+      return query(arg1, arg2, options, ...rest);
+    };
+  }) as T;
+}
+
 // Role
 function queryAllByShadowRole<T extends HTMLElement = HTMLElement>(
   ...args: ShadowRoleMatcherParams
@@ -56,10 +67,12 @@ const [
   getByShadowRole,
   findAllByShadowRole,
   findByShadowRole,
-] = buildQueries<ScreenShadowRoleMatcherParams>(
-  queryAllByShadowRole,
-  getMultipleRoleError,
-  getMissingRoleError
+] = toShadowQueries(
+  buildQueries<ScreenShadowRoleMatcherParams>(
+    queryAllByShadowRole,
+    getMultipleRoleError,
+    getMissingRoleError
+  )
 );
 
 // Label Text
@@ -94,11 +107,11 @@ const [
   getByShadowLabelText,
   findAllByShadowLabelText,
   findByShadowLabelText,
-] = buildQueries<ScreenShadowSelectorMatcherParams>(
+] = toShadowQueries(buildQueries<ScreenShadowSelectorMatcherParams>(
   queryAllByShadowLabelText,
   getMultipleLabelTextError,
   getMissingLabelTextError
-);
+))
 
 // Placeholder Text
 function queryAllByShadowPlaceholderText<T extends HTMLElement = HTMLElement>(
@@ -132,10 +145,12 @@ const [
   getByShadowPlaceholderText,
   findAllByShadowPlaceholderText,
   findByShadowPlaceholderText,
-] = buildQueries<ScreenShadowSelectorMatcherParams>(
-  queryAllByShadowPlaceholderText,
-  getMultiplePlaceholderTextError,
-  getMissingPlaceholderTextError
+] = toShadowQueries(
+  buildQueries<ScreenShadowSelectorMatcherParams>(
+    queryAllByShadowPlaceholderText,
+    getMultiplePlaceholderTextError,
+    getMissingPlaceholderTextError
+  )
 );
 
 // Text
@@ -170,10 +185,12 @@ const [
   getByShadowText,
   findAllByShadowText,
   findByShadowText,
-] = buildQueries<ScreenShadowSelectorMatcherParams>(
-  queryAllByShadowText,
-  getMultipleTextError,
-  getMissingTextError
+] = toShadowQueries(
+  buildQueries<ScreenShadowSelectorMatcherParams>(
+    queryAllByShadowText,
+    getMultipleTextError,
+    getMissingTextError
+  )
 );
 
 // Display Value
@@ -208,10 +225,12 @@ const [
   getByShadowDisplayValue,
   findAllByShadowDisplayValue,
   findByShadowDisplayValue,
-] = buildQueries<ScreenShadowSelectorMatcherParams>(
-  queryAllByShadowDisplayValue,
-  getMultipleDisplayValueError,
-  getMissingDisplayValueError
+] = toShadowQueries(
+  buildQueries<ScreenShadowSelectorMatcherParams>(
+    queryAllByShadowDisplayValue,
+    getMultipleDisplayValueError,
+    getMissingDisplayValueError
+  )
 );
 
 // Alt Text
@@ -246,10 +265,12 @@ const [
   getByShadowAltText,
   findAllByShadowAltText,
   findByShadowAltText,
-] = buildQueries<ScreenShadowMatcherParams>(
-  queryAllByShadowAltText,
-  getMultipleAltTextError,
-  getMissingAltTextError
+] = toShadowQueries(
+  buildQueries<ScreenShadowMatcherParams>(
+    queryAllByShadowAltText,
+    getMultipleAltTextError,
+    getMissingAltTextError
+  )
 );
 
 // Title
@@ -284,10 +305,12 @@ const [
   getByShadowTitle,
   findAllByShadowTitle,
   findByShadowTitle,
-] = buildQueries<ScreenShadowMatcherParams>(
-  queryAllByShadowTitle,
-  getMultipleTitleError,
-  getMissingTitleError
+] = toShadowQueries(
+  buildQueries<ScreenShadowMatcherParams>(
+    queryAllByShadowTitle,
+    getMultipleTitleError,
+    getMissingTitleError
+  )
 );
 
 // Test Id
@@ -322,10 +345,12 @@ const [
   getByShadowTestId,
   findAllByShadowTestId,
   findByShadowTestId,
-] = buildQueries<ScreenShadowMatcherParams>(
-  queryAllByShadowTestId,
-  getMultipleTestIdError,
-  getMissingTestIdError
+] = toShadowQueries(
+  buildQueries<ScreenShadowMatcherParams>(
+    queryAllByShadowTestId,
+    getMultipleTestIdError,
+    getMissingTestIdError
+  )
 );
 
 export {

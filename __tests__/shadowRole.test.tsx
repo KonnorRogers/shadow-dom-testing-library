@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, findAllByRole } from "@testing-library/react";
 import { findByShadowRole, screen } from "../src/index";
 import { Button, SimpleButton } from "../components";
 
@@ -50,7 +50,8 @@ describe("ShadowRole()", () => {
   it("should also work with shadow query", async () => {
     render(<SimpleButton />);
     fireEvent.click((await screen.findByRole("button")) as HTMLElement);
-    const el = await screen.findByText(/1/);
+
+    const el = await screen.findByRole("button", { name: /1/i });
     expect(el).toBeInTheDocument();
   });
 });

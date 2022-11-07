@@ -23,6 +23,7 @@ describe("within", () => {
     const option = within(select).getByShadowRole("option", {
       name: optionLabel,
     });
+
     expect(option).toBeInTheDocument();
   });
 });
