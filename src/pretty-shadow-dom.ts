@@ -21,7 +21,7 @@ export function toJSDOM(element?: Element | Document | undefined): HTMLElement {
     htmlString = element.outerHTML;
   }
 
-  htmlString = processNodes(element, htmlString, Array.from(element.children));
+  htmlString = processNodes(element, htmlString);
 
   // Remove Comment nodes
   htmlString = htmlString.replace(/<!--.*?-->/g, "");
@@ -30,27 +30,40 @@ export function toJSDOM(element?: Element | Document | undefined): HTMLElement {
   htmlString = htmlString.replace(/>\s+</g, "><");
 
   const dom = new JSDOM(htmlString);
-  return dom.window.document.body;
+
+  if (
+    element instanceof Document ||
+    element instanceof HTMLHtmlElement ||
+    element instanceof HTMLBodyElement
+  ) {
+    return dom.window.document.body;
+  }
+
+  return dom.window.document.body.firstElementChild as HTMLElement;
 }
 
 function processNodes(
   element: Element | Document | ShadowRoot,
   stringBuffer: string = "",
-  nodes: Array<Element | ShadowRoot> = Array.from(element.children)
+  nodes: Array<Element | ShadowRoot | Document> = Array.from(element.children)
 ) {
+  if ("shadowRoot" in element && element.shadowRoot != null) {
+    nodes.unshift(element.shadowRoot);
+  }
+
+  nodes.unshift(element);
+
   while (nodes.length > 0) {
     const node = nodes.shift()!;
     if (node && "shadowRoot" in node && node.shadowRoot != null) {
-      const tempNode = document.createElement("div");
-      tempNode.innerHTML = node.outerHTML;
+      const outerHTML = node.outerHTML;
 
       const shadowRootPseudoNode = document.createElement("shadow-root");
       shadowRootPseudoNode.innerHTML = node.shadowRoot.innerHTML;
-      tempNode.firstElementChild!.insertBefore(
-        shadowRootPseudoNode,
-        tempNode.firstElementChild!.firstChild
-      );
-      stringBuffer = stringBuffer.replace(node.outerHTML, tempNode.innerHTML);
+
+      node.insertAdjacentElement("afterbegin", shadowRootPseudoNode);
+
+      stringBuffer = stringBuffer.replace(outerHTML, node.outerHTML);
       nodes.push(...Array.from(node.shadowRoot.children));
     }
     nodes.push(...Array.from(node.children));
