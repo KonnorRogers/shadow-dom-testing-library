@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.4.1...v1.5.0) (2022-11-07)
+
+
+### Features
+
+* disable suggestions for shadow queries ([#29](https://github.com/konnorrogers/shadow-dom-testing-library/issues/29)) ([a0bc80c](https://github.com/konnorrogers/shadow-dom-testing-library/commit/a0bc80c22b78ac5063bef321ba3e4edbe1d0a97d))
+
+
+### Bug Fixes
+
+* pretty-shadow-dom not serializing shadowRoot hosts. ([#28](https://github.com/konnorrogers/shadow-dom-testing-library/issues/28)) ([88e2b6d](https://github.com/konnorrogers/shadow-dom-testing-library/commit/88e2b6deb206a82ae96346d3cbf7d5b1e17674db))
+
 ### [1.4.1](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.4.0...v1.4.1) (2022-11-04)
 
 
