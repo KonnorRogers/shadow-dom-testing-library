@@ -31,11 +31,15 @@ export function toJSDOM(element?: Element | Document | undefined): HTMLElement {
 
   const dom = new JSDOM(htmlString);
 
-	if (element instanceof Document || element instanceof HTMLHtmlElement || element instanceof HTMLBodyElement) {
-		return dom.window.document.body
-	}
+  if (
+    element instanceof Document ||
+    element instanceof HTMLHtmlElement ||
+    element instanceof HTMLBodyElement
+  ) {
+    return dom.window.document.body;
+  }
 
-	return dom.window.document.body.firstElementChild as HTMLElement
+  return dom.window.document.body.firstElementChild as HTMLElement;
 }
 
 function processNodes(
@@ -43,24 +47,21 @@ function processNodes(
   stringBuffer: string = "",
   nodes: Array<Element | ShadowRoot | Document> = Array.from(element.children)
 ) {
-	if ("shadowRoot" in element && element.shadowRoot != null) {
-		nodes.unshift(element.shadowRoot)
-	}
+  if ("shadowRoot" in element && element.shadowRoot != null) {
+    nodes.unshift(element.shadowRoot);
+  }
 
-	nodes.unshift(element)
+  nodes.unshift(element);
 
   while (nodes.length > 0) {
     const node = nodes.shift()!;
     if (node && "shadowRoot" in node && node.shadowRoot != null) {
-      const outerHTML = node.outerHTML
+      const outerHTML = node.outerHTML;
 
       const shadowRootPseudoNode = document.createElement("shadow-root");
       shadowRootPseudoNode.innerHTML = node.shadowRoot.innerHTML;
 
-      node.insertAdjacentElement(
-      	"afterbegin",
-        shadowRootPseudoNode,
-      );
+      node.insertAdjacentElement("afterbegin", shadowRootPseudoNode);
 
       stringBuffer = stringBuffer.replace(outerHTML, node.outerHTML);
       nodes.push(...Array.from(node.shadowRoot.children));

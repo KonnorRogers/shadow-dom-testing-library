@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 import { render } from "@testing-library/react";
 import { Button, NestedShadowRoots } from "../components";
 import { prettyShadowDOM, screen } from "../src/index";
@@ -20,36 +20,36 @@ test("Should strip style and script tags", () => {
 });
 
 test("Should test shadow roots of passing in element", async () => {
-	render(<Button />)
+  render(<Button />);
 
-	const button = await screen.findByShadowRole("button")
+  const button = await screen.findByShadowRole("button");
 
-	// @ts-expect-error
-	const str = prettyShadowDOM(button.getRootNode().host) as string
+  // @ts-expect-error
+  const str = prettyShadowDOM(button.getRootNode().host) as string;
 
-	expect(str.includes("my-button")).toBe(true)
-	expect(str.includes("shadow-root")).toBe(true)
-	expect(str.includes("body")).toBe(false)
-	expect(str.includes("div")).toBe(false)
-})
+  expect(str.includes("my-button")).toBe(true);
+  expect(str.includes("shadow-root")).toBe(true);
+  expect(str.includes("body")).toBe(false);
+  expect(str.includes("div")).toBe(false);
+});
 
 test("Should render body if passed in", () => {
-	render(<Button />)
+  render(<Button />);
 
-	const str = prettyShadowDOM(document.body) as string
+  const str = prettyShadowDOM(document.body) as string;
 
-	expect(str.includes("my-button")).toBe(true)
-	expect(str.includes("shadow-root")).toBe(true)
-	expect(str.includes("body")).toBe(true)
-})
+  expect(str.includes("my-button")).toBe(true);
+  expect(str.includes("shadow-root")).toBe(true);
+  expect(str.includes("body")).toBe(true);
+});
 
 test("Should render HTML tag if passed in", () => {
-	render(<Button />)
+  render(<Button />);
 
-	const str = prettyShadowDOM() as string
+  const str = prettyShadowDOM() as string;
 
-	console.log(str)
-	expect(str.includes("my-button")).toBe(true)
-	expect(str.includes("shadow-root")).toBe(true)
-	expect(str.includes("body")).toBe(true)
-})
+  console.log(str);
+  expect(str.includes("my-button")).toBe(true);
+  expect(str.includes("shadow-root")).toBe(true);
+  expect(str.includes("body")).toBe(true);
+});
