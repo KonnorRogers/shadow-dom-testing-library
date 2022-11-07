@@ -21,7 +21,7 @@ export function toJSDOM(element?: Element | Document | undefined): HTMLElement {
     htmlString = element.outerHTML;
   }
 
-  htmlString = processNodes(element, htmlString, Array.from(element.children));
+  htmlString = processNodes(element, htmlString);
 
   // Remove Comment nodes
   htmlString = htmlString.replace(/<!--.*?-->/g, "");
@@ -36,8 +36,14 @@ export function toJSDOM(element?: Element | Document | undefined): HTMLElement {
 function processNodes(
   element: Element | Document | ShadowRoot,
   stringBuffer: string = "",
-  nodes: Array<Element | ShadowRoot> = Array.from(element.children)
+  nodes: Array<Element | ShadowRoot | Document> = Array.from(element.children)
 ) {
+	if ("shadowRoot" in element && element.shadowRoot != null) {
+		nodes.unshift(element.shadowRoot)
+	}
+
+	nodes.unshift(element)
+
   while (nodes.length > 0) {
     const node = nodes.shift()!;
     if (node && "shadowRoot" in node && node.shadowRoot != null) {
