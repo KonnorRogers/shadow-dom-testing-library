@@ -24,6 +24,17 @@ import {
 
 const scopeQuery = "*";
 
+function toShadowQueries<T extends Function[]>(queries: T): T {
+  return queries.map((query) => {
+    return (...args: any[]) => {
+      let [arg1, arg2, options, ...rest] = args;
+      if (options == null) options = {};
+      options.suggest = false;
+      return query(arg1, arg2, options, ...rest);
+    };
+  }) as unknown as T;
+}
+
 // Role
 function queryAllByShadowRole<T extends HTMLElement = HTMLElement>(
   ...args: ShadowRoleMatcherParams
@@ -56,22 +67,13 @@ const [
   getByShadowRole,
   findAllByShadowRole,
   findByShadowRole,
-] = buildQueries<ScreenShadowRoleMatcherParams>(
-  queryAllByShadowRole,
-  getMultipleRoleError,
-  getMissingRoleError
-).map((fn) => {
-  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-    let [arg1, arg2, options, ...rest] = args;
-
-    if (options == null) {
-      options = {};
-    }
-
-    options.suggest = false;
-    return fn(arg1, arg2, options, ...rest);
-  };
-});
+] = toShadowQueries(
+  buildQueries<ScreenShadowRoleMatcherParams>(
+    queryAllByShadowRole,
+    getMultipleRoleError,
+    getMissingRoleError
+  )
+);
 
 // Label Text
 function queryAllByShadowLabelText<T extends HTMLElement = HTMLElement>(
@@ -105,22 +107,11 @@ const [
   getByShadowLabelText,
   findAllByShadowLabelText,
   findByShadowLabelText,
-] = buildQueries<ScreenShadowSelectorMatcherParams>(
+] = toShadowQueries(buildQueries<ScreenShadowSelectorMatcherParams>(
   queryAllByShadowLabelText,
   getMultipleLabelTextError,
   getMissingLabelTextError
-).map((fn) => {
-  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-    let [arg1, arg2, options, ...rest] = args;
-
-    if (options == null) {
-      options = {};
-    }
-
-    options.suggest = false;
-    return fn(arg1, arg2, options, ...rest);
-  };
-});
+))
 
 // Placeholder Text
 function queryAllByShadowPlaceholderText<T extends HTMLElement = HTMLElement>(
@@ -154,22 +145,13 @@ const [
   getByShadowPlaceholderText,
   findAllByShadowPlaceholderText,
   findByShadowPlaceholderText,
-] = buildQueries<ScreenShadowSelectorMatcherParams>(
-  queryAllByShadowPlaceholderText,
-  getMultiplePlaceholderTextError,
-  getMissingPlaceholderTextError
-).map((fn) => {
-  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-    let [arg1, arg2, options, ...rest] = args;
-
-    if (options == null) {
-      options = {};
-    }
-
-    options.suggest = false;
-    return fn(arg1, arg2, options, ...rest);
-  };
-});
+] = toShadowQueries(
+  buildQueries<ScreenShadowSelectorMatcherParams>(
+    queryAllByShadowPlaceholderText,
+    getMultiplePlaceholderTextError,
+    getMissingPlaceholderTextError
+  )
+);
 
 // Text
 function queryAllByShadowText<T extends HTMLElement = HTMLElement>(
@@ -203,23 +185,13 @@ const [
   getByShadowText,
   findAllByShadowText,
   findByShadowText,
-] = buildQueries<ScreenShadowSelectorMatcherParams>(
-  queryAllByShadowText,
-  getMultipleTextError,
-  getMissingTextError
-).map((fn) => {
-  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-    let [arg1, arg2, options, ...rest] = args;
-
-    if (options == null) {
-      options = {};
-    }
-
-    options.suggest = false;
-
-    return fn(arg1, arg2, options, ...rest);
-  };
-});
+] = toShadowQueries(
+  buildQueries<ScreenShadowSelectorMatcherParams>(
+    queryAllByShadowText,
+    getMultipleTextError,
+    getMissingTextError
+  )
+);
 
 // Display Value
 function queryAllByShadowDisplayValue<T extends HTMLElement = HTMLElement>(
@@ -253,22 +225,13 @@ const [
   getByShadowDisplayValue,
   findAllByShadowDisplayValue,
   findByShadowDisplayValue,
-] = buildQueries<ScreenShadowSelectorMatcherParams>(
-  queryAllByShadowDisplayValue,
-  getMultipleDisplayValueError,
-  getMissingDisplayValueError
-).map((fn) => {
-  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-    let [arg1, arg2, options, ...rest] = args;
-
-    if (options == null) {
-      options = {};
-    }
-
-    options.suggest = false;
-    return fn(arg1, arg2, options, ...rest);
-  };
-});
+] = toShadowQueries(
+  buildQueries<ScreenShadowSelectorMatcherParams>(
+    queryAllByShadowDisplayValue,
+    getMultipleDisplayValueError,
+    getMissingDisplayValueError
+  )
+);
 
 // Alt Text
 function queryAllByShadowAltText<T extends HTMLElement = HTMLElement>(
@@ -302,22 +265,13 @@ const [
   getByShadowAltText,
   findAllByShadowAltText,
   findByShadowAltText,
-] = buildQueries<ScreenShadowMatcherParams>(
-  queryAllByShadowAltText,
-  getMultipleAltTextError,
-  getMissingAltTextError
-).map((fn) => {
-  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-    let [arg1, arg2, options, ...rest] = args;
-
-    if (options == null) {
-      options = {};
-    }
-
-    options.suggest = false;
-    return fn(arg1, arg2, options, ...rest);
-  };
-});
+] = toShadowQueries(
+  buildQueries<ScreenShadowMatcherParams>(
+    queryAllByShadowAltText,
+    getMultipleAltTextError,
+    getMissingAltTextError
+  )
+);
 
 // Title
 function queryAllByShadowTitle<T extends HTMLElement = HTMLElement>(
@@ -351,22 +305,13 @@ const [
   getByShadowTitle,
   findAllByShadowTitle,
   findByShadowTitle,
-] = buildQueries<ScreenShadowMatcherParams>(
-  queryAllByShadowTitle,
-  getMultipleTitleError,
-  getMissingTitleError
-).map((fn) => {
-  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-    let [arg1, arg2, options, ...rest] = args;
-
-    if (options == null) {
-      options = {};
-    }
-
-    options.suggest = false;
-    return fn(arg1, arg2, options, ...rest);
-  };
-});
+] = toShadowQueries(
+  buildQueries<ScreenShadowMatcherParams>(
+    queryAllByShadowTitle,
+    getMultipleTitleError,
+    getMissingTitleError
+  )
+);
 
 // Test Id
 function queryAllByShadowTestId<T extends HTMLElement = HTMLElement>(
@@ -400,22 +345,13 @@ const [
   getByShadowTestId,
   findAllByShadowTestId,
   findByShadowTestId,
-] = buildQueries<ScreenShadowMatcherParams>(
-  queryAllByShadowTestId,
-  getMultipleTestIdError,
-  getMissingTestIdError
-).map((fn) => {
-  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> => {
-    let [arg1, arg2, options, ...rest] = args;
-
-    if (options == null) {
-      options = {};
-    }
-
-    options.suggest = false;
-    return fn(arg1, arg2, options, ...rest);
-  };
-});
+] = toShadowQueries(
+  buildQueries<ScreenShadowMatcherParams>(
+    queryAllByShadowTestId,
+    getMultipleTestIdError,
+    getMissingTestIdError
+  )
+);
 
 export {
   // Role

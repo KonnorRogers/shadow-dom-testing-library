@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, findAllByRole } from "@testing-library/react";
 import { findByShadowRole, screen } from "../src/index";
 import { Button, SimpleButton } from "../components";
 

@@ -48,7 +48,6 @@ test("Should render HTML tag if passed in", () => {
 
   const str = prettyShadowDOM() as string;
 
-  console.log(str);
   expect(str.includes("my-button")).toBe(true);
   expect(str.includes("shadow-root")).toBe(true);
   expect(str.includes("body")).toBe(true);
