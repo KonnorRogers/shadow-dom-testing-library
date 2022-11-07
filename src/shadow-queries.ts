@@ -25,14 +25,14 @@ import {
 const scopeQuery = "*";
 
 function toShadowQueries<T extends Function[]>(queries: T): T {
-  return queries.map((query) => {
-    return (...args: any[]) => {
+  return queries.map((query): Function => {
+    return (...args: any[]): unknown => {
       let [arg1, arg2, options, ...rest] = args;
       if (options == null) options = {};
       options.suggest = false;
       return query(arg1, arg2, options, ...rest);
     };
-  }) as unknown as T;
+  }) as T;
 }
 
 // Role
