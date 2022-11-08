@@ -61,7 +61,10 @@ function processNodes(
       const shadowRootPseudoNode = document.createElement("shadow-root");
       shadowRootPseudoNode.innerHTML = node.shadowRoot.innerHTML;
 
-      node.insertAdjacentElement("afterbegin", shadowRootPseudoNode);
+			const clonedNode = node.cloneNode(true) as Element
+      clonedNode.insertAdjacentElement("afterbegin", shadowRootPseudoNode);
+
+      stringBuffer = stringBuffer.replace(outerHTML, clonedNode.outerHTML);
 
       stringBuffer = stringBuffer.replace(outerHTML, node.outerHTML);
       nodes.push(...Array.from(node.shadowRoot.children));
