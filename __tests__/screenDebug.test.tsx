@@ -5,7 +5,28 @@ import {
   NestedShadowRoots,
   TripleShadowRoots,
 } from "../components";
-import { screen } from "../src/index";
+import { prettyShadowDOM, screen } from "../src/index";
+
+beforeEach(() => {
+	// jest.spyOn(console, 'log').mockImplementation(() => {})
+})
+
+afterEach(() => {
+  // // @ts-expect-error
+  // console.log.mockRestore()
+})
+
+/* @see https://github.com/KonnorRogers/shadow-dom-testing-library/issues/33#issuecomment-1306593757 */
+test("Should not modify the original dom", () => {
+	render(<Duplicates />)
+	const originalHTML = document.body.innerHTML
+	expect(document.querySelector("shadow-root")).toBe(null)
+
+	prettyShadowDOM(document.body)
+
+	expect(document.querySelector("shadow-root")).toBe(null)
+	expect(originalHTML).toEqual(document.body.innerHTML)
+})
 
 test.skip("Triple shadow roots", async () => {
   render(<TripleShadowRoots />);
