@@ -23,7 +23,8 @@ export * from "./shadow-queries";
 
 export {
 	deepQuerySelector,
-	deepQuerySelectorAll
+	deepQuerySelectorAll,
+	getAllElementsAndShadowRoots
 } from "./deep-query-selectors"
 
 export {
