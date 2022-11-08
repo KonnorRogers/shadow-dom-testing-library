@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.1](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.6.0...v1.6.1) (2022-11-08)
+
+
+### Bug Fixes
+
+* pretty-shadow-dom modifying the original element ([#35](https://github.com/konnorrogers/shadow-dom-testing-library/issues/35)) ([4ec056e](https://github.com/konnorrogers/shadow-dom-testing-library/commit/4ec056e0269767d680286c23a17a539d3aa20a8d))
+
 ## [1.6.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.5.0...v1.6.0) (2022-11-08)
 
 
