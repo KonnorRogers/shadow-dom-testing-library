@@ -22,6 +22,11 @@ export * from "./types";
 export * from "./shadow-queries";
 
 export {
+	deepQuerySelector,
+	deepQuerySelectorAll
+} from "./deep-query-selectors"
+
+export {
   shadowScreen as screen,
   shadowWithin as within,
   debug,
