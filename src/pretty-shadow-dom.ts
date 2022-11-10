@@ -1,6 +1,4 @@
-import "./jsdom-setup";
 import { prettyDOM } from "@testing-library/dom";
-import { JSDOM } from "jsdom";
 
 /**
  * This is an extension of prettyDOM / logDOM that provides proper printing of shadow roots.
@@ -29,17 +27,18 @@ export function toJSDOM(element?: Element | Document | undefined): HTMLElement {
   // Remove extraneous whitespace as it creates bloated printing
   htmlString = htmlString.replace(/>\s+</g, "><");
 
-  const dom = new JSDOM(htmlString);
+  const parser = new DOMParser();
+  const dom = parser.parseFromString(htmlString, "text/html");
 
   if (
     element instanceof Document ||
     element instanceof HTMLHtmlElement ||
     element instanceof HTMLBodyElement
   ) {
-    return dom.window.document.body;
+    return dom.body;
   }
 
-  return dom.window.document.body.firstElementChild as HTMLElement;
+  return dom.body.firstElementChild as HTMLElement;
 }
 
 function processNodes(
@@ -61,7 +60,7 @@ function processNodes(
       const shadowRootPseudoNode = document.createElement("shadow-root");
       shadowRootPseudoNode.innerHTML = node.shadowRoot.innerHTML;
 
-			const clonedNode = node.cloneNode(true) as Element
+      const clonedNode = node.cloneNode(true) as Element;
       clonedNode.insertAdjacentElement("afterbegin", shadowRootPseudoNode);
 
       stringBuffer = stringBuffer.replace(outerHTML, clonedNode.outerHTML);
