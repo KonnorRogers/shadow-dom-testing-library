@@ -22,9 +22,9 @@ export * from "./types";
 export * from "./shadow-queries";
 
 export {
-	deepQuerySelector,
-	deepQuerySelectorAll
-} from "./deep-query-selectors"
+  deepQuerySelector,
+  deepQuerySelectorAll,
+} from "./deep-query-selectors";
 
 export {
   shadowScreen as screen,

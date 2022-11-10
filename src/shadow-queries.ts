@@ -107,11 +107,13 @@ const [
   getByShadowLabelText,
   findAllByShadowLabelText,
   findByShadowLabelText,
-] = toShadowQueries(buildQueries<ScreenShadowSelectorMatcherParams>(
-  queryAllByShadowLabelText,
-  getMultipleLabelTextError,
-  getMissingLabelTextError
-))
+] = toShadowQueries(
+  buildQueries<ScreenShadowSelectorMatcherParams>(
+    queryAllByShadowLabelText,
+    getMultipleLabelTextError,
+    getMissingLabelTextError
+  )
+);
 
 // Placeholder Text
 function queryAllByShadowPlaceholderText<T extends HTMLElement = HTMLElement>(

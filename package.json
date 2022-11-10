@@ -14,6 +14,7 @@
   "scripts": {
     "test": "vitest run",
     "format": "npx prettier ./src ./__tests__ ./README.md --write",
+    "check": "npx prettier ./src ./__tests__ ./README.md --check",
     "test:watch": "vitest",
     "test:ci": "npm run build && npm run test && npm run jest",
     "jest": "jest",
@@ -46,8 +47,7 @@
   "url": "https://github.com/konnorrogers/shadow-dom-testing-library/issues",
   "repository": "github:konnorrogers/shadow-dom-testing-library",
   "peerDependencies": {
-    "@testing-library/dom": ">= 8",
-    "jsdom": ">= 20"
+    "@testing-library/dom": ">= 8"
   },
   "devDependencies": {
     "@open-wc/testing-helpers": "^2.1.2",
