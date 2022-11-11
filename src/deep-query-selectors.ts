@@ -4,14 +4,11 @@ export function deepQuerySelector(
   container: Container,
   selector: string,
   options: ShadowOptions = { shallow: false },
-  elementsToProcess: (Element | ShadowRoot)[] = [],
-  elements: (Element)[] = []
-
-) {
-  const els = deepQuerySelectorAll(container, selector, options, elementsToProcess, elements);
+): Element | null {
+  const els = deepQuerySelectorAll(container, selector, options);
 
   if (Array.isArray(els) && els.length > 0) {
-    return els[0];
+    return els[0] as Element | null;
   }
 
   return null;
@@ -29,20 +26,46 @@ export function deepQuerySelector(
  *   deepQuerySelectorAll(myElement, "*") // => [slot, div]
  *   deepQuerySelectorAll(myElement, "slot[name='blah']") // => [slot]
  */
-export function deepQuerySelectorAll(
+export function deepQuerySelectorAll<T extends HTMLElement>(
   container: Container,
   selector: string,
+  options: ShadowOptions = { shallow: false }
+): T[] {
+  const elements = getAllElementsAndShadowRoots(container, options)
+
+	const queriedElements = elements.map((el) => Array.from(el.querySelectorAll<T>(selector))).flat(Infinity) as T[]
+  return [...new Set(queriedElements)]
+}
+
+
+// This could probably get really slow and memory intensive in large DOMs,
+// maybe an infinite generator in the future?
+export function getAllElementsAndShadowRoots(
+  container: Container,
   options: ShadowOptions = { shallow: false },
-  elementsToProcess: (Element | ShadowRoot)[] = [],
-  elements: (Element)[] = []
+) {
+	const selector = "*"
+	return recurse(container, selector, options)
+}
+
+function recurse (
+	container: Container,
+	selector: string,
+  options: ShadowOptions = { shallow: false },
+  elementsToProcess: (Element | ShadowRoot | Document)[] = [],
+  elements: (Element | ShadowRoot | Document)[] = [],
 ) {
   // if "document" is passed in, it will also pick up "<html>" causing the query to run twice.
   if (container instanceof Document) {
     container = document.documentElement;
   }
 
-  // Make sure we're checking the container element!
-  elementsToProcess.push(container);
+	// I haven't figured this one out, but for some reason when using the buildQueries
+	// from DOM-testing-library, not reassigning here causes an infinite loop.
+	// I've even tried calling "elementsToProcess.includes / .find" with no luck.
+	elementsToProcess = [container]
+  elements.push(container) // Make sure we're checking the container element!
+
 
   // Accounts for if the container houses a textNode
   if (
@@ -50,7 +73,7 @@ export function deepQuerySelectorAll(
     container.shadowRoot != null &&
     container.shadowRoot.mode !== "closed"
   ) {
-    elementsToProcess.push(container.shadowRoot);
+  	elements.push(container.shadowRoot)
   }
 
   elementsToProcess.forEach((containerElement) => {
@@ -62,73 +85,6 @@ export function deepQuerySelectorAll(
           return;
         }
 
-        // comment this to not add shadowRoots.
-        // This is here because queryByRole() requires the parent element which in some cases is the shadow root.
-        elementsToProcess.push(el.shadowRoot);
-
-        if (options.shallow === true) {
-          el.shadowRoot
-            .querySelectorAll(selector)
-            .forEach((el) => {
-            	elements.push(el)
-          	});
-          return;
-        }
-
-        el.shadowRoot
-          .querySelectorAll(selector)
-          .forEach((el) => {
-          	elements.push(el)
-          	elementsToProcess.push(el)
-        	});
-        deepQuerySelectorAll(el.shadowRoot, selector, options, elementsToProcess, elements);
-      });
-  });
-
-  // We can sometimes hit duplicate nodes this way, lets stop that.
-  return [...new Set(elements)];
-}
-
-
-// This could probably get really slow and memory intensive in large DOMs,
-// maybe an infinite generator in the future?
-export function getAllElementsAndShadowRoots(
-  container: Container,
-  options: ShadowOptions = { shallow: false },
-  elements: (Element | ShadowRoot | Document)[] = []
-) {
-	const selector = "*"
-  // if "document" is passed in, it will also pick up "<html>" causing the query to run twice.
-  if (container instanceof Document) {
-    container = document.documentElement;
-  }
-
-  const containers = [container]
-
-  // Make sure we're checking the container element!
-  elements.push(container)
-
-  // Accounts for if the container houses a textNode
-  if (
-    container instanceof HTMLElement &&
-    container.shadowRoot != null &&
-    container.shadowRoot.mode !== "closed"
-  ) {
-  	elements.push(container.shadowRoot)
-  	containers.push(container.shadowRoot)
-  }
-
-
-  containers.forEach((containerElement) => {
-    containerElement
-      .querySelectorAll(selector)
-      .forEach((el: Element | HTMLElement) => {
-        if (el.shadowRoot == null || el.shadowRoot.mode === "closed") {
-          elements.push(el);
-          return;
-        }
-
-        // comment this to not add shadowRoots.
         // This is here because queryByRole() requires the parent element which in some cases is the shadow root.
         elements.push(el.shadowRoot);
 
@@ -145,8 +101,9 @@ export function getAllElementsAndShadowRoots(
           .querySelectorAll(selector)
           .forEach((el) => {
           	elements.push(el)
+          	elementsToProcess.push(el)
         	});
-        getAllElementsAndShadowRoots(el.shadowRoot, options, elements);
+        recurse(el.shadowRoot, selector, options, elementsToProcess, elements);
       });
   });
 
