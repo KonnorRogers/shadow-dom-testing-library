@@ -1,5 +1,5 @@
 import * as React from "react";
-import { MySelect, Select } from "../components";
+import { Duplicates, MySelect, Select, TripleShadowRoots } from "../components";
 import { render } from "@testing-library/react";
 import { screen, within } from "../src/index";
 
@@ -26,4 +26,11 @@ describe("within", () => {
 
     expect(option).toBeInTheDocument();
   });
+
+  it("Should find the nested button", async () => {
+	  render(<Duplicates />);
+		const btns = await within(document.querySelector("duplicate-buttons") as HTMLElement).findAllByShadowRole("button")
+		expect(btns).toHaveLength(2)
+		btns.forEach((btn) => expect(btn).toBeInstanceOf(HTMLButtonElement))
+  })
 });
