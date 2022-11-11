@@ -3,7 +3,7 @@ import { Container, ShadowOptions } from "./types";
 export function deepQuerySelector(
   container: Container,
   selector: string,
-  options: ShadowOptions = { shallow: false },
+  options: ShadowOptions = { shallow: false }
 ): Element | null {
   const els = deepQuerySelectorAll(container, selector, options);
 
@@ -31,41 +31,41 @@ export function deepQuerySelectorAll<T extends HTMLElement>(
   selector: string,
   options: ShadowOptions = { shallow: false }
 ): T[] {
-  const elements = getAllElementsAndShadowRoots(container, options)
+  const elements = getAllElementsAndShadowRoots(container, options);
 
-	const queriedElements = elements.map((el) => Array.from(el.querySelectorAll<T>(selector))).flat(Infinity) as T[]
-  return [...new Set(queriedElements)]
+  const queriedElements = elements
+    .map((el) => Array.from(el.querySelectorAll<T>(selector)))
+    .flat(Infinity) as T[];
+  return [...new Set(queriedElements)];
 }
-
 
 // This could probably get really slow and memory intensive in large DOMs,
 // maybe an infinite generator in the future?
 export function getAllElementsAndShadowRoots(
   container: Container,
-  options: ShadowOptions = { shallow: false },
+  options: ShadowOptions = { shallow: false }
 ) {
-	const selector = "*"
-	return recurse(container, selector, options)
+  const selector = "*";
+  return recurse(container, selector, options);
 }
 
-function recurse (
-	container: Container,
-	selector: string,
+function recurse(
+  container: Container,
+  selector: string,
   options: ShadowOptions = { shallow: false },
   elementsToProcess: (Element | ShadowRoot | Document)[] = [],
-  elements: (Element | ShadowRoot | Document)[] = [],
+  elements: (Element | ShadowRoot | Document)[] = []
 ) {
   // if "document" is passed in, it will also pick up "<html>" causing the query to run twice.
   if (container instanceof Document) {
     container = document.documentElement;
   }
 
-	// I haven't figured this one out, but for some reason when using the buildQueries
-	// from DOM-testing-library, not reassigning here causes an infinite loop.
-	// I've even tried calling "elementsToProcess.includes / .find" with no luck.
-	elementsToProcess = [container]
-  elements.push(container) // Make sure we're checking the container element!
-
+  // I haven't figured this one out, but for some reason when using the buildQueries
+  // from DOM-testing-library, not reassigning here causes an infinite loop.
+  // I've even tried calling "elementsToProcess.includes / .find" with no luck.
+  elementsToProcess = [container];
+  elements.push(container); // Make sure we're checking the container element!
 
   // Accounts for if the container houses a textNode
   if (
@@ -73,7 +73,7 @@ function recurse (
     container.shadowRoot != null &&
     container.shadowRoot.mode !== "closed"
   ) {
-  	elements.push(container.shadowRoot)
+    elements.push(container.shadowRoot);
   }
 
   elementsToProcess.forEach((containerElement) => {
@@ -89,20 +89,16 @@ function recurse (
         elements.push(el.shadowRoot);
 
         if (options.shallow === true) {
-          el.shadowRoot
-            .querySelectorAll(selector)
-            .forEach((el) => {
-            	elements.push(el)
-          	});
+          el.shadowRoot.querySelectorAll(selector).forEach((el) => {
+            elements.push(el);
+          });
           return;
         }
 
-        el.shadowRoot
-          .querySelectorAll(selector)
-          .forEach((el) => {
-          	elements.push(el)
-          	elementsToProcess.push(el)
-        	});
+        el.shadowRoot.querySelectorAll(selector).forEach((el) => {
+          elements.push(el);
+          elementsToProcess.push(el);
+        });
         recurse(el.shadowRoot, selector, options, elementsToProcess, elements);
       });
   });
