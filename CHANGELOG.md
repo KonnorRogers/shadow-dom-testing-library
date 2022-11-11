@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.1](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.7.0...v1.7.1) (2022-11-11)
+
+
+### Bug Fixes
+
+* deepQuerySelector types and processing shadow roots ([#41](https://github.com/konnorrogers/shadow-dom-testing-library/issues/41)) ([92934e2](https://github.com/konnorrogers/shadow-dom-testing-library/commit/92934e2c3ae4b5bbc164769e4330d0ab8c30b9b9))
+
 ## [1.7.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.6.2...v1.7.0) (2022-11-11)
 
 
