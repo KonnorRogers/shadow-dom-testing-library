@@ -1,14 +1,14 @@
 import { Container, ShadowOptions } from "./types";
 
-export function deepQuerySelector(
+export function deepQuerySelector<T extends HTMLElement>(
   container: Container,
   selector: string,
   options: ShadowOptions = { shallow: false }
-): Element | null {
+): T | null {
   const els = deepQuerySelectorAll(container, selector, options);
 
   if (Array.isArray(els) && els.length > 0) {
-    return els[0] as Element | null;
+    return els[0] as T | null;
   }
 
   return null;
@@ -74,6 +74,7 @@ function recurse(
     container.shadowRoot.mode !== "closed"
   ) {
     elements.push(container.shadowRoot);
+    elementsToProcess.push(container.shadowRoot)
   }
 
   elementsToProcess.forEach((containerElement) => {

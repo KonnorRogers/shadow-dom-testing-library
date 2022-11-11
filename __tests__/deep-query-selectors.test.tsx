@@ -47,12 +47,16 @@ describe("deepQuerySelector()", () => {
 describe("deepQuerySelectorAll()", () => {
   test("Should find and return both buttons", () => {
     const { container, baseElement } = render(<Duplicates />);
-    let btns = deepQuerySelectorAll(container, "button");
 
+    let btns = deepQuerySelectorAll(container, "button");
     expect(btns).toHaveLength(2);
     btns.forEach((btn) => expect(btn).toBeInstanceOf(HTMLButtonElement));
 
     btns = deepQuerySelectorAll(baseElement, "button");
+    expect(btns).toHaveLength(2);
+    btns.forEach((btn) => expect(btn).toBeInstanceOf(HTMLButtonElement));
+
+    btns = deepQuerySelectorAll(document.querySelector("duplicate-buttons") as HTMLElement, "button");
     expect(btns).toHaveLength(2);
     btns.forEach((btn) => expect(btn).toBeInstanceOf(HTMLButtonElement));
   });
