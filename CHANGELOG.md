@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.6.2...v1.7.0) (2022-11-11)
+
+
+### Features
+
+* modify deepQuerySelectorAll behavior, add getAllElementsAndShadowRoots. ([#36](https://github.com/konnorrogers/shadow-dom-testing-library/issues/36)) ([697a0dc](https://github.com/konnorrogers/shadow-dom-testing-library/commit/697a0dc0d0b4ce31f051037d3d2cad1f9aab19e5))
+
 ### [1.6.2](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.6.1...v1.6.2) (2022-11-10)
 
 
