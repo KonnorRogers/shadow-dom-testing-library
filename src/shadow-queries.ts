@@ -12,7 +12,7 @@ import {
   queryAllByTestId,
 } from "@testing-library/dom";
 
-import { deepQuerySelectorAll } from "./deep-query-selectors";
+import { getAllElementsAndShadowRoots } from "./deep-query-selectors";
 import {
   ScreenShadowMatcherParams,
   ScreenShadowRoleMatcherParams,
@@ -21,8 +21,6 @@ import {
   ShadowRoleMatcherParams,
   ShadowSelectorMatcherParams,
 } from "./types";
-
-const scopeQuery = "*";
 
 function toShadowQueries<T extends Function[]>(queries: T): T {
   return queries.map((query): Function => {
@@ -49,7 +47,7 @@ function queryAllByShadowRole<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      deepQuerySelectorAll(container, scopeQuery, options)
+      getAllElementsAndShadowRoots(container, options)
         .map((el) => queryAllByRole(el as HTMLElement, role, options))
         .flat(Infinity)
     ),
@@ -89,7 +87,7 @@ function queryAllByShadowLabelText<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      deepQuerySelectorAll(container, scopeQuery, options)
+      getAllElementsAndShadowRoots(container, options)
         .map((el) => queryAllByLabelText(el as HTMLElement, id, options))
         .flat(Infinity)
     ),
@@ -129,7 +127,7 @@ function queryAllByShadowPlaceholderText<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      deepQuerySelectorAll(container, scopeQuery, options)
+      getAllElementsAndShadowRoots(container, options)
         .map((el) => queryAllByPlaceholderText(el as HTMLElement, id, options))
         .flat(Infinity)
     ),
@@ -169,7 +167,7 @@ function queryAllByShadowText<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      deepQuerySelectorAll(container, scopeQuery, options)
+      getAllElementsAndShadowRoots(container, options)
         .map((el) => queryAllByText(el as HTMLElement, id, options))
         .flat(Infinity)
     ),
@@ -209,7 +207,7 @@ function queryAllByShadowDisplayValue<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      deepQuerySelectorAll(container, scopeQuery, options)
+      getAllElementsAndShadowRoots(container, options)
         .map((el) => queryAllByDisplayValue(el as HTMLElement, id, options))
         .flat(Infinity)
     ),
@@ -249,7 +247,7 @@ function queryAllByShadowAltText<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      deepQuerySelectorAll(container, scopeQuery, options)
+      getAllElementsAndShadowRoots(container, options)
         .map((el) => queryAllByAltText(el as HTMLElement, id, options))
         .flat(Infinity)
     ),
@@ -289,7 +287,7 @@ function queryAllByShadowTitle<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      deepQuerySelectorAll(container, scopeQuery, options)
+      getAllElementsAndShadowRoots(container, options)
         .map((el) => queryAllByTitle(el as HTMLElement, id, options))
         .flat(Infinity)
     ),
@@ -329,7 +327,7 @@ function queryAllByShadowTestId<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      deepQuerySelectorAll(container, scopeQuery, options)
+      getAllElementsAndShadowRoots(container, options)
         .map((el) => queryAllByTestId(el as HTMLElement, id, options))
         .flat(Infinity)
     ),

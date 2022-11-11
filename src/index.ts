@@ -24,6 +24,7 @@ export * from "./shadow-queries";
 export {
   deepQuerySelector,
   deepQuerySelectorAll,
+  getAllElementsAndShadowRoots,
 } from "./deep-query-selectors";
 
 export {

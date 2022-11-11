@@ -131,7 +131,8 @@ class TripleShadowRootsElement extends HTMLElement {
 		if (this.isConnected === false) return ""
 
     this.shadowRoot.innerHTML = `
-			<nested-shadow-roots></nested-shadow-roots>
+			<nested-shadow-roots>
+			</nested-shadow-roots>
 		`;
 	}
 }
