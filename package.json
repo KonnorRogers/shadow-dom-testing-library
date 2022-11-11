@@ -1,6 +1,6 @@
 {
   "name": "shadow-dom-testing-library",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "An extension of DOM-testing-library to provide hooks into the shadow dom",
   "type": "module",
   "source": "src/index.ts",
@@ -14,6 +14,7 @@
   "scripts": {
     "test": "vitest run",
     "format": "npx prettier ./src ./__tests__ ./README.md --write",
+    "check": "npx prettier ./src ./__tests__ ./README.md --check",
     "test:watch": "vitest",
     "test:ci": "npm run build && npm run test && npm run jest",
     "jest": "jest",
@@ -46,13 +47,12 @@
   "url": "https://github.com/konnorrogers/shadow-dom-testing-library/issues",
   "repository": "github:konnorrogers/shadow-dom-testing-library",
   "peerDependencies": {
-    "@testing-library/dom": ">= 8",
-    "jsdom": ">= 20"
+    "@testing-library/dom": ">= 8"
   },
   "devDependencies": {
     "@open-wc/testing-helpers": "^2.1.2",
-    "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/dom": ">= 8",
+    "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@types/jest": "^28.1.4",
     "@types/node": "^18.0.3",
@@ -63,7 +63,7 @@
     "jest": "^28.1.2",
     "jest-environment-jsdom": "^28.1.2",
     "jest-preview": "^0.2.6",
-    "jsdom": ">= 20",
+    "jsdom": "^20.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "standard-version": "^9.5.0",

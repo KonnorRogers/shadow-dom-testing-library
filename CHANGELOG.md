@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.2](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.6.1...v1.6.2) (2022-11-10)
+
+
+### Bug Fixes
+
+* remove jsdom so polyfills arent needed. ([#37](https://github.com/konnorrogers/shadow-dom-testing-library/issues/37)) ([a56bbb0](https://github.com/konnorrogers/shadow-dom-testing-library/commit/a56bbb016954b6d6020d11746452bc3b4c188e2b))
+
 ### [1.6.1](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.6.0...v1.6.1) (2022-11-08)
 
 
