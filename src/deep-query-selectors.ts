@@ -74,7 +74,7 @@ function recurse(
     container.shadowRoot.mode !== "closed"
   ) {
     elements.push(container.shadowRoot);
-    elementsToProcess.push(container.shadowRoot)
+    elementsToProcess.push(container.shadowRoot);
   }
 
   elementsToProcess.forEach((containerElement) => {

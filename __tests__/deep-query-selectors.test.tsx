@@ -56,7 +56,10 @@ describe("deepQuerySelectorAll()", () => {
     expect(btns).toHaveLength(2);
     btns.forEach((btn) => expect(btn).toBeInstanceOf(HTMLButtonElement));
 
-    btns = deepQuerySelectorAll(document.querySelector("duplicate-buttons") as HTMLElement, "button");
+    btns = deepQuerySelectorAll(
+      document.querySelector("duplicate-buttons") as HTMLElement,
+      "button"
+    );
     expect(btns).toHaveLength(2);
     btns.forEach((btn) => expect(btn).toBeInstanceOf(HTMLButtonElement));
   });

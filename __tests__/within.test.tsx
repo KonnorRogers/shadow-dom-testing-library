@@ -28,9 +28,11 @@ describe("within", () => {
   });
 
   it("Should find the nested button", async () => {
-	  render(<Duplicates />);
-		const btns = await within(document.querySelector("duplicate-buttons") as HTMLElement).findAllByShadowRole("button")
-		expect(btns).toHaveLength(2)
-		btns.forEach((btn) => expect(btn).toBeInstanceOf(HTMLButtonElement))
-  })
+    render(<Duplicates />);
+    const btns = await within(
+      document.querySelector("duplicate-buttons") as HTMLElement
+    ).findAllByShadowRole("button");
+    expect(btns).toHaveLength(2);
+    btns.forEach((btn) => expect(btn).toBeInstanceOf(HTMLButtonElement));
+  });
 });
