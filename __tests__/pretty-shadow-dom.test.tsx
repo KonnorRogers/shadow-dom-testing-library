@@ -6,15 +6,15 @@ import { prettyShadowDOM, screen } from "../src/index";
 test("Should strip style and script tags", () => {
   const div = document.createElement("div");
 
-  const comment = document.createComment("Comment")
-  const style = document.createElement("style")
-  style.innerHTML = `style {}`
-  const script = document.createElement("script")
-  script.innerHTML = `const script = null`
-  const otherDiv = document.createElement("div")
-  otherDiv.innerHTML = "Hi"
+  const comment = document.createComment("Comment");
+  const style = document.createElement("style");
+  style.innerHTML = `style {}`;
+  const script = document.createElement("script");
+  script.innerHTML = `const script = null`;
+  const otherDiv = document.createElement("div");
+  otherDiv.innerHTML = "Hi";
 
-  div.append(comment, style, script, otherDiv)
+  div.append(comment, style, script, otherDiv);
 
   const str = prettyDOM(div) as string;
 
@@ -47,7 +47,7 @@ test("Should render body if passed in", () => {
 
   const str = prettyShadowDOM(document.body) as string;
 
-	// console.log(str)
+  // console.log(str)
   expect(str.includes("my-button")).toBe(true);
   expect(str.includes("ShadowRoot")).toBe(true);
   expect(str.includes("body")).toBe(true);
@@ -64,9 +64,9 @@ test("Should render HTML tag if passed in", () => {
 });
 
 test("It should render 3 shadow root instances", () => {
-	render(<TripleShadowRoots />)
-  const str = prettyShadowDOM() as string
+  render(<TripleShadowRoots />);
+  const str = prettyShadowDOM() as string;
 
   // console.log(str)
   expect(str.includes("ShadowRoot")).toBe(true);
-})
+});

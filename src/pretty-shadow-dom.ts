@@ -1,31 +1,33 @@
-import { prettyDOM, getConfig } from '@testing-library/dom'
-import type {Config, NewPlugin, Printer, Refs} from 'pretty-format'
+import { prettyDOM, getConfig } from "@testing-library/dom";
+import type { Config, NewPlugin, Printer, Refs } from "pretty-format";
 
 export function prettyShadowDOM(
-    ...args: Parameters<typeof prettyDOM>
+  ...args: Parameters<typeof prettyDOM>
 ): ReturnType<typeof prettyDOM> {
-    let [dom, maxLength, options] = args;
+  let [dom, maxLength, options] = args;
 
-    const plugin: NewPlugin = createDOMElementFilter(options?.filterNode || filterCommentsAndDefaultIgnoreTagsTags)
+  const plugin: NewPlugin = createDOMElementFilter(
+    options?.filterNode || filterCommentsAndDefaultIgnoreTagsTags
+  );
 
-    if (options?.plugins) {
-      options.plugins.push(plugin)
-    } else {
-      if (options == null) {
-        options = {}
-      }
-
-      options.plugins = [plugin]
+  if (options?.plugins) {
+    options.plugins.push(plugin);
+  } else {
+    if (options == null) {
+      options = {};
     }
 
-    return prettyDOM(dom, maxLength, {
-        ...options,
-        plugins: [plugin],
-    });
+    options.plugins = [plugin];
+  }
+
+  return prettyDOM(dom, maxLength, {
+    ...options,
+    plugins: [plugin],
+  });
 }
 
 function escapeHTML(str: string): string {
-  return str.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 function filterCommentsAndDefaultIgnoreTagsTags(value: Node) {
@@ -34,7 +36,7 @@ function filterCommentsAndDefaultIgnoreTagsTags(value: Node) {
     (value.nodeType !== ELEMENT_NODE ||
       // @ts-expect-error
       !value.matches(getConfig().defaultIgnore))
-  )
+  );
 }
 
 // Return empty string if keys is empty.
@@ -45,25 +47,25 @@ const printProps = (
   indentation: string,
   depth: number,
   refs: Refs,
-  printer: Printer,
+  printer: Printer
 ): string => {
-  const indentationNext = indentation + config.indent
-  const colors = config.colors
+  const indentationNext = indentation + config.indent;
+  const colors = config.colors;
   return keys
-    .map(key => {
-      const value = props[key]
-      let printed = printer(value, config, indentationNext, depth, refs)
+    .map((key) => {
+      const value = props[key];
+      let printed = printer(value, config, indentationNext, depth, refs);
 
-      if (typeof value !== 'string') {
-        if (printed.indexOf('\n') !== -1) {
+      if (typeof value !== "string") {
+        if (printed.indexOf("\n") !== -1) {
           printed =
             config.spacingOuter +
             indentationNext +
             printed +
             config.spacingOuter +
-            indentation
+            indentation;
         }
-        printed = '{' + printed + '}'
+        printed = "{" + printed + "}";
       }
 
       return (
@@ -72,17 +74,17 @@ const printProps = (
         colors.prop.open +
         key +
         colors.prop.close +
-        '=' +
+        "=" +
         colors.value.open +
         printed +
         colors.value.close
-      )
+      );
     })
-    .join('')
-}
+    .join("");
+};
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType#node_type_constants
-const NodeTypeTextNode = 3
+const NodeTypeTextNode = 3;
 
 // Return empty string if children is empty.
 const printChildren = (
@@ -91,43 +93,43 @@ const printChildren = (
   indentation: string,
   depth: number,
   refs: Refs,
-  printer: Printer,
+  printer: Printer
 ): string =>
   children
-    .map(child => {
+    .map((child) => {
       const printedChild =
-        typeof child === 'string'
+        typeof child === "string"
           ? printText(child, config)
-          : printer(child, config, indentation, depth, refs)
+          : printer(child, config, indentation, depth, refs);
 
       if (
-        printedChild === '' &&
-        typeof child === 'object' &&
+        printedChild === "" &&
+        typeof child === "object" &&
         child !== null &&
         (child as Node).nodeType !== NodeTypeTextNode
       ) {
         // A plugin serialized this Node to '' meaning we should ignore it.
-        return ''
+        return "";
       }
-      return config.spacingOuter + indentation + printedChild
+      return config.spacingOuter + indentation + printedChild;
     })
-    .join('')
+    .join("");
 
 const printText = (text: string, config: Config): string => {
-  const contentColor = config.colors.content
-  return contentColor.open + escapeHTML(text) + contentColor.close
-}
+  const contentColor = config.colors.content;
+  return contentColor.open + escapeHTML(text) + contentColor.close;
+};
 
 const printComment = (comment: string, config: Config): string => {
-  const commentColor = config.colors.comment
+  const commentColor = config.colors.comment;
   return (
     commentColor.open +
-    '<!--' +
+    "<!--" +
     escapeHTML(comment) +
-    '-->' +
+    "-->" +
     commentColor.close
-  )
-}
+  );
+};
 
 // Separate the functions to format props, children, and element,
 // so a plugin could override a particular function, if needed.
@@ -138,13 +140,13 @@ const printElement = (
   printedProps: string,
   printedChildren: string,
   config: Config,
-  indentation: string,
+  indentation: string
 ): string => {
-  const tagColor = config.colors.tag
+  const tagColor = config.colors.tag;
 
   return (
     tagColor.open +
-    '<' +
+    "<" +
     type +
     (printedProps &&
       tagColor.close +
@@ -153,86 +155,94 @@ const printElement = (
         indentation +
         tagColor.open) +
     (printedChildren
-      ? '>' +
+      ? ">" +
         tagColor.close +
         printedChildren +
         config.spacingOuter +
         indentation +
         tagColor.open +
-        '</' +
+        "</" +
         type
-      : (printedProps && !config.min ? '' : ' ') + '/') +
-    '>' +
+      : (printedProps && !config.min ? "" : " ") + "/") +
+    ">" +
     tagColor.close
-  )
-}
+  );
+};
 
 const printElementAsLeaf = (type: string, config: Config): string => {
-  const tagColor = config.colors.tag
+  const tagColor = config.colors.tag;
   return (
     tagColor.open +
-    '<' +
+    "<" +
     type +
     tagColor.close +
-    ' …' +
+    " …" +
     tagColor.open +
-    ' />' +
+    " />" +
     tagColor.close
-  )
-}
+  );
+};
 
-const ELEMENT_NODE = 1
-const TEXT_NODE = 3
-const COMMENT_NODE = 8
-const FRAGMENT_NODE = 11
+const ELEMENT_NODE = 1;
+const TEXT_NODE = 3;
+const COMMENT_NODE = 8;
+const FRAGMENT_NODE = 11;
 
-const ELEMENT_REGEXP = /^((HTML|SVG)\w*)?Element$/
+const ELEMENT_REGEXP = /^((HTML|SVG)\w*)?Element$/;
 
 const testNode = (val: any) => {
-  const constructorName = val?.constructor?.name || ""
-  const {nodeType, tagName} = val
+  const constructorName = val?.constructor?.name || "";
+  const { nodeType, tagName } = val;
   const isCustomElement =
-    (typeof tagName === 'string' && tagName.includes('-')) ||
-    (typeof val.hasAttribute === 'function' && val.hasAttribute('is'))
+    (typeof tagName === "string" && tagName.includes("-")) ||
+    (typeof val.hasAttribute === "function" && val.hasAttribute("is"));
 
   return (
     (nodeType === ELEMENT_NODE &&
       (ELEMENT_REGEXP.test(constructorName) || isCustomElement)) ||
-    (nodeType === TEXT_NODE && constructorName === 'Text') ||
-    (nodeType === COMMENT_NODE && constructorName === 'Comment') ||
-    (nodeType === FRAGMENT_NODE)
-  )
-}
+    (nodeType === TEXT_NODE && constructorName === "Text") ||
+    (nodeType === COMMENT_NODE && constructorName === "Comment") ||
+    nodeType === FRAGMENT_NODE
+  );
+};
 
-export const test: NewPlugin['test'] = (val: any) =>
-  val?.constructor?.name && testNode(val)
+export const test: NewPlugin["test"] = (val: any) =>
+  val?.constructor?.name && testNode(val);
 
-type HandledType = Element | Text | Comment | DocumentFragment
+type HandledType = Element | Text | Comment | DocumentFragment;
 
 function nodeIsText(node: HandledType): node is Text {
-  return node.nodeType === TEXT_NODE
+  return node.nodeType === TEXT_NODE;
 }
 
 function nodeIsComment(node: HandledType): node is Comment {
-  return node.nodeType === COMMENT_NODE
+  return node.nodeType === COMMENT_NODE;
 }
 
-function nodeIsFragment(node: HandledType): node is DocumentFragment | ShadowRoot {
-  return node.nodeType === FRAGMENT_NODE
+function nodeIsFragment(
+  node: HandledType
+): node is DocumentFragment | ShadowRoot {
+  return node.nodeType === FRAGMENT_NODE;
 }
 
 export function createDOMElementFilter(
-  filterNode: (node: Node) => boolean,
+  filterNode: (node: Node) => boolean
 ): NewPlugin {
+  function getChildren(
+    node: Element | DocumentFragment | ShadowRoot
+  ): (Node | Element | ShadowRoot)[] {
+    const children: (Node | Element | ShadowRoot)[] =
+      Array.prototype.slice.call(node.childNodes || node.children);
 
-  function getChildren (node: Element | DocumentFragment | ShadowRoot): (Node | Element | ShadowRoot)[] {
-    const children: (Node | Element | ShadowRoot)[] = Array.prototype.slice.call(node.childNodes || node.children)
-
-    if ("shadowRoot" in node && node.shadowRoot != null && node.shadowRoot.mode !== "closed") {
-      children.unshift(node.shadowRoot)
+    if (
+      "shadowRoot" in node &&
+      node.shadowRoot != null &&
+      node.shadowRoot.mode !== "closed"
+    ) {
+      children.unshift(node.shadowRoot);
     }
 
-    return children.filter(filterNode)
+    return children.filter(filterNode);
   }
 
   return {
@@ -243,26 +253,26 @@ export function createDOMElementFilter(
       indentation: string,
       depth: number,
       refs: Refs,
-      printer: Printer,
+      printer: Printer
     ) => {
       if (nodeIsText(node)) {
-        return printText(node.data, config)
+        return printText(node.data, config);
       }
 
       if (nodeIsComment(node)) {
-        return printComment(node.data, config)
+        return printComment(node.data, config);
       }
 
-      let type = "DocumentFragment"
+      let type = "DocumentFragment";
 
       if ("tagName" in node && node.tagName) {
-        type = node.tagName.toLowerCase()
+        type = node.tagName.toLowerCase();
       } else if (node instanceof ShadowRoot) {
-        type = "ShadowRoot"
+        type = "ShadowRoot";
       }
 
       if (++depth > config.maxDepth) {
-        return printElementAsLeaf(type, config)
+        return printElementAsLeaf(type, config);
       }
 
       return printElement(
@@ -271,22 +281,22 @@ export function createDOMElementFilter(
           nodeIsFragment(node)
             ? []
             : Array.from(node.attributes)
-                .map(attr => attr.name)
+                .map((attr) => attr.name)
                 .sort(),
           nodeIsFragment(node)
             ? {}
             : Array.from(node.attributes).reduce<Record<string, string>>(
                 (props, attribute) => {
-                  props[attribute.name] = attribute.value
-                  return props
+                  props[attribute.name] = attribute.value;
+                  return props;
                 },
-                {},
+                {}
               ),
           config,
           indentation + config.indent,
           depth,
           refs,
-          printer,
+          printer
         ),
         printChildren(
           getChildren(node) as unknown[],
@@ -294,11 +304,11 @@ export function createDOMElementFilter(
           indentation + config.indent,
           depth,
           refs,
-          printer,
+          printer
         ),
         config,
-        indentation,
-      )
+        indentation
+      );
     },
-  }
+  };
 }
