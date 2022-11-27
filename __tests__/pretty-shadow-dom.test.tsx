@@ -18,6 +18,8 @@ test("Should strip style and script tags", () => {
 
   const str = prettyDOM(div) as string;
 
+  // console.log(str)
+
   expect(str.includes("Comment")).toBe(false);
   expect(str.includes("style")).toBe(false);
   expect(str.includes("script")).toBe(false);
@@ -32,6 +34,7 @@ test("Should test shadow roots of passing in element", async () => {
   // @ts-expect-error
   let str = prettyShadowDOM(button.getRootNode().host) as string;
 
+  // console.log(str)
 
   expect(str.includes("my-button")).toBe(true);
   expect(str.includes("ShadowRoot")).toBe(true);
@@ -50,22 +53,20 @@ test("Should render body if passed in", () => {
   expect(str.includes("body")).toBe(true);
 });
 
-// test("Should render HTML tag if passed in", () => {
-//   render(<Button />);
+test("Should render HTML tag if passed in", () => {
+  render(<Button />);
 
-//   const str = prettyShadowDOM() as string;
+  const str = prettyShadowDOM() as string;
 
-//   console.log(str)
-//   expect(str.includes("my-button")).toBe(true);
-//   expect(str.includes("#shadowRoot")).toBe(true);
-//   expect(str.includes("body")).toBe(true);
-// });
+  expect(str.includes("my-button")).toBe(true);
+  expect(str.includes("ShadowRoot")).toBe(true);
+  expect(str.includes("body")).toBe(true);
+});
 
 test("It should render 3 shadow root instances", () => {
 	render(<TripleShadowRoots />)
   const str = prettyShadowDOM() as string
 
-  console.log(str)
-
-  expect(str.includes("#shadowRoot")).toBe(true);
+  // console.log(str)
+  expect(str.includes("ShadowRoot")).toBe(true);
 })

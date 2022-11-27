@@ -225,9 +225,8 @@ export function createDOMElementFilter(
   filterNode: (node: Node) => boolean,
 ): NewPlugin {
 
-  function getChildren (node: Element | DocumentFragment | ShadowRoot) {
-    const children = Array.prototype.slice
-      .call(node.childNodes || node.children)
+  function getChildren (node: Element | DocumentFragment | ShadowRoot): (Node | Element | ShadowRoot)[] {
+    const children: (Node | Element | ShadowRoot)[] = Array.prototype.slice.call(node.childNodes || node.children)
 
     if ("shadowRoot" in node && node.shadowRoot != null && node.shadowRoot.mode !== "closed") {
       children.unshift(node.shadowRoot)
@@ -290,7 +289,7 @@ export function createDOMElementFilter(
           printer,
         ),
         printChildren(
-          getChildren(node),
+          getChildren(node) as unknown[],
           config,
           indentation + config.indent,
           depth,
