@@ -195,13 +195,15 @@ const testNode = (val: any) => {
   const { nodeType, tagName } = val;
   const isCustomElement =
     (typeof tagName === "string" && tagName.includes("-")) ||
-    (typeof val.hasAttribute === "function" && val.hasAttribute("is"));
+    (typeof val.hasAttribute === "function" && val.hasAttribute("is")) ||
+    val instanceof HTMLElement;
 
   return (
     (nodeType === ELEMENT_NODE &&
       (ELEMENT_REGEXP.test(constructorName) || isCustomElement)) ||
     (nodeType === TEXT_NODE && constructorName === "Text") ||
     (nodeType === COMMENT_NODE && constructorName === "Comment") ||
+    // Don't check constructorName === "DocumentFragment" because it excludes ShadowRoot.
     nodeType === FRAGMENT_NODE
   );
 };
