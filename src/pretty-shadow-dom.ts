@@ -10,15 +10,10 @@ export function prettyShadowDOM(
     options?.filterNode || filterCommentsAndDefaultIgnoreTagsTags
   );
 
-  if (options?.plugins) {
-    options.plugins.push(plugin);
-  } else {
-    if (options == null) {
-      options = {};
-    }
+  if (options == null) options = {}
+  if (options.plugins == null) options.plugins = []
 
-    options.plugins = [plugin];
-  }
+  options.plugins.push(plugin);
 
   return prettyDOM(dom, maxLength, {
     ...options,
@@ -30,7 +25,7 @@ function escapeHTML(str: string): string {
   return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function filterCommentsAndDefaultIgnoreTagsTags(value: Node) {
+export function filterCommentsAndDefaultIgnoreTagsTags(value: Node) {
   return (
     value.nodeType !== COMMENT_NODE &&
     (value.nodeType !== ELEMENT_NODE ||

@@ -8,12 +8,12 @@ import {
 import { prettyShadowDOM, screen } from "../src/index";
 
 beforeEach(() => {
-  // jest.spyOn(console, 'log').mockImplementation(() => {})
+  jest.spyOn(console, 'log').mockImplementation(() => {})
 });
 
 afterEach(() => {
-  // // @ts-expect-error
-  // console.log.mockRestore()
+  // @ts-expect-error
+  console.log.mockRestore()
 });
 
 /* @see https://github.com/KonnorRogers/shadow-dom-testing-library/issues/33#issuecomment-1306593757 */
@@ -28,19 +28,148 @@ test("Should not modify the original dom", () => {
   expect(originalHTML).toEqual(document.body.innerHTML);
 });
 
-test.skip("Triple shadow roots", async () => {
+test("Triple shadow roots", async () => {
   render(<TripleShadowRoots />);
 
   screen.debug();
+  expect(console.log).toHaveBeenCalledTimes(1)
+
+  // @ts-expect-error
+  expect(console.log.mock.calls[0][0]).toMatchInlineSnapshot(`
+    "[36m<body>[39m
+      [36m<div>[39m
+        [36m<triple-shadow-roots>[39m
+          [36m<ShadowRoot>[39m
+            [0m
+    			[0m
+            [36m<nested-shadow-roots>[39m
+              [36m<ShadowRoot>[39m
+                [0m
+    			[0m
+                [36m<duplicate-buttons>[39m
+                  [36m<ShadowRoot>[39m
+                    [0m
+    			[0m
+                    [36m<slot[39m
+                      [33mname[39m=[32m\\"start\\"[39m
+                    [36m/>[39m
+                    [0m
+    			[0m
+                    [36m<button>[39m
+                      [0mButton One[0m
+                    [36m</button>[39m
+                    [0m
+    			[0m
+                    [36m<br />[39m
+                    [0m
+    			[0m
+                    [36m<slot />[39m
+                    [0m
+    			[0m
+                    [36m<br />[39m
+                    [0m
+    			[0m
+                    [36m<button>[39m
+                      [0mButton Two[0m
+                    [36m</button>[39m
+                    [0m
+    			[0m
+                    [36m<slot[39m
+                      [33mname[39m=[32m\\"end\\"[39m
+                    [36m/>[39m
+                    [0m
+    		[0m
+                  [36m</ShadowRoot>[39m
+                [36m</duplicate-buttons>[39m
+                [0m
+    		[0m
+              [36m</ShadowRoot>[39m
+              [0m
+    			[0m
+            [36m</nested-shadow-roots>[39m
+            [0m
+    		[0m
+          [36m</ShadowRoot>[39m
+        [36m</triple-shadow-roots>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+    [2m/Users/konnorrogers/projects/oss/shadow-dom-testing-library/src/log-shadow-dom.ts:15:25[22m
+      13 |
+      14 |   if (options == null) options = {}
+    > 15 |
+         | ^
+    "
+  `)
 });
 
-test.skip("Double shadow root", async () => {
+test("Double shadow root", async () => {
   render(<NestedShadowRoots />);
 
   screen.debug();
+
+  expect(console.log).toHaveBeenCalledTimes(1)
+
+  // @ts-expect-error
+  expect(console.log.mock.calls[0][0]).toMatchInlineSnapshot(`
+    "[36m<body>[39m
+      [36m<div>[39m
+        [36m<nested-shadow-roots>[39m
+          [36m<ShadowRoot>[39m
+            [0m
+    			[0m
+            [36m<duplicate-buttons>[39m
+              [36m<ShadowRoot>[39m
+                [0m
+    			[0m
+                [36m<slot[39m
+                  [33mname[39m=[32m\\"start\\"[39m
+                [36m/>[39m
+                [0m
+    			[0m
+                [36m<button>[39m
+                  [0mButton One[0m
+                [36m</button>[39m
+                [0m
+    			[0m
+                [36m<br />[39m
+                [0m
+    			[0m
+                [36m<slot />[39m
+                [0m
+    			[0m
+                [36m<br />[39m
+                [0m
+    			[0m
+                [36m<button>[39m
+                  [0mButton Two[0m
+                [36m</button>[39m
+                [0m
+    			[0m
+                [36m<slot[39m
+                  [33mname[39m=[32m\\"end\\"[39m
+                [36m/>[39m
+                [0m
+    		[0m
+              [36m</ShadowRoot>[39m
+            [36m</duplicate-buttons>[39m
+            [0m
+    		[0m
+          [36m</ShadowRoot>[39m
+        [36m</nested-shadow-roots>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+    [2m/Users/konnorrogers/projects/oss/shadow-dom-testing-library/src/log-shadow-dom.ts:15:25[22m
+      13 |
+      14 |   if (options == null) options = {}
+    > 15 |
+         | ^
+    "
+  `)
 });
 
-test.skip("Single shadow root", async () => {
+test("Single shadow root", async () => {
   render(
     <Duplicates>
       <div slot="start">Start Slot</div>
@@ -49,50 +178,70 @@ test.skip("Single shadow root", async () => {
     </Duplicates>
   );
 
-  // jest.spyOn(console, 'log').mockImplementation(() => { })
-
   screen.debug();
 
-  // @TODO: this is supposed to work but doesnt...
-  // https://github.com/testing-library/dom-testing-library/blob/edffb7c5ec2e4afd7f6bedf842c669ddbfb73297/src/__tests__/pretty-dom.js#L61
-  //   expect(console.log).toHaveBeenCalledTimes(1)
-  // 	expect(console.log.mock.calls[0][0]).toEqual(`
-  // <body>
-  // 	<div>
-  //   	<duplicate-buttons>
-  //     	<shadow-root>
-  //       	<slot
-  //         	name="start"
-  //       	/>
-  //       	<button>
-  //         	Button One
-  //       	</button>
-  //       	<br />
-  //       	<slot />
-  //       	<br />
-  //       	<button>
-  //         	Button Two
-  //       	</button>
-  //       	<slot
-  //         	name="end"
-  //       	/>
-  //     	</shadow-root>
-  //     	<div
-  //       	slot="start"
-  //     	>
-  //       	Start Slot
-  //     	</div>
-  //     	<div>
-  //       	Default Slot
-  //     	</div>
-  //     	<div
-  //       	slot="end"
-  //     	>
-  //       	End Slot
-  //     	</div>
-  //   	</duplicate-buttons>
-  // 	</div>
-  // </body>
-  //  `)
-  // 	jest.resetAllMocks()
+  expect(console.log).toHaveBeenCalledTimes(1)
+
+  // @ts-expect-error
+  expect(console.log.mock.calls[0][0]).toMatchInlineSnapshot(`
+    "[36m<body>[39m
+      [36m<div>[39m
+        [36m<duplicate-buttons>[39m
+          [36m<ShadowRoot>[39m
+            [0m
+    			[0m
+            [36m<slot[39m
+              [33mname[39m=[32m\\"start\\"[39m
+            [36m/>[39m
+            [0m
+    			[0m
+            [36m<button>[39m
+              [0mButton One[0m
+            [36m</button>[39m
+            [0m
+    			[0m
+            [36m<br />[39m
+            [0m
+    			[0m
+            [36m<slot />[39m
+            [0m
+    			[0m
+            [36m<br />[39m
+            [0m
+    			[0m
+            [36m<button>[39m
+              [0mButton Two[0m
+            [36m</button>[39m
+            [0m
+    			[0m
+            [36m<slot[39m
+              [33mname[39m=[32m\\"end\\"[39m
+            [36m/>[39m
+            [0m
+    		[0m
+          [36m</ShadowRoot>[39m
+          [36m<div[39m
+            [33mslot[39m=[32m\\"start\\"[39m
+          [36m>[39m
+            [0mStart Slot[0m
+          [36m</div>[39m
+          [36m<div>[39m
+            [0mDefault Slot[0m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mslot[39m=[32m\\"end\\"[39m
+          [36m>[39m
+            [0mEnd Slot[0m
+          [36m</div>[39m
+        [36m</duplicate-buttons>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+    [2m/Users/konnorrogers/projects/oss/shadow-dom-testing-library/src/log-shadow-dom.ts:15:25[22m
+      13 |
+      14 |   if (options == null) options = {}
+    > 15 |
+         | ^
+    "
+  `)
 });
