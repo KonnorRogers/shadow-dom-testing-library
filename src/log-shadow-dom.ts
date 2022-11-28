@@ -10,6 +10,7 @@ export function logShadowDOM(
   const plugin: NewPlugin = createDOMElementFilter(
     options?.filterNode || filterCommentsAndDefaultIgnoreTagsTags
   );
+
   if (options == null) options = {}
   if (options.plugins == null) options.plugins = []
   options.plugins.push(plugin)

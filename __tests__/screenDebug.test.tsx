@@ -1,5 +1,4 @@
 import React from "react";
-import { getUserCodeFrame } from "@testing-library/dom/dist/get-user-code-frame"
 import { render } from "@testing-library/react";
 import {
   Duplicates,
@@ -8,18 +7,9 @@ import {
 } from "../components";
 import { screen } from "../src/index";
 
-
 beforeEach(() => {
   jest.spyOn(console, 'log').mockImplementation(() => {})
-  jest.mocked(getUserCodeFrame).mockImplementation(
-      () => `"/home/konnor/projects/sample-error/error-example.js:7:14
-        5 |         document.createTextNode('Hello World!')
-        6 |       )
-      > 7 |       screen.debug()
-          |              ^
-      "
-    `
-  )
+  jest.spyOn(screen, 'debug')
 });
 
 afterEach(() => {
@@ -32,20 +22,6 @@ test("Triple shadow roots", async () => {
 
   screen.debug();
   expect(console.log).toHaveBeenCalledTimes(1)
-
-  // @ts-expect-error
-  expect(console.log.mock.calls[0][0]).toMatchInlineSnapshot()
-});
-
-test("Double shadow root", async () => {
-  render(<NestedShadowRoots />);
-
-  screen.debug();
-
-  expect(console.log).toHaveBeenCalledTimes(1)
-
-  // @ts-expect-error
-  expect(console.log.mock.calls[0][0]).toMatchInlineSnapshot()
 });
 
 test("Single shadow root", async () => {
@@ -61,6 +37,7 @@ test("Single shadow root", async () => {
 
   expect(console.log).toHaveBeenCalledTimes(1)
 
+	// This is kind of a silly testing, but its more about making sure we properly loaded our plugin.
   // @ts-expect-error
-  expect(console.log.mock.calls[0][0]).toMatchInlineSnapshot()
+  expect(console.log.mock.calls[0][0]).toMatch(/ShadowRoot/)
 });
