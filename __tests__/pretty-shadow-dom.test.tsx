@@ -18,8 +18,6 @@ test("Should strip style and script tags", () => {
 
   const str = prettyDOM(div) as string;
 
-  // console.log(str)
-
   expect(str.includes("Comment")).toBe(false);
   expect(str.includes("style")).toBe(false);
   expect(str.includes("script")).toBe(false);
@@ -34,12 +32,21 @@ test("Should test shadow roots of passing in element", async () => {
   // @ts-expect-error
   let str = prettyShadowDOM(button.getRootNode().host) as string;
 
-  // console.log(str)
-
   expect(str.includes("my-button")).toBe(true);
   expect(str.includes("ShadowRoot")).toBe(true);
   expect(str.includes("body")).toBe(false);
   expect(str.includes("div")).toBe(false);
+
+  expect(str).toMatchInlineSnapshot(`
+    "[36m<my-button>[39m
+      [36m<ShadowRoot>[39m
+        [36m<button>[39m
+          [36m<slot />[39m
+        [36m</button>[39m
+      [36m</ShadowRoot>[39m
+      [0m0[0m
+    [36m</my-button>[39m"
+  `)
 });
 
 test("Should render body if passed in", () => {
@@ -47,10 +54,24 @@ test("Should render body if passed in", () => {
 
   const str = prettyShadowDOM(document.body) as string;
 
-  // console.log(str)
   expect(str.includes("my-button")).toBe(true);
   expect(str.includes("ShadowRoot")).toBe(true);
   expect(str.includes("body")).toBe(true);
+
+  expect(str).toMatchInlineSnapshot(`
+    "[36m<body>[39m
+      [36m<div>[39m
+        [36m<my-button>[39m
+          [36m<ShadowRoot>[39m
+            [36m<button>[39m
+              [36m<slot />[39m
+            [36m</button>[39m
+          [36m</ShadowRoot>[39m
+          [0m0[0m
+        [36m</my-button>[39m
+      [36m</div>[39m
+    [36m</body>[39m"
+  `)
 });
 
 test("Should render HTML tag if passed in", () => {
@@ -61,12 +82,86 @@ test("Should render HTML tag if passed in", () => {
   expect(str.includes("my-button")).toBe(true);
   expect(str.includes("ShadowRoot")).toBe(true);
   expect(str.includes("body")).toBe(true);
+
+  expect(str).toMatchInlineSnapshot(`
+    "[36m<body>[39m
+      [36m<div>[39m
+        [36m<my-button>[39m
+          [36m<ShadowRoot>[39m
+            [36m<button>[39m
+              [36m<slot />[39m
+            [36m</button>[39m
+          [36m</ShadowRoot>[39m
+          [0m0[0m
+        [36m</my-button>[39m
+      [36m</div>[39m
+    [36m</body>[39m"
+  `)
 });
 
 test("It should render 3 shadow root instances", () => {
   render(<TripleShadowRoots />);
   const str = prettyShadowDOM() as string;
 
-  // console.log(str)
   expect(str.includes("ShadowRoot")).toBe(true);
+
+  expect(str).toMatchInlineSnapshot(`
+    "[36m<body>[39m
+      [36m<div>[39m
+        [36m<triple-shadow-roots>[39m
+          [36m<ShadowRoot>[39m
+            [0m
+    			[0m
+            [36m<nested-shadow-roots>[39m
+              [36m<ShadowRoot>[39m
+                [0m
+    			[0m
+                [36m<duplicate-buttons>[39m
+                  [36m<ShadowRoot>[39m
+                    [0m
+    			[0m
+                    [36m<slot[39m
+                      [33mname[39m=[32m\\"start\\"[39m
+                    [36m/>[39m
+                    [0m
+    			[0m
+                    [36m<button>[39m
+                      [0mButton One[0m
+                    [36m</button>[39m
+                    [0m
+    			[0m
+                    [36m<br />[39m
+                    [0m
+    			[0m
+                    [36m<slot />[39m
+                    [0m
+    			[0m
+                    [36m<br />[39m
+                    [0m
+    			[0m
+                    [36m<button>[39m
+                      [0mButton Two[0m
+                    [36m</button>[39m
+                    [0m
+    			[0m
+                    [36m<slot[39m
+                      [33mname[39m=[32m\\"end\\"[39m
+                    [36m/>[39m
+                    [0m
+    		[0m
+                  [36m</ShadowRoot>[39m
+                [36m</duplicate-buttons>[39m
+                [0m
+    		[0m
+              [36m</ShadowRoot>[39m
+              [0m
+    			[0m
+            [36m</nested-shadow-roots>[39m
+            [0m
+    		[0m
+          [36m</ShadowRoot>[39m
+        [36m</triple-shadow-roots>[39m
+      [36m</div>[39m
+    [36m</body>[39m"
+  `)
 });
