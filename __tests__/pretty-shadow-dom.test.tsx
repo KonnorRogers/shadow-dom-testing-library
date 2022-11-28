@@ -1,7 +1,20 @@
 import * as React from "react";
 import { prettyDOM, render } from "@testing-library/react";
-import { Button, TripleShadowRoots } from "../components";
+import { Button, Duplicates, TripleShadowRoots } from "../components";
 import { prettyShadowDOM, screen } from "../src/index";
+
+/* @see https://github.com/KonnorRogers/shadow-dom-testing-library/issues/33#issuecomment-1306593757 */
+test("Should not modify the original dom", () => {
+  render(<Duplicates />);
+  const originalHTML = document.body.innerHTML;
+  expect(document.querySelector("shadow-root")).toBe(null);
+
+  prettyShadowDOM(document.body);
+
+  expect(document.querySelector("shadow-root")).toBe(null);
+  expect(originalHTML).toEqual(document.body.innerHTML);
+});
+
 
 test("Should strip style and script tags", () => {
   const div = document.createElement("div");
