@@ -10,8 +10,8 @@ export function prettyShadowDOM(
     options?.filterNode || filterCommentsAndDefaultIgnoreTagsTags
   );
 
-  if (options == null) options = {}
-  if (options.plugins == null) options.plugins = []
+  if (options == null) options = {};
+  if (options.plugins == null) options.plugins = [];
 
   options.plugins.push(plugin);
 

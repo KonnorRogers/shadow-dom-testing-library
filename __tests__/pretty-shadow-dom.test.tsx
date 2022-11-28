@@ -15,7 +15,6 @@ test("Should not modify the original dom", () => {
   expect(originalHTML).toEqual(document.body.innerHTML);
 });
 
-
 test("Should strip style and script tags", () => {
   const div = document.createElement("div");
 
@@ -59,7 +58,7 @@ test("Should test shadow roots of passing in element", async () => {
       [36m</ShadowRoot>[39m
       [0m0[0m
     [36m</my-button>[39m"
-  `)
+  `);
 });
 
 test("Should render body if passed in", () => {
@@ -84,7 +83,7 @@ test("Should render body if passed in", () => {
         [36m</my-button>[39m
       [36m</div>[39m
     [36m</body>[39m"
-  `)
+  `);
 });
 
 test("Should render HTML tag if passed in", () => {
@@ -109,7 +108,7 @@ test("Should render HTML tag if passed in", () => {
         [36m</my-button>[39m
       [36m</div>[39m
     [36m</body>[39m"
-  `)
+  `);
 });
 
 test("It should render 3 shadow root instances", () => {
@@ -176,5 +175,5 @@ test("It should render 3 shadow root instances", () => {
         [36m</triple-shadow-roots>[39m
       [36m</div>[39m
     [36m</body>[39m"
-  `)
+  `);
 });

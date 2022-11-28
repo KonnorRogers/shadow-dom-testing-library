@@ -1,5 +1,8 @@
 import { logDOM } from "@testing-library/dom";
-import { createDOMElementFilter, filterCommentsAndDefaultIgnoreTagsTags } from "./pretty-shadow-dom";
+import {
+  createDOMElementFilter,
+  filterCommentsAndDefaultIgnoreTagsTags,
+} from "./pretty-shadow-dom";
 import type { NewPlugin } from "pretty-format";
 
 export function logShadowDOM(
@@ -11,9 +14,9 @@ export function logShadowDOM(
     options?.filterNode || filterCommentsAndDefaultIgnoreTagsTags
   );
 
-  if (options == null) options = {}
-  if (options.plugins == null) options.plugins = []
-  options.plugins.push(plugin)
+  if (options == null) options = {};
+  if (options.plugins == null) options.plugins = [];
+  options.plugins.push(plugin);
 
   logDOM(dom, maxLength, options);
 }
