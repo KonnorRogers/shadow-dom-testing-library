@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.7.1...v1.8.0) (2022-11-28)
+
+
+### Features
+
+* replace DOMParser with a proper printer ([#43](https://github.com/konnorrogers/shadow-dom-testing-library/issues/43)) ([ebde061](https://github.com/konnorrogers/shadow-dom-testing-library/commit/ebde061e757f506fa12e652b1d03744931a59abc))
+
 ### [1.7.1](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.7.0...v1.7.1) (2022-11-11)
 
 
