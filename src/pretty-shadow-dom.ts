@@ -245,6 +245,10 @@ export function createDOMElementFilter(
     const children: (Node | Element | ShadowRoot)[] =
       Array.prototype.slice.call(node.childNodes || node.children);
 
+		if (node instanceof HTMLSlotElement) {
+      children.push(...node.assignedElements({ flatten: true }))
+		}
+
     if (
       "shadowRoot" in node &&
       node.shadowRoot != null &&

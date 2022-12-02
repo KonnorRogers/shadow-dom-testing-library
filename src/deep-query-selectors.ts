@@ -67,7 +67,11 @@ function recurse(
   elementsToProcess = [container];
   elements.push(container); // Make sure we're checking the container element!
 
-  // Accounts for if the container houses a textNode
+  if (container instanceof HTMLSlotElement) {
+  	elements.push(...container.assignedElements({ flatten: true }))
+  	elementsToProcess.push(...container.assignedElements({ flatten: true }))
+  }
+
   if (
     container instanceof HTMLElement &&
     container.shadowRoot != null &&
@@ -104,6 +108,5 @@ function recurse(
       });
   });
 
-  // We can sometimes hit duplicate nodes this way, lets stop that.
   return [...new Set(elements)];
 }
