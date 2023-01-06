@@ -257,27 +257,26 @@ prettyShadowDOM(element, maxLength, options); // => string | false
 Perhaps you don't want the extended screen. That's fine. To
 import just the shadowQueries you can do so like this:
 
-
 ```js
-import { shadowQueries } from "shadow-dom-testing-library"
+import { shadowQueries } from "shadow-dom-testing-library";
 
 test("findByShadowRole", async () => {
-  render(<Button />)
-  const btn = await shadowQueries.findByShadowRole("button")
-  expect(btn).toBeInTheDocument()
-})
+  render(<Button />);
+  const btn = await shadowQueries.findByShadowRole("button");
+  expect(btn).toBeInTheDocument();
+});
 ```
 
 You could also use this method to extend your own screen.
 
 ```js
-import { shadowQueries } from "shadow-dom-testing-library"
-import { screen as DOMScreen } from "@testing-library/dom"
+import { shadowQueries } from "shadow-dom-testing-library";
+import { screen as DOMScreen } from "@testing-library/dom";
 
 const screen = {
   ...DOMScreen,
-  ...shadowQueries
-}
+  ...shadowQueries,
+};
 
-screen.getByShadowRole("button")
+screen.getByShadowRole("button");
 ```
