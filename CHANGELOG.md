@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.8.0...v1.9.0) (2023-01-06)
+
+
+### Features
+
+* export shadowQueries ([#44](https://github.com/konnorrogers/shadow-dom-testing-library/issues/44)) ([06850fb](https://github.com/konnorrogers/shadow-dom-testing-library/commit/06850fb690986dd6f3de723825fb1f74e200d998))
+
 ## [1.8.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.7.1...v1.8.0) (2022-11-28)
 
 
