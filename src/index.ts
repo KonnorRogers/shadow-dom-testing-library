@@ -30,6 +30,7 @@ export {
 export {
   shadowScreen as screen,
   shadowWithin as within,
+  shadowQueries,
   debug,
   logShadowDOM,
   prettyShadowDOM,
