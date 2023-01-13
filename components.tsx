@@ -176,7 +176,7 @@ type CustomElement<T, K extends string = string> = Partial<T & React.DOMAttribut
 window.customElements.define("my-button", class extends MyButton {})
 window.customElements.define("my-image", class extends MyImage {})
 window.customElements.define("my-text-area", class extends MyTextArea {})
-window.customElements.define("duplicate-buttons", class extends DuplicateButtons {})
+window.customElements.define("duplicate-buttons", DuplicateButtons)
 window.customElements.define("nested-shadow-roots", class extends NestedShadowRootsElement {})
 window.customElements.define("triple-shadow-roots", class extends TripleShadowRootsElement {})
 window.customElements.define("my-select", class extends MySelect {})

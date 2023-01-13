@@ -1,6 +1,10 @@
 import { prettyDOM, getConfig } from "@testing-library/dom";
 import type { Config, NewPlugin, Printer, Refs } from "pretty-format";
 
+function removeDuplicateNewLines(str: string) {
+  return str.replaceAll(/\n/, "\n")
+}
+
 export function prettyShadowDOM(
   ...args: Parameters<typeof prettyDOM>
 ): ReturnType<typeof prettyDOM> {
@@ -15,10 +19,14 @@ export function prettyShadowDOM(
 
   options.plugins.push(plugin);
 
-  return prettyDOM(dom, maxLength, {
+  const res = prettyDOM(dom, maxLength, {
     ...options,
     plugins: [plugin],
   });
+
+  if (res === false) return res
+
+  return removeDuplicateNewLines(res)
 }
 
 function escapeHTML(str: string): string {
@@ -46,7 +54,8 @@ const printProps = (
 ): string => {
   const indentationNext = indentation + config.indent;
   const colors = config.colors;
-  return keys
+
+  return removeDuplicateNewLines(keys
     .map((key) => {
       const value = props[key];
       let printed = printer(value, config, indentationNext, depth, refs);
@@ -75,7 +84,7 @@ const printProps = (
         colors.value.close
       );
     })
-    .join("");
+    .join(""))
 };
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType#node_type_constants
@@ -90,7 +99,7 @@ const printChildren = (
   refs: Refs,
   printer: Printer
 ): string =>
-  children
+  removeDuplicateNewLines(children
     .map((child) => {
       const printedChild =
         typeof child === "string"
@@ -100,7 +109,7 @@ const printChildren = (
       if (
         printedChild === "" &&
         typeof child === "object" &&
-        child !== null &&
+        child != null &&
         (child as Node).nodeType !== NodeTypeTextNode
       ) {
         // A plugin serialized this Node to '' meaning we should ignore it.
@@ -108,7 +117,7 @@ const printChildren = (
       }
       return config.spacingOuter + indentation + printedChild;
     })
-    .join("");
+    .join(""))
 
 const printText = (text: string, config: Config): string => {
   const contentColor = config.colors.content;
@@ -139,7 +148,7 @@ const printElement = (
 ): string => {
   const tagColor = config.colors.tag;
 
-  return (
+  return removeDuplicateNewLines(
     tagColor.open +
     "<" +
     type +
@@ -161,12 +170,12 @@ const printElement = (
       : (printedProps && !config.min ? "" : " ") + "/") +
     ">" +
     tagColor.close
-  );
+  )
 };
 
 const printElementAsLeaf = (type: string, config: Config): string => {
   const tagColor = config.colors.tag;
-  return (
+  return removeDuplicateNewLines(
     tagColor.open +
     "<" +
     type +
@@ -175,7 +184,7 @@ const printElementAsLeaf = (type: string, config: Config): string => {
     tagColor.open +
     " />" +
     tagColor.close
-  );
+  )
 };
 
 const ELEMENT_NODE = 1;
@@ -199,7 +208,7 @@ const testNode = (val: any) => {
     (nodeType === TEXT_NODE && constructorName === "Text") ||
     (nodeType === COMMENT_NODE && constructorName === "Comment") ||
     // Don't check constructorName === "DocumentFragment" because it excludes ShadowRoot.
-    nodeType === FRAGMENT_NODE
+    ( nodeType === FRAGMENT_NODE )
   );
 };
 
