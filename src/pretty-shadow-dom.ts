@@ -2,7 +2,7 @@ import { prettyDOM, getConfig } from "@testing-library/dom";
 import type { Config, NewPlugin, Printer, Refs } from "pretty-format";
 
 function removeDuplicateNewLines(str: string) {
-  return str.replaceAll(/\n/, "\n")
+  return str.replaceAll(/^\s*\n$/gm, "")
 }
 
 export function prettyShadowDOM(
