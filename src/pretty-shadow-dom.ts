@@ -1,6 +1,17 @@
 import { prettyDOM, getConfig } from "@testing-library/dom";
 import type { Config, NewPlugin, Printer, Refs } from "pretty-format";
 
+// This regexp combo took way too long to figure out...
+const findWhiteSpace = /([^\S\r\n]*[\f\n\r\t\v]+)/.source;
+
+function removeDuplicateNewLines(str: string) {
+  let final = str.replace(
+    new RegExp(`${findWhiteSpace}.*${findWhiteSpace}{2,}`, "g"),
+    ""
+  );
+  return final;
+}
+
 export function prettyShadowDOM(
   ...args: Parameters<typeof prettyDOM>
 ): ReturnType<typeof prettyDOM> {
@@ -46,6 +57,7 @@ const printProps = (
 ): string => {
   const indentationNext = indentation + config.indent;
   const colors = config.colors;
+
   return keys
     .map((key) => {
       const value = props[key];
@@ -90,25 +102,27 @@ const printChildren = (
   refs: Refs,
   printer: Printer
 ): string =>
-  children
-    .map((child) => {
-      const printedChild =
-        typeof child === "string"
-          ? printText(child, config)
-          : printer(child, config, indentation, depth, refs);
+  removeDuplicateNewLines(
+    children
+      .map((child) => {
+        const printedChild =
+          typeof child === "string"
+            ? printText(child, config)
+            : printer(child, config, indentation, depth, refs);
 
-      if (
-        printedChild === "" &&
-        typeof child === "object" &&
-        child !== null &&
-        (child as Node).nodeType !== NodeTypeTextNode
-      ) {
-        // A plugin serialized this Node to '' meaning we should ignore it.
-        return "";
-      }
-      return config.spacingOuter + indentation + printedChild;
-    })
-    .join("");
+        if (
+          printedChild === "" &&
+          typeof child === "object" &&
+          child != null &&
+          (child as Node).nodeType !== NodeTypeTextNode
+        ) {
+          // A plugin serialized this Node to '' meaning we should ignore it.
+          return "";
+        }
+        return config.spacingOuter + indentation + printedChild;
+      })
+      .join("")
+  );
 
 const printText = (text: string, config: Config): string => {
   const contentColor = config.colors.content;

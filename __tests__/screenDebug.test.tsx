@@ -37,7 +37,6 @@ test("Single shadow root", async () => {
 
   expect(console.log).toHaveBeenCalledTimes(1);
 
-  // This is kind of a silly testing, but its more about making sure we properly loaded our plugin.
   // @ts-expect-error
   expect(console.log.mock.calls[0][0]).toMatch(/ShadowRoot/);
 });
