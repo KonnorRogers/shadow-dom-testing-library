@@ -1,8 +1,15 @@
 import { prettyDOM, getConfig } from "@testing-library/dom";
 import type { Config, NewPlugin, Printer, Refs } from "pretty-format";
 
+// This regexp combo took way too long to figure out...
+const findWhiteSpace = /([^\S\r\n]*[\f\n\r\t\v]+)/.source;
+
 function removeDuplicateNewLines(str: string) {
-  return str.replaceAll(/^\s*\n$/gm, "")
+  let final = str.replace(
+    new RegExp(`${findWhiteSpace}.*${findWhiteSpace}{2,}`, "g"),
+    ""
+  );
+  return final;
 }
 
 export function prettyShadowDOM(
@@ -19,14 +26,10 @@ export function prettyShadowDOM(
 
   options.plugins.push(plugin);
 
-  const res = prettyDOM(dom, maxLength, {
+  return prettyDOM(dom, maxLength, {
     ...options,
     plugins: [plugin],
   });
-
-  if (res === false) return res
-
-  return removeDuplicateNewLines(res)
 }
 
 function escapeHTML(str: string): string {
@@ -55,7 +58,7 @@ const printProps = (
   const indentationNext = indentation + config.indent;
   const colors = config.colors;
 
-  return removeDuplicateNewLines(keys
+  return keys
     .map((key) => {
       const value = props[key];
       let printed = printer(value, config, indentationNext, depth, refs);
@@ -84,7 +87,7 @@ const printProps = (
         colors.value.close
       );
     })
-    .join(""))
+    .join("");
 };
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType#node_type_constants
@@ -99,25 +102,27 @@ const printChildren = (
   refs: Refs,
   printer: Printer
 ): string =>
-  removeDuplicateNewLines(children
-    .map((child) => {
-      const printedChild =
-        typeof child === "string"
-          ? printText(child, config)
-          : printer(child, config, indentation, depth, refs);
+  removeDuplicateNewLines(
+    children
+      .map((child) => {
+        const printedChild =
+          typeof child === "string"
+            ? printText(child, config)
+            : printer(child, config, indentation, depth, refs);
 
-      if (
-        printedChild === "" &&
-        typeof child === "object" &&
-        child != null &&
-        (child as Node).nodeType !== NodeTypeTextNode
-      ) {
-        // A plugin serialized this Node to '' meaning we should ignore it.
-        return "";
-      }
-      return config.spacingOuter + indentation + printedChild;
-    })
-    .join(""))
+        if (
+          printedChild === "" &&
+          typeof child === "object" &&
+          child != null &&
+          (child as Node).nodeType !== NodeTypeTextNode
+        ) {
+          // A plugin serialized this Node to '' meaning we should ignore it.
+          return "";
+        }
+        return config.spacingOuter + indentation + printedChild;
+      })
+      .join("")
+  );
 
 const printText = (text: string, config: Config): string => {
   const contentColor = config.colors.content;
@@ -148,7 +153,7 @@ const printElement = (
 ): string => {
   const tagColor = config.colors.tag;
 
-  return removeDuplicateNewLines(
+  return (
     tagColor.open +
     "<" +
     type +
@@ -170,12 +175,12 @@ const printElement = (
       : (printedProps && !config.min ? "" : " ") + "/") +
     ">" +
     tagColor.close
-  )
+  );
 };
 
 const printElementAsLeaf = (type: string, config: Config): string => {
   const tagColor = config.colors.tag;
-  return removeDuplicateNewLines(
+  return (
     tagColor.open +
     "<" +
     type +
@@ -184,7 +189,7 @@ const printElementAsLeaf = (type: string, config: Config): string => {
     tagColor.open +
     " />" +
     tagColor.close
-  )
+  );
 };
 
 const ELEMENT_NODE = 1;
@@ -208,7 +213,7 @@ const testNode = (val: any) => {
     (nodeType === TEXT_NODE && constructorName === "Text") ||
     (nodeType === COMMENT_NODE && constructorName === "Comment") ||
     // Don't check constructorName === "DocumentFragment" because it excludes ShadowRoot.
-    ( nodeType === FRAGMENT_NODE )
+    nodeType === FRAGMENT_NODE
   );
 };
 
