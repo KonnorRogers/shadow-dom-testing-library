@@ -1,3 +1,4 @@
+import { patchWrap } from "./trick-dom-testing-library";
 import { Container, ShadowOptions } from "./types";
 
 export function deepQuerySelector<T extends HTMLElement>(
@@ -31,12 +32,14 @@ export function deepQuerySelectorAll<T extends HTMLElement>(
   selector: string,
   options: ShadowOptions = { shallow: false }
 ): T[] {
-  const elements = getAllElementsAndShadowRoots(container, options);
+  return patchWrap(() => {
+    const elements = getAllElementsAndShadowRoots(container, options);
 
-  const queriedElements = elements
-    .map((el) => Array.from(el.querySelectorAll<T>(selector)))
-    .flat(Infinity) as T[];
-  return [...new Set(queriedElements)];
+    const queriedElements = elements
+      .map((el) => Array.from(el.querySelectorAll<T>(selector)))
+      .flat(Infinity) as T[];
+    return [...new Set(queriedElements)];
+  })
 }
 
 // This could probably get really slow and memory intensive in large DOMs,

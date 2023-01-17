@@ -5,9 +5,7 @@ import { debug } from "./debug";
 import { logShadowDOM } from "./log-shadow-dom";
 import { prettyShadowDOM } from "./pretty-shadow-dom";
 import { shadowScreen } from "./shadow-screen";
-import { trickDOMTestingLibrary } from "./trick-dom-testing-library";
-
-trickDOMTestingLibrary();
+import { patchWrap } from "./trick-dom-testing-library";
 
 const allQueries = {
   ...queries,
@@ -15,8 +13,9 @@ const allQueries = {
 };
 
 function shadowWithin(element: HTMLElement) {
-  return within(element, allQueries);
+  return  within(element, allQueries);
 }
+
 
 export * from "./types";
 export * from "./shadow-queries";
