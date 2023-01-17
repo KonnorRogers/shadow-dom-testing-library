@@ -9,6 +9,20 @@ beforeEach(() => {
 	    return this.assignedNodes()
 	  }
   })
+
+  // @ts-expect-error
+  HTMLSlotElement.prototype.querySelectorAll = function (str: string) {
+    const qsa = HTMLElement.prototype.querySelectorAll
+    let els = Array.from(qsa.call(this, str))
+
+    this.assignedNodes({ flatten: true }).forEach((_el) => {
+      const el = _el as Element
+      els.push(el)
+      els = els.concat(Array.from(el.querySelectorAll(str)))
+    })
+
+    return [...new Set(els)]
+  }
 })
 
 
@@ -22,8 +36,8 @@ test("Should aggregate content from slots", async () => {
 
 	const startSlot = el.container.firstElementChild?.shadowRoot?.querySelector("slot[name='start']") as HTMLSlotElement
 	const btn = await within(startSlot).findAllByShadowRole("button")
-	const img = await within(startSlot).findByShadowRole("img")
 	expect(btn.length).toEqual(1)
+	const img = await within(startSlot).findByShadowRole("img")
 	expect(img).toBeInTheDocument()
 
 	// make sure other slots dont leak in.

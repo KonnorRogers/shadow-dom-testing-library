@@ -45,17 +45,10 @@ function queryAllByShadowRole<T extends HTMLElement = HTMLElement>(
 
   options.suggest = false;
 
-  let slottedElements: HTMLElement[] = []
-
-  if (container instanceof HTMLSlotElement) {
-    slottedElements = [...container.assignedElements({ flatten: true }) as HTMLElement[]]
-  }
-
   return [
     ...new Set(
       getAllElementsAndShadowRoots(container, options)
         .map((el) => queryAllByRole(el as HTMLElement, role, options))
-        .concat(slottedElements)
         .flat(Infinity)
     ),
   ] as T[];
