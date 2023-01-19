@@ -1,6 +1,6 @@
 import * as React from "react";
 import { render } from "@testing-library/react";
-import { Duplicates } from "../components";
+import { Duplicates, Select } from "../components";
 import { within } from "../src/index";
 
 test("Should aggregate content from slots", async () => {
@@ -39,3 +39,32 @@ test("Should aggregate content from slots", async () => {
   // Make sure our patch of Slots doesn't leak.
   expect(startSlot.querySelectorAll("*")).toHaveLength(0)
 });
+
+test("slot aggregation should use slotted content instead of default content", () => {
+  const el = render(
+    <Select label="My Other Label">
+      <span slot="label">
+        My Label
+      </span>
+    </Select>
+  );
+
+  const labelSlot = el.container.firstElementChild?.shadowRoot?.querySelector(
+    "slot[name='label']"
+  ) as HTMLSlotElement;
+
+  expect(within(labelSlot).queryByText("My Label")).toBeTruthy
+})
+
+test("slot aggregation should use default items when not given slotted content", () => {
+  const el = render(
+    <Select label="My Label"></Select>
+  );
+
+  const labelSlot = el.container.firstElementChild?.shadowRoot?.querySelector(
+    "slot[name='label']"
+  ) as HTMLSlotElement;
+
+  expect(within(labelSlot).queryByText("My Label")).toBeTruthy
+})
+

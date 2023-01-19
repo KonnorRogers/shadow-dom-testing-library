@@ -160,7 +160,9 @@ export class MySelect extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
     	<label>
-				${this.label}
+				<slot name="label">
+			    ${this.label}
+			  </slot>
 				<select>
 					<slot></slot>
 				</select>
