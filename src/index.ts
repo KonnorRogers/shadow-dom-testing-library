@@ -13,9 +13,8 @@ const allQueries = {
 };
 
 function shadowWithin(element: HTMLElement) {
-  return  within(element, allQueries);
+  return within(element, allQueries);
 }
-
 
 export * from "./types";
 export * from "./shadow-queries";

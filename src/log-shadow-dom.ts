@@ -19,6 +19,5 @@ export function logShadowDOM(
   if (options.plugins == null) options.plugins = [];
   options.plugins.push(plugin);
 
-
   patchWrap(() => logDOM(dom, maxLength, options));
 }

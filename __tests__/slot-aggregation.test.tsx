@@ -37,15 +37,13 @@ test("Should aggregate content from slots", async () => {
   expect(within(defaultSlot).queryByShadowRole("img")).not.toBeInTheDocument();
 
   // Make sure our patch of Slots doesn't leak.
-  expect(startSlot.querySelectorAll("*")).toHaveLength(0)
+  expect(startSlot.querySelectorAll("*")).toHaveLength(0);
 });
 
 test("slot aggregation should use slotted content instead of default content", () => {
   const el = render(
     <Select label="My Other Label">
-      <span slot="label">
-        My Label
-      </span>
+      <span slot="label">My Label</span>
     </Select>
   );
 
@@ -53,18 +51,15 @@ test("slot aggregation should use slotted content instead of default content", (
     "slot[name='label']"
   ) as HTMLSlotElement;
 
-  expect(within(labelSlot).queryByText("My Label")).toBeTruthy
-})
+  expect(within(labelSlot).queryByText("My Label")).toBeTruthy;
+});
 
 test("slot aggregation should use default items when not given slotted content", () => {
-  const el = render(
-    <Select label="My Label"></Select>
-  );
+  const el = render(<Select label="My Label"></Select>);
 
   const labelSlot = el.container.firstElementChild?.shadowRoot?.querySelector(
     "slot[name='label']"
   ) as HTMLSlotElement;
 
-  expect(within(labelSlot).queryByText("My Label")).toBeTruthy
-})
-
+  expect(within(labelSlot).queryByText("My Label")).toBeTruthy;
+});

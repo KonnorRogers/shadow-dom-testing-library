@@ -27,10 +27,12 @@ export function prettyShadowDOM(
 
   options.plugins.push(plugin);
 
-  return patchWrap(() => prettyDOM(dom, maxLength, {
-    ...options,
-    plugins: [plugin],
-  }));
+  return patchWrap(() =>
+    prettyDOM(dom, maxLength, {
+      ...options,
+      plugins: [plugin],
+    })
+  );
 }
 
 function escapeHTML(str: string): string {

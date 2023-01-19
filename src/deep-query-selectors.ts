@@ -39,7 +39,7 @@ export function deepQuerySelectorAll<T extends HTMLElement>(
       .map((el) => Array.from(el.querySelectorAll<T>(selector)))
       .flat(Infinity) as T[];
     return [...new Set(queriedElements)];
-  })
+  });
 }
 
 // This could probably get really slow and memory intensive in large DOMs,

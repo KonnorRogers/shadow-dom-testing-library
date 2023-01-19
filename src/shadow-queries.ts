@@ -48,9 +48,10 @@ function queryAllByShadowRole<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      patchWrap(() => getAllElementsAndShadowRoots(container, options)
-        .map((el) => queryAllByRole(el as HTMLElement, role, options))
-        .flat(Infinity)
+      patchWrap(() =>
+        getAllElementsAndShadowRoots(container, options)
+          .map((el) => queryAllByRole(el as HTMLElement, role, options))
+          .flat(Infinity)
       )
     ),
   ] as T[];
@@ -89,9 +90,11 @@ function queryAllByShadowLabelText<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      patchWrap(() => getAllElementsAndShadowRoots(container, options)
-        .map((el) => queryAllByLabelText(el as HTMLElement, id, options))
-        .flat(Infinity))
+      patchWrap(() =>
+        getAllElementsAndShadowRoots(container, options)
+          .map((el) => queryAllByLabelText(el as HTMLElement, id, options))
+          .flat(Infinity)
+      )
     ),
   ] as T[];
 }
@@ -130,9 +133,11 @@ function queryAllByShadowPlaceholderText<T extends HTMLElement = HTMLElement>(
   return [
     ...new Set(
       patchWrap(() =>
-      getAllElementsAndShadowRoots(container, options)
-        .map((el) => queryAllByPlaceholderText(el as HTMLElement, id, options))
-        .flat(Infinity)
+        getAllElementsAndShadowRoots(container, options)
+          .map((el) =>
+            queryAllByPlaceholderText(el as HTMLElement, id, options)
+          )
+          .flat(Infinity)
       )
     ),
   ] as T[];
@@ -171,9 +176,10 @@ function queryAllByShadowText<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      patchWrap(() => getAllElementsAndShadowRoots(container, options)
-        .map((el) => queryAllByText(el as HTMLElement, id, options))
-        .flat(Infinity)
+      patchWrap(() =>
+        getAllElementsAndShadowRoots(container, options)
+          .map((el) => queryAllByText(el as HTMLElement, id, options))
+          .flat(Infinity)
       )
     ),
   ] as T[];
@@ -212,9 +218,10 @@ function queryAllByShadowDisplayValue<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      patchWrap(() => getAllElementsAndShadowRoots(container, options)
-        .map((el) => queryAllByDisplayValue(el as HTMLElement, id, options))
-        .flat(Infinity)
+      patchWrap(() =>
+        getAllElementsAndShadowRoots(container, options)
+          .map((el) => queryAllByDisplayValue(el as HTMLElement, id, options))
+          .flat(Infinity)
       )
     ),
   ] as T[];
@@ -253,9 +260,10 @@ function queryAllByShadowAltText<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      patchWrap(() => getAllElementsAndShadowRoots(container, options)
-        .map((el) => queryAllByAltText(el as HTMLElement, id, options))
-        .flat(Infinity)
+      patchWrap(() =>
+        getAllElementsAndShadowRoots(container, options)
+          .map((el) => queryAllByAltText(el as HTMLElement, id, options))
+          .flat(Infinity)
       )
     ),
   ] as T[];
@@ -294,9 +302,10 @@ function queryAllByShadowTitle<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      patchWrap(() => getAllElementsAndShadowRoots(container, options)
-        .map((el) => queryAllByTitle(el as HTMLElement, id, options))
-        .flat(Infinity)
+      patchWrap(() =>
+        getAllElementsAndShadowRoots(container, options)
+          .map((el) => queryAllByTitle(el as HTMLElement, id, options))
+          .flat(Infinity)
       )
     ),
   ] as T[];
@@ -335,9 +344,10 @@ function queryAllByShadowTestId<T extends HTMLElement = HTMLElement>(
 
   return [
     ...new Set(
-      patchWrap(() => getAllElementsAndShadowRoots(container, options)
-        .map((el) => queryAllByTestId(el as HTMLElement, id, options))
-        .flat(Infinity)
+      patchWrap(() =>
+        getAllElementsAndShadowRoots(container, options)
+          .map((el) => queryAllByTestId(el as HTMLElement, id, options))
+          .flat(Infinity)
       )
     ),
   ] as T[];
