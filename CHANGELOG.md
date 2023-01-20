@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.9.1...v1.10.0) (2023-01-20)
+
+
+### Features
+
+* allow slots to aggregate projected elements ([#46](https://github.com/konnorrogers/shadow-dom-testing-library/issues/46)) ([bdd78e1](https://github.com/konnorrogers/shadow-dom-testing-library/commit/bdd78e18cc49ec2357aa999519d8fa75fd5df5ad))
+
 ### [1.9.1](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.9.0...v1.9.1) (2023-01-14)
 
 
