@@ -1,5 +1,6 @@
 import { prettyDOM, getConfig } from "@testing-library/dom";
 import type { Config, NewPlugin, Printer, Refs } from "pretty-format";
+import { patchWrap } from "./trick-dom-testing-library";
 
 // This regexp combo took way too long to figure out...
 const findWhiteSpace = /([^\S\r\n]*[\f\n\r\t\v]+)/.source;
@@ -26,10 +27,12 @@ export function prettyShadowDOM(
 
   options.plugins.push(plugin);
 
-  return prettyDOM(dom, maxLength, {
-    ...options,
-    plugins: [plugin],
-  });
+  return patchWrap(() =>
+    prettyDOM(dom, maxLength, {
+      ...options,
+      plugins: [plugin],
+    })
+  );
 }
 
 function escapeHTML(str: string): string {

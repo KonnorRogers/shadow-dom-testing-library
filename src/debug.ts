@@ -1,6 +1,5 @@
 import { screen } from "@testing-library/dom";
 import { logShadowDOM } from "./log-shadow-dom";
-import { prettyShadowDOM } from "./pretty-shadow-dom";
 
 export function debug(...args: Parameters<typeof screen.debug>) {
   let [element, maxLength, options] = args;
