@@ -116,6 +116,8 @@ class NestedShadowRootsElement extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
 			<duplicate-buttons></duplicate-buttons>
+
+			<slot></slot>
 		`;
 	}
 }
