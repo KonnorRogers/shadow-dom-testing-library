@@ -4,16 +4,15 @@ import {
   // screen
 } from "@testing-library/react"
 import { screen } from "../src/index"
-import { TripleShadowRoots, Duplicates } from "../components";
+import { TripleShadowRoots, NestedShadowRoots } from "../components";
 
 test("Should serialize custom elements properly", () => {
   render(
     <TripleShadowRoots>
-      <button>Button</button>
-      <Duplicates />
+      <NestedShadowRoots role="not-button" />
     </TripleShadowRoots>
   );
-  const btn = screen.getByShadowRole("button", { name: "Not found" })
-  // const btn = screen.getByRole("button", { name: "Not found" })
+  // const btn = screen.getByShadowRole("button", { name: "Not found" })
+  const btn = screen.getByRole("button")
   expect(btn).toBeInTheDocument()
 });
