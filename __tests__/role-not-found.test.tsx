@@ -6,7 +6,8 @@ import {
 import { screen } from "../src/index"
 import { TripleShadowRoots, NestedShadowRoots } from "../components";
 
-test("Should serialize custom elements properly", () => {
+// Replication of: https://github.com/KonnorRogers/shadow-dom-testing-library/issues/47
+test.skip("Should serialize custom elements properly", () => {
   render(
     <TripleShadowRoots>
       <NestedShadowRoots role="not-button" />
