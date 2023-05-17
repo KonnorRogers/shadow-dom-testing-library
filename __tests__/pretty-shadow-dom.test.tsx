@@ -143,6 +143,7 @@ test("It should render 3 shadow root instances", () => {
                     [36m/>[39m[0m
                   [36m</ShadowRoot>[39m
                 [36m</duplicate-buttons>[39m[0m
+                [36m<slot />[39m[0m
               [36m</ShadowRoot>[39m[0m
             [36m</nested-shadow-roots>[39m[0m
           [36m</ShadowRoot>[39m
