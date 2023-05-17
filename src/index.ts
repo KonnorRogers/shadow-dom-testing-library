@@ -8,20 +8,22 @@ import { shadowScreen } from "./shadow-screen";
 
 configure({
   // https://github.com/testing-library/dom-testing-library/blob/39a64d4b862f706d09f0cd225ce9eda892f1e8d8/src/config.ts#L36-L51
-  getElementError (message, container) {
-    const prettifiedDOM = prettyShadowDOM(container)
+  getElementError(message, container) {
+    const prettifiedDOM = prettyShadowDOM(container);
     const error = new Error(
       [
         message,
-        `Ignored nodes: comments, ${getConfig().defaultIgnore}\n${prettifiedDOM}`,
+        `Ignored nodes: comments, ${
+          getConfig().defaultIgnore
+        }\n${prettifiedDOM}`,
       ]
         .filter(Boolean)
-        .join('\n\n'),
-    )
-    error.name = 'ShadowDOMTestingLibraryElementError'
-    return error
-  }
-})
+        .join("\n\n")
+    );
+    error.name = "ShadowDOMTestingLibraryElementError";
+    return error;
+  },
+});
 
 const allQueries = {
   ...queries,
@@ -35,9 +37,7 @@ function shadowWithin(element: HTMLElement) {
 export * from "./types";
 export * from "./shadow-queries";
 
-export {
-  createDOMElementFilter
-} from "./pretty-shadow-dom"
+export { createDOMElementFilter } from "./pretty-shadow-dom";
 
 export {
   deepQuerySelector,
