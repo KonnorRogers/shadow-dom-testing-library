@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.10.0...v1.11.0) (2023-05-19)
+
+
+### Features
+
+* set the default `getElementError` to use prettyShadowDOM ([#48](https://github.com/konnorrogers/shadow-dom-testing-library/issues/48)) ([990872e](https://github.com/konnorrogers/shadow-dom-testing-library/commit/990872e432faa1c685b3f56df3050ce4b5d52f3a))
+
 ## [1.10.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.9.1...v1.10.0) (2023-01-20)
 
 
