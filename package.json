@@ -75,6 +75,6 @@
     "vitest": "^0.17.1"
   },
   "dependencies": {
-    "shadow-dom-walk": "^1.0.3"
+    "shadow-dom-walk": "^1.0.4"
   }
 }
