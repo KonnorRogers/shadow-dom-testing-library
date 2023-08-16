@@ -27,7 +27,7 @@ function removeDOMPatch() {
 }
 
 export function patchWrap<T extends (...args: any) => any>(
-  callback: T
+  callback: T,
 ): ReturnType<T> {
   patchDOM();
 

@@ -5,7 +5,7 @@ import { Container, ShadowOptions } from "./types";
 export function deepQuerySelector<T extends HTMLElement>(
   container: Container,
   selector: string,
-  options: ShadowOptions = { shallow: false, maxDepth: Infinity }
+  options: ShadowOptions = { shallow: false, maxDepth: Infinity },
 ): T | null {
   const els = deepQuerySelectorAll(container, selector, options);
 
@@ -31,7 +31,7 @@ export function deepQuerySelector<T extends HTMLElement>(
 export function deepQuerySelectorAll<T extends HTMLElement>(
   container: Container,
   selector: string,
-  options: ShadowOptions = { shallow: false, maxDepth: Infinity }
+  options: ShadowOptions = { shallow: false, maxDepth: Infinity },
 ): T[] {
   return patchWrap(() => {
     const elements = getAllElementsAndShadowRoots(container, options);
@@ -47,12 +47,14 @@ export function deepQuerySelectorAll<T extends HTMLElement>(
 // maybe an infinite generator in the future?
 export function getAllElementsAndShadowRoots(
   container: Container,
-  options: ShadowOptions = { shallow: false, maxDepth: Infinity }
+  options: ShadowOptions = { shallow: false, maxDepth: Infinity },
 ) {
   if (options.shallow === true) {
-    console.warn("The 'shallow' option will go away in v2.0.0 of SDTL. The replacement will be 'maxDepth: 1'")
-    options.maxDepth = 1
+    console.warn(
+      "The 'shallow' option will go away in v2.0.0 of SDTL. The replacement will be 'maxDepth: 1'",
+    );
+    options.maxDepth = 1;
   }
 
-  return findAllElements(container, options.maxDepth)
+  return findAllElements(container, options.maxDepth);
 }

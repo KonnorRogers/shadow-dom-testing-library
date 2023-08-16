@@ -18,7 +18,7 @@ configure({
         }\n${prettifiedDOM}`,
       ]
         .filter(Boolean)
-        .join("\n\n")
+        .join("\n\n"),
     );
     error.name = "ShadowDOMTestingLibraryElementError";
     return error;

@@ -10,11 +10,11 @@ test("Should aggregate content from slots", async () => {
         <img src="" /> <span>Start button</span>
       </button>
       <a href="#">Middle Link</a>
-    </Duplicates>
+    </Duplicates>,
   );
 
   const startSlot = el.container.firstElementChild?.shadowRoot?.querySelector(
-    "slot[name='start']"
+    "slot[name='start']",
   ) as HTMLSlotElement;
   const btn = await within(startSlot).findAllByShadowRole("button");
   expect(btn.length).toEqual(1);
@@ -25,14 +25,14 @@ test("Should aggregate content from slots", async () => {
   expect(within(startSlot).queryByShadowRole("link")).toBeNull;
 
   const defaultSlot = el.container.firstElementChild?.shadowRoot?.querySelector(
-    "slot:not([name])"
+    "slot:not([name])",
   ) as HTMLSlotElement;
   const anchor = await within(defaultSlot).findByShadowRole("link");
   expect(anchor).toBeInTheDocument();
 
   // Make sure default slot doesnt pick up start / end slot
   expect(
-    within(defaultSlot).queryByShadowRole("button")
+    within(defaultSlot).queryByShadowRole("button"),
   ).not.toBeInTheDocument();
   expect(within(defaultSlot).queryByShadowRole("img")).not.toBeInTheDocument();
 
@@ -44,11 +44,11 @@ test("slot aggregation should use slotted content instead of default content", (
   const el = render(
     <Select label="My Other Label">
       <span slot="label">My Label</span>
-    </Select>
+    </Select>,
   );
 
   const labelSlot = el.container.firstElementChild?.shadowRoot?.querySelector(
-    "slot[name='label']"
+    "slot[name='label']",
   ) as HTMLSlotElement;
 
   expect(within(labelSlot).queryByText("My Label")).toBeTruthy;
@@ -58,7 +58,7 @@ test("slot aggregation should use default items when not given slotted content",
   const el = render(<Select label="My Label"></Select>);
 
   const labelSlot = el.container.firstElementChild?.shadowRoot?.querySelector(
-    "slot[name='label']"
+    "slot[name='label']",
   ) as HTMLSlotElement;
 
   expect(within(labelSlot).queryByText("My Label")).toBeTruthy;

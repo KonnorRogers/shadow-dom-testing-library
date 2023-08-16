@@ -51,8 +51,8 @@ function queryAllByShadowRole<T extends HTMLElement = HTMLElement>(
       patchWrap(() =>
         getAllElementsAndShadowRoots(container, options)
           .map((el) => queryAllByRole(el as HTMLElement, role, options))
-          .flat(Infinity)
-      )
+          .flat(Infinity),
+      ),
     ),
   ] as T[];
 }
@@ -72,8 +72,8 @@ const [
   buildQueries<ScreenShadowRoleMatcherParams>(
     queryAllByShadowRole,
     getMultipleRoleError,
-    getMissingRoleError
-  )
+    getMissingRoleError,
+  ),
 );
 
 // Label Text
@@ -93,8 +93,8 @@ function queryAllByShadowLabelText<T extends HTMLElement = HTMLElement>(
       patchWrap(() =>
         getAllElementsAndShadowRoots(container, options)
           .map((el) => queryAllByLabelText(el as HTMLElement, id, options))
-          .flat(Infinity)
-      )
+          .flat(Infinity),
+      ),
     ),
   ] as T[];
 }
@@ -114,8 +114,8 @@ const [
   buildQueries<ScreenShadowSelectorMatcherParams>(
     queryAllByShadowLabelText,
     getMultipleLabelTextError,
-    getMissingLabelTextError
-  )
+    getMissingLabelTextError,
+  ),
 );
 
 // Placeholder Text
@@ -135,10 +135,10 @@ function queryAllByShadowPlaceholderText<T extends HTMLElement = HTMLElement>(
       patchWrap(() =>
         getAllElementsAndShadowRoots(container, options)
           .map((el) =>
-            queryAllByPlaceholderText(el as HTMLElement, id, options)
+            queryAllByPlaceholderText(el as HTMLElement, id, options),
           )
-          .flat(Infinity)
-      )
+          .flat(Infinity),
+      ),
     ),
   ] as T[];
 }
@@ -158,8 +158,8 @@ const [
   buildQueries<ScreenShadowSelectorMatcherParams>(
     queryAllByShadowPlaceholderText,
     getMultiplePlaceholderTextError,
-    getMissingPlaceholderTextError
-  )
+    getMissingPlaceholderTextError,
+  ),
 );
 
 // Text
@@ -179,8 +179,8 @@ function queryAllByShadowText<T extends HTMLElement = HTMLElement>(
       patchWrap(() =>
         getAllElementsAndShadowRoots(container, options)
           .map((el) => queryAllByText(el as HTMLElement, id, options))
-          .flat(Infinity)
-      )
+          .flat(Infinity),
+      ),
     ),
   ] as T[];
 }
@@ -200,8 +200,8 @@ const [
   buildQueries<ScreenShadowSelectorMatcherParams>(
     queryAllByShadowText,
     getMultipleTextError,
-    getMissingTextError
-  )
+    getMissingTextError,
+  ),
 );
 
 // Display Value
@@ -221,8 +221,8 @@ function queryAllByShadowDisplayValue<T extends HTMLElement = HTMLElement>(
       patchWrap(() =>
         getAllElementsAndShadowRoots(container, options)
           .map((el) => queryAllByDisplayValue(el as HTMLElement, id, options))
-          .flat(Infinity)
-      )
+          .flat(Infinity),
+      ),
     ),
   ] as T[];
 }
@@ -242,8 +242,8 @@ const [
   buildQueries<ScreenShadowSelectorMatcherParams>(
     queryAllByShadowDisplayValue,
     getMultipleDisplayValueError,
-    getMissingDisplayValueError
-  )
+    getMissingDisplayValueError,
+  ),
 );
 
 // Alt Text
@@ -263,8 +263,8 @@ function queryAllByShadowAltText<T extends HTMLElement = HTMLElement>(
       patchWrap(() =>
         getAllElementsAndShadowRoots(container, options)
           .map((el) => queryAllByAltText(el as HTMLElement, id, options))
-          .flat(Infinity)
-      )
+          .flat(Infinity),
+      ),
     ),
   ] as T[];
 }
@@ -284,8 +284,8 @@ const [
   buildQueries<ScreenShadowMatcherParams>(
     queryAllByShadowAltText,
     getMultipleAltTextError,
-    getMissingAltTextError
-  )
+    getMissingAltTextError,
+  ),
 );
 
 // Title
@@ -305,8 +305,8 @@ function queryAllByShadowTitle<T extends HTMLElement = HTMLElement>(
       patchWrap(() =>
         getAllElementsAndShadowRoots(container, options)
           .map((el) => queryAllByTitle(el as HTMLElement, id, options))
-          .flat(Infinity)
-      )
+          .flat(Infinity),
+      ),
     ),
   ] as T[];
 }
@@ -326,8 +326,8 @@ const [
   buildQueries<ScreenShadowMatcherParams>(
     queryAllByShadowTitle,
     getMultipleTitleError,
-    getMissingTitleError
-  )
+    getMissingTitleError,
+  ),
 );
 
 // Test Id
@@ -347,8 +347,8 @@ function queryAllByShadowTestId<T extends HTMLElement = HTMLElement>(
       patchWrap(() =>
         getAllElementsAndShadowRoots(container, options)
           .map((el) => queryAllByTestId(el as HTMLElement, id, options))
-          .flat(Infinity)
-      )
+          .flat(Infinity),
+      ),
     ),
   ] as T[];
 }
@@ -368,8 +368,8 @@ const [
   buildQueries<ScreenShadowMatcherParams>(
     queryAllByShadowTestId,
     getMultipleTestIdError,
-    getMissingTestIdError
-  )
+    getMissingTestIdError,
+  ),
 );
 
 export {

@@ -30,7 +30,7 @@ describe("ShadowText()", () => {
     });
 
     const el = (await fixture(
-      html`<shadow-text></shadow-text>`
+      html`<shadow-text></shadow-text>`,
     )) as HTMLElement;
     await nextFrame();
 
@@ -50,7 +50,7 @@ describe("ShadowText()", () => {
 
   it("should not suggest light dom queries", async () => {
     const el = (await fixture(
-      html`<shadow-text></shadow-text>`
+      html`<shadow-text></shadow-text>`,
     )) as HTMLElement;
     await nextFrame();
 
