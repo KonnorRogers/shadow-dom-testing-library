@@ -8,7 +8,7 @@ const findWhiteSpace = /([^\S\r\n]*[\f\n\r\t\v]+)/.source;
 function removeDuplicateNewLines(str: string) {
   let final = str.replace(
     new RegExp(`${findWhiteSpace}.*${findWhiteSpace}{2,}`, "g"),
-    ""
+    "",
   );
   return final;
 }
@@ -19,7 +19,7 @@ export function prettyShadowDOM(
   let [dom, maxLength, options] = args;
 
   const plugin: NewPlugin = createDOMElementFilter(
-    options?.filterNode || filterCommentsAndDefaultIgnoreTagsTags
+    options?.filterNode || filterCommentsAndDefaultIgnoreTagsTags,
   );
 
   if (options == null) options = {};
@@ -31,7 +31,7 @@ export function prettyShadowDOM(
     prettyDOM(dom, maxLength, {
       ...options,
       plugins: [plugin],
-    })
+    }),
   );
 }
 
@@ -56,7 +56,7 @@ const printProps = (
   indentation: string,
   depth: number,
   refs: Refs,
-  printer: Printer
+  printer: Printer,
 ): string => {
   const indentationNext = indentation + config.indent;
   const colors = config.colors;
@@ -103,7 +103,7 @@ const printChildren = (
   indentation: string,
   depth: number,
   refs: Refs,
-  printer: Printer
+  printer: Printer,
 ): string =>
   removeDuplicateNewLines(
     children
@@ -124,7 +124,7 @@ const printChildren = (
         }
         return config.spacingOuter + indentation + printedChild;
       })
-      .join("")
+      .join(""),
   );
 
 const printText = (text: string, config: Config): string => {
@@ -152,7 +152,7 @@ const printElement = (
   printedProps: string,
   printedChildren: string,
   config: Config,
-  indentation: string
+  indentation: string,
 ): string => {
   const tagColor = config.colors.tag;
 
@@ -234,16 +234,16 @@ function nodeIsComment(node: HandledType): node is Comment {
 }
 
 function nodeIsFragment(
-  node: HandledType
+  node: HandledType,
 ): node is DocumentFragment | ShadowRoot {
   return node.nodeType === FRAGMENT_NODE;
 }
 
 export function createDOMElementFilter(
-  filterNode: (node: Node) => boolean
+  filterNode: (node: Node) => boolean,
 ): NewPlugin {
   function getChildren(
-    node: Element | DocumentFragment | ShadowRoot
+    node: Element | DocumentFragment | ShadowRoot,
   ): (Node | Element | ShadowRoot)[] {
     const children: (Node | Element | ShadowRoot)[] =
       Array.prototype.slice.call(node.childNodes || node.children);
@@ -267,7 +267,7 @@ export function createDOMElementFilter(
       indentation: string,
       depth: number,
       refs: Refs,
-      printer: Printer
+      printer: Printer,
     ) => {
       if (nodeIsText(node)) {
         return printText(node.data, config);
@@ -304,13 +304,13 @@ export function createDOMElementFilter(
                   props[attribute.name] = attribute.value;
                   return props;
                 },
-                {}
+                {},
               ),
           config,
           indentation + config.indent,
           depth,
           refs,
-          printer
+          printer,
         ),
         printChildren(
           getChildren(node) as unknown[],
@@ -318,10 +318,10 @@ export function createDOMElementFilter(
           indentation + config.indent,
           depth,
           refs,
-          printer
+          printer,
         ),
         config,
-        indentation
+        indentation,
       );
     },
   };
