@@ -11,7 +11,7 @@ test.skip("Should serialize custom elements properly", () => {
   render(
     <TripleShadowRoots>
       <NestedShadowRoots role="not-button" />
-    </TripleShadowRoots>
+    </TripleShadowRoots>,
   );
   // const btn = screen.getByShadowRole("button", { name: "Not found" })
   const btn = screen.getByRole("button");

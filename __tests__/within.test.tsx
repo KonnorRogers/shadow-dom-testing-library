@@ -12,7 +12,7 @@ describe("within", () => {
       <Select label={selectLabel}>
         <option>{optionLabel}</option>
         <option>Option two</option>
-      </Select>
+      </Select>,
     );
 
     const shadowSelect = await screen.findByShadowRole("combobox");
@@ -30,7 +30,7 @@ describe("within", () => {
   it("Should find the nested button", async () => {
     render(<Duplicates />);
     const btns = await within(
-      document.querySelector("duplicate-buttons") as HTMLElement
+      document.querySelector("duplicate-buttons") as HTMLElement,
     ).findAllByShadowRole("button");
     expect(btns).toHaveLength(2);
     btns.forEach((btn) => expect(btn).toBeInstanceOf(HTMLButtonElement));

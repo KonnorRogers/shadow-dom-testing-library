@@ -15,13 +15,13 @@ describe("deepQuerySelector()", () => {
       ?.shadowRoot?.querySelectorAll("button")[1];
 
     expect(deepQuerySelector(container, "button")).toBeInstanceOf(
-      HTMLButtonElement
+      HTMLButtonElement,
     );
     expect(deepQuerySelector(container, "button")).toBe(btn);
     expect(deepQuerySelector(container, "button")).not.toBe(secondButton);
 
     expect(deepQuerySelector(baseElement, "button")).toBeInstanceOf(
-      HTMLButtonElement
+      HTMLButtonElement,
     );
     expect(deepQuerySelector(baseElement, "button")).toBe(btn);
     expect(deepQuerySelector(baseElement, "button")).not.toBe(secondButton);
@@ -58,7 +58,7 @@ describe("deepQuerySelectorAll()", () => {
 
     btns = deepQuerySelectorAll(
       document.querySelector("duplicate-buttons") as HTMLElement,
-      "button"
+      "button",
     );
     expect(btns).toHaveLength(2);
     btns.forEach((btn) => expect(btn).toBeInstanceOf(HTMLButtonElement));

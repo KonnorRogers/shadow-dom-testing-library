@@ -30,7 +30,7 @@ test("Single shadow root", async () => {
       <div slot="start">Start Slot</div>
       <div>Default Slot</div>
       <div slot="end">End Slot</div>
-    </Duplicates>
+    </Duplicates>,
   );
 
   screen.debug();

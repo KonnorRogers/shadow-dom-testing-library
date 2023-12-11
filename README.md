@@ -280,3 +280,12 @@ const screen = {
 
 screen.getByShadowRole("button");
 ```
+
+## Usage with TypeScript
+
+```ts
+import { screen, shadowQueries } from "shadow-dom-testing-library";
+
+const btn = await screen.findByShadowRole<HTMLButtonElement>("button");
+const btn = shadowQueries.getByShadowRole<HTMLButtonElement>("button");
+```

@@ -19,12 +19,12 @@ test("Should error if two similiar nodes actually exist", async () => {
     <>
       <h2>Hello</h2>
       <h2>Hello</h2>
-    </>
+    </>,
   );
 
   expect(() => screen.getByShadowText("Hello")).toThrow(/multiple elements/i);
   await expect(() => screen.findByShadowText("Hello")).rejects.toThrow(
-    /multiple elements/i
+    /multiple elements/i,
   );
 });
 
@@ -32,7 +32,7 @@ test("Should error if two similar nodes are in shadow root", async () => {
   render(<Duplicates />);
   expect(() => screen.getByShadowRole("button")).toThrow(/multiple elements/i);
   await expect(() => screen.findByShadowRole("button")).rejects.toThrow(
-    /multiple elements/i
+    /multiple elements/i,
   );
 });
 
@@ -41,7 +41,7 @@ test("Should find duplicate nodes in a double nested shadow root", async () => {
 
   expect(() => screen.getByShadowRole("button")).toThrow(/multiple elements/i);
   await expect(() => screen.findByShadowRole("button")).rejects.toThrow(
-    /multiple elements/i
+    /multiple elements/i,
   );
 });
 
@@ -50,6 +50,6 @@ test("Should find duplicate nodes in a triple nested shadow root", async () => {
 
   expect(() => screen.getByShadowRole("button")).toThrow(/multiple elements/i);
   await expect(() => screen.findByShadowRole("button")).rejects.toThrow(
-    /multiple elements/i
+    /multiple elements/i,
   );
 });

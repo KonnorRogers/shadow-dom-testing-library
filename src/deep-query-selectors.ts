@@ -4,7 +4,7 @@ import { Container, ShadowOptions } from "./types";
 export function deepQuerySelector<T extends HTMLElement>(
   container: Container,
   selector: string,
-  options: ShadowOptions = { shallow: false }
+  options: ShadowOptions = { shallow: false },
 ): T | null {
   const els = deepQuerySelectorAll(container, selector, options);
 
@@ -30,7 +30,7 @@ export function deepQuerySelector<T extends HTMLElement>(
 export function deepQuerySelectorAll<T extends HTMLElement>(
   container: Container,
   selector: string,
-  options: ShadowOptions = { shallow: false }
+  options: ShadowOptions = { shallow: false },
 ): T[] {
   return patchWrap(() => {
     const elements = getAllElementsAndShadowRoots(container, options);
@@ -46,7 +46,7 @@ export function deepQuerySelectorAll<T extends HTMLElement>(
 // maybe an infinite generator in the future?
 export function getAllElementsAndShadowRoots(
   container: Container,
-  options: ShadowOptions = { shallow: false }
+  options: ShadowOptions = { shallow: false },
 ) {
   const selector = "*";
   return recurse(container, selector, options);
@@ -57,7 +57,7 @@ function recurse(
   selector: string,
   options: ShadowOptions = { shallow: false },
   elementsToProcess: (Element | ShadowRoot | Document)[] = [],
-  elements: (Element | ShadowRoot | Document)[] = []
+  elements: (Element | ShadowRoot | Document)[] = [],
 ) {
   // if "document" is passed in, it will also pick up "<html>" causing the query to run twice.
   if (container instanceof Document) {

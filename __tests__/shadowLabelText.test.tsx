@@ -11,12 +11,11 @@ describe("ByShadowLabelText()", () => {
     const findContainerLabel = await findByShadowLabelText(
       container,
       /omments/,
-      { exact: false }
+      { exact: false },
     );
     expect(findContainerLabel).toBeInTheDocument();
-    const findContainerLabels = await screen.findAllByShadowLabelText(
-      "Comments"
-    );
+    const findContainerLabels =
+      await screen.findAllByShadowLabelText("Comments");
     expect(findContainerLabels.length).toBeGreaterThan(0);
 
     const queryContainerLabel = screen.queryByShadowLabelText("Comments");
