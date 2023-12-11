@@ -13,8 +13,8 @@
   },
   "scripts": {
     "test": "vitest run",
-    "format": "npx prettier ./src ./__tests__ ./README.md --write",
-    "check": "npx prettier ./src ./__tests__ ./README.md --check",
+    "format": "prettier ./src ./__tests__ ./README.md --write",
+    "check": "prettier ./src ./__tests__ ./README.md --check",
     "test:watch": "vitest",
     "test:ci": "npm run build && npm run test && npm run jest",
     "jest": "jest",
@@ -64,6 +64,7 @@
     "jest-environment-jsdom": "^28.1.2",
     "jest-preview": "^0.2.6",
     "jsdom": "^20.0.2",
+    "prettier": "^3.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "standard-version": "^9.5.0",

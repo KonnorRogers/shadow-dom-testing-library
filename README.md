@@ -286,6 +286,6 @@ screen.getByShadowRole("button");
 ```ts
 import { screen, shadowQueries } from "shadow-dom-testing-library";
 
-const btn = await screen.findByShadowRole<HTMLButtonElement>("button")
-const btn = shadowQueries.getByShadowRole<HTMLButtonElement>("button")
+const btn = await screen.findByShadowRole<HTMLButtonElement>("button");
+const btn = shadowQueries.getByShadowRole<HTMLButtonElement>("button");
 ```
