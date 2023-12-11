@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.1](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.11.0...v1.11.1) (2023-12-11)
+
+
+### Bug Fixes
+
+* **types:** add TypeScript generics for queries ([#53](https://github.com/konnorrogers/shadow-dom-testing-library/issues/53)) ([c9b0172](https://github.com/konnorrogers/shadow-dom-testing-library/commit/c9b01722a862937888f646801a784c70033009fb))
+
 ## [1.11.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.10.0...v1.11.0) (2023-05-19)
 
 
