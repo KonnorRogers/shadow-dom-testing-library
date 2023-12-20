@@ -7,7 +7,7 @@ const allQueries = {
   ...shadowQueries,
 };
 
-function shadowWithin(element: HTMLElement) {
+export function shadowWithin(element: HTMLElement) {
   const withinObj = within(element, allQueries);
 
   // This is a gross and ugly hack. However, the `allQueries` function from RTL doesn't
@@ -328,7 +328,3 @@ function shadowWithin(element: HTMLElement) {
 
   return finalObj;
 }
-
-shadowWithin(document.documentElement).findByShadowRole<HTMLButtonElement>(
-  "button",
-);
