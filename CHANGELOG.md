@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.2](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.11.1...v1.11.2) (2023-12-20)
+
+
+### Bug Fixes
+
+* **types:** add generics for within queries ([#54](https://github.com/konnorrogers/shadow-dom-testing-library/issues/54)) ([f5a8bf6](https://github.com/konnorrogers/shadow-dom-testing-library/commit/f5a8bf6fb8b84fb862f6598faf0754355414f15b))
+
 ### [1.11.1](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.11.0...v1.11.1) (2023-12-11)
 
 
