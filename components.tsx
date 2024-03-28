@@ -115,7 +115,7 @@ class NestedShadowRootsElement extends HTMLElement {
 		if (this.isConnected === false) return ""
 
     this.shadowRoot.innerHTML = `
-			<duplicate-buttons></duplicate-buttons>
+			<duplicate-buttons data-cy="duplicate-buttons"></duplicate-buttons>
 
 			<slot></slot>
 		`;
