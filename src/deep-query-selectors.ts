@@ -117,7 +117,7 @@ function recurse(
         // This is here because queryByRole() requires the parent element which in some cases is the shadow root.
         elements.push(el.shadowRoot);
 
-        if (options.depth <= currentDepth) {
+        if (options.depth && options.depth <= currentDepth) {
           el.shadowRoot.querySelectorAll(selector).forEach((el) => {
             elements.push(el);
           });
