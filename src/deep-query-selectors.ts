@@ -1,20 +1,22 @@
 import { patchWrap } from "./trick-dom-testing-library";
 import { Container, ShadowOptions } from "./types";
 
-function fixOptions (options: ShadowOptions) {
+function fixOptions(options: ShadowOptions) {
   if (options.shallow != null) {
-    console.warn(`The "shallow" option will be removed in the next major release. Please use "{depth: 1}" to maintain the same functionality.`)
+    console.warn(
+      `The "shallow" option will be removed in the next major release. Please use "{depth: 1}" to maintain the same functionality.`,
+    );
 
     if (options.shallow === true) {
-      options.depth = 1
+      options.depth = 1;
     }
   }
 
   if (!options.depth) {
-    options.depth = Infinity
+    options.depth = Infinity;
   }
 
-  return options
+  return options;
 }
 
 export function deepQuerySelector<T extends HTMLElement>(
@@ -22,7 +24,7 @@ export function deepQuerySelector<T extends HTMLElement>(
   selector: string,
   options: ShadowOptions = { shallow: false, depth: Infinity },
 ): T | null {
-  options = fixOptions(options)
+  options = fixOptions(options);
 
   const els = deepQuerySelectorAll(container, selector, options);
 
@@ -50,7 +52,7 @@ export function deepQuerySelectorAll<T extends HTMLElement>(
   selector: string,
   options: ShadowOptions = { shallow: false, depth: Infinity },
 ): T[] {
-  options = fixOptions(options)
+  options = fixOptions(options);
 
   return patchWrap(() => {
     const elements = getAllElementsAndShadowRoots(container, options);
@@ -68,7 +70,7 @@ export function getAllElementsAndShadowRoots(
   container: Container,
   options: ShadowOptions = { shallow: false, depth: Infinity },
 ) {
-  options = fixOptions(options)
+  options = fixOptions(options);
   const selector = "*";
 
   return recurse(container, selector, options);
@@ -82,7 +84,6 @@ function recurse(
   elements: (Element | ShadowRoot | Document)[] = [],
   currentDepth = 1,
 ) {
-
   // if "document" is passed in, it will also pick up "<html>" causing the query to run twice.
   if (container instanceof Document) {
     container = document.documentElement;
@@ -129,7 +130,14 @@ function recurse(
           elements.push(el);
           elementsToProcess.push(el);
         });
-        recurse(el.shadowRoot, selector, options, elementsToProcess, elements, currentDepth);
+        recurse(
+          el.shadowRoot,
+          selector,
+          options,
+          elementsToProcess,
+          elements,
+          currentDepth,
+        );
       });
   });
 
