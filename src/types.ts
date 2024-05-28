@@ -12,7 +12,7 @@ export type Container = HTMLElement | Document | ShadowRoot;
 // Allow shallow queries to be appended to the default options of DOM testing library
 export interface ShadowOptions {
   shallow?: boolean;
-  depth?: number;
+  depth: number;
 }
 export interface ShadowByRoleOptions extends ByRoleOptions, ShadowOptions {}
 export interface ShadowMatcherOptions extends MatcherOptions, ShadowOptions {}
