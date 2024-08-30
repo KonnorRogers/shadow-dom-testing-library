@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.3](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.11.2...v1.11.3) (2024-08-30)
+
+
+### Bug Fixes
+
+* account for \r\n and \r line endings in pretty shadow dom ([12e927a](https://github.com/konnorrogers/shadow-dom-testing-library/commit/12e927af6bc63befd9bc6a0375b9eb0094d027de))
+
 ### [1.11.2](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.11.1...v1.11.2) (2023-12-20)
 
 
