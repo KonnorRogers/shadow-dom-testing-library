@@ -3,7 +3,7 @@ import type { Config, NewPlugin, Printer, Refs } from "pretty-format";
 import { patchWrap } from "./trick-dom-testing-library";
 
 // This regexp combo took way too long to figure out...
-const findWhiteSpace = /([^\S\r\n]*[\f\n\r\t\v]+)/.source;
+const findWhiteSpace = /([^\S(\r\n|\r|\n)]*[\f\n\r\t\v]+)/.source;
 
 function removeDuplicateNewLines(str: string) {
   let final = str.replace(
