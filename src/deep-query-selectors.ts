@@ -1,11 +1,31 @@
 import { patchWrap } from "./trick-dom-testing-library";
 import { Container, ShadowOptions } from "./types";
 
+function fixOptions(options: ShadowOptions) {
+  if (options.shallow != null) {
+    console.warn(
+      `The "shallow" option will be removed in the next major release. Please use "{depth: 1}" to maintain the same functionality.`,
+    );
+
+    if (options.shallow === true) {
+      options.depth = 1;
+    }
+  }
+
+  if (!options.depth) {
+    options.depth = Infinity;
+  }
+
+  return options;
+}
+
 export function deepQuerySelector<T extends HTMLElement>(
   container: Container,
   selector: string,
-  options: ShadowOptions = { shallow: false },
+  options: ShadowOptions = { shallow: false, depth: Infinity },
 ): T | null {
+  options = fixOptions(options);
+
   const els = deepQuerySelectorAll(container, selector, options);
 
   if (Array.isArray(els) && els.length > 0) {
@@ -30,8 +50,10 @@ export function deepQuerySelector<T extends HTMLElement>(
 export function deepQuerySelectorAll<T extends HTMLElement>(
   container: Container,
   selector: string,
-  options: ShadowOptions = { shallow: false },
+  options: ShadowOptions = { shallow: false, depth: Infinity },
 ): T[] {
+  options = fixOptions(options);
+
   return patchWrap(() => {
     const elements = getAllElementsAndShadowRoots(container, options);
 
@@ -46,18 +68,21 @@ export function deepQuerySelectorAll<T extends HTMLElement>(
 // maybe an infinite generator in the future?
 export function getAllElementsAndShadowRoots(
   container: Container,
-  options: ShadowOptions = { shallow: false },
+  options: ShadowOptions = { shallow: false, depth: Infinity },
 ) {
+  options = fixOptions(options);
   const selector = "*";
+
   return recurse(container, selector, options);
 }
 
 function recurse(
   container: Container,
   selector: string,
-  options: ShadowOptions = { shallow: false },
+  options: ShadowOptions = { shallow: false, depth: Infinity },
   elementsToProcess: (Element | ShadowRoot | Document)[] = [],
   elements: (Element | ShadowRoot | Document)[] = [],
+  currentDepth = 1,
 ) {
   // if "document" is passed in, it will also pick up "<html>" causing the query to run twice.
   if (container instanceof Document) {
@@ -92,18 +117,27 @@ function recurse(
         // This is here because queryByRole() requires the parent element which in some cases is the shadow root.
         elements.push(el.shadowRoot);
 
-        if (options.shallow === true) {
+        if (options.depth && options.depth <= currentDepth) {
           el.shadowRoot.querySelectorAll(selector).forEach((el) => {
             elements.push(el);
           });
           return;
         }
 
+        currentDepth++;
+
         el.shadowRoot.querySelectorAll(selector).forEach((el) => {
           elements.push(el);
           elementsToProcess.push(el);
         });
-        recurse(el.shadowRoot, selector, options, elementsToProcess, elements);
+        recurse(
+          el.shadowRoot,
+          selector,
+          options,
+          elementsToProcess,
+          elements,
+          currentDepth,
+        );
       });
   });
 
