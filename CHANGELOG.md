@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.11.3...v1.12.0) (2025-02-28)
+
+
+### Features
+
+* add depth option, deprecate 'shallow' option ([#59](https://github.com/konnorrogers/shadow-dom-testing-library/issues/59)) ([2a0f63d](https://github.com/konnorrogers/shadow-dom-testing-library/commit/2a0f63d7a008b0147d339b9091878b097914a92e))
+
 ### [1.11.3](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.11.2...v1.11.3) (2024-08-30)
 
 
