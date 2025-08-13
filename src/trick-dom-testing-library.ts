@@ -18,18 +18,20 @@ patchShadowRoot();
 // https://github.com/testing-library/dom-testing-library/blob/73a5694529dbfff289f3d7a01470c45ef5c77715/src/queries/text.ts#L34-L36
 // https://github.com/testing-library/dom-testing-library/blob/73a5694529dbfff289f3d7a01470c45ef5c77715/src/pretty-dom.js#L50-L54
 export function patchDOM() {
-  patchSlotElement();
+  // Return "dispose" callbacks to cleanup patchs
+  return [patchSlotElement()];
 }
 
-function removeDOMPatch() {
-  HTMLSlotElement.prototype.querySelectorAll =
-    HTMLElement.prototype.querySelectorAll;
+function removeDOMPatch(patchRemovalFunctions: Function[]) {
+  for (const fn of patchRemovalFunctions) {
+    fn();
+  }
 }
 
 export function patchWrap<T extends (...args: any) => any>(
   callback: T,
 ): ReturnType<T> {
-  patchDOM();
+  const patchRemovalFunctions = patchDOM();
 
   try {
     const val = callback();
@@ -41,12 +43,12 @@ export function patchWrap<T extends (...args: any) => any>(
       "finally" in val &&
       typeof val.finally === "function"
     ) {
-      val.finally(() => removeDOMPatch());
+      val.finally(() => removeDOMPatch(patchRemovalFunctions));
     }
 
     return val;
   } finally {
-    removeDOMPatch();
+    removeDOMPatch(patchRemovalFunctions);
   }
 }
 
@@ -81,8 +83,34 @@ function patchShadowRoot() {
 }
 
 function patchSlotElement() {
+  const qsa = HTMLElement.prototype.querySelectorAll;
+  const originalChildNodesDescriptor = Object.getOwnPropertyDescriptor(
+    Node.prototype,
+    "childNodes",
+  );
+  const originalChildNodesGetter = originalChildNodesDescriptor!.get;
+
+  /**
+   * This patch allows labels to get proper textContent, and most likely other text helpers by taking either the projected nodes, or the fallback nodes.
+   * https://github.com/KonnorRogers/shadow-dom-testing-library/issues/64#issuecomment-3177493042
+   * https://github.com/testing-library/dom-testing-library/blob/225a3e4cfaa8f8046989d51b9051df507354b644/src/label-helpers.ts#L13-L35
+   */
+  Object.defineProperty(HTMLSlotElement.prototype, "childNodes", {
+    get() {
+      const projectedNodes: Node[] = this.assignedNodes({ flatten: true });
+
+      // Slotted elements, use those.
+      if (projectedNodes.length > 0) {
+        return projectedNodes;
+      }
+      // if no assignedNodes, return original `childNodes`.
+      return originalChildNodesGetter!.call(this);
+    },
+    enumerable: true,
+    configurable: true,
+  });
+
   HTMLSlotElement.prototype.querySelectorAll = function (str: string) {
-    const qsa = HTMLElement.prototype.querySelectorAll;
     let els: Element[] = [];
 
     this.assignedElements({ flatten: true }).forEach((_el) => {
@@ -109,5 +137,18 @@ function patchSlotElement() {
     return [...new Set(els)] as unknown as ReturnType<
       typeof HTMLSlotElement.prototype.querySelectorAll
     >;
+  };
+
+  return () => {
+    HTMLSlotElement.prototype.querySelectorAll = qsa;
+
+    // There's no way to `delete` a newly defined property, so we just call the original descriptor.
+    Object.defineProperty(HTMLSlotElement.prototype, "childNodes", {
+      get() {
+        return originalChildNodesGetter!.call(this);
+      },
+      enumerable: true,
+      configurable: true,
+    });
   };
 }

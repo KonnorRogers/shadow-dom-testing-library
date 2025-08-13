@@ -32,7 +32,7 @@ class MyTextArea extends HTMLElement {
 		if (this.shadowRoot == null) return ""
 
     this.shadowRoot.innerHTML = `
-			<label for="textarea">${this.label}</label>
+			<label for="textarea"><slot name="label">${this.label}</slot></label>
 
 			<textarea id="textarea"><slot></slot></textarea>
 		`;
@@ -222,7 +222,7 @@ export function Button() {
 }
 
 
-export const TextArea = () => <my-text-area label="Comments" />
+export const TextArea = (props: any) => <my-text-area label="Comments">{props.children}</my-text-area>
 
 export const AnimatedImage = () => (
   <my-image
