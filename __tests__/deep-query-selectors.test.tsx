@@ -37,9 +37,9 @@ describe("deepQuerySelector()", () => {
 
   test("Should not find and 3rd level button element when shallow is true", () => {
     const { container, baseElement } = render(<TripleShadowRoots />);
-    let el = deepQuerySelector(container, "button", { shallow: true });
+    let el = deepQuerySelector(container, "button", { depth: 1 });
     expect(el).not.toBeInstanceOf(HTMLButtonElement);
-    el = deepQuerySelector(baseElement, "button", { shallow: true });
+    el = deepQuerySelector(baseElement, "button", { depth: 1 });
     expect(el).not.toBeInstanceOf(HTMLButtonElement);
   });
 });

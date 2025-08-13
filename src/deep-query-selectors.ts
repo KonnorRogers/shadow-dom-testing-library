@@ -2,9 +2,9 @@ import { patchWrap } from "./trick-dom-testing-library";
 import { Container, ShadowOptions } from "./types";
 
 function fixOptions(options: ShadowOptions) {
-  if (options.shallow != null) {
+  if (options.shallow === true && options.depth !== 1) {
     console.warn(
-      `The "shallow" option will be removed in the next major release. Please use "{depth: 1}" to maintain the same functionality.`,
+      `The "shallow" option will be removed in the next major release. Please use "{depth: 1}" to maintain the same functionality as {shallow: true}.`,
     );
 
     if (options.shallow === true) {
@@ -52,10 +52,11 @@ export function deepQuerySelectorAll<T extends HTMLElement>(
   selector: string,
   options: ShadowOptions = { shallow: false, depth: Infinity },
 ): T[] {
-  options = fixOptions(options);
-
   return patchWrap(() => {
-    const elements = getAllElementsAndShadowRoots(container, options);
+    const elements = getAllElementsAndShadowRoots(
+      container,
+      fixOptions(options),
+    );
 
     const queriedElements = elements
       .map((el) => Array.from(el.querySelectorAll<T>(selector)))
@@ -70,10 +71,9 @@ export function getAllElementsAndShadowRoots(
   container: Container,
   options: ShadowOptions = { shallow: false, depth: Infinity },
 ) {
-  options = fixOptions(options);
   const selector = "*";
 
-  return recurse(container, selector, options);
+  return recurse(container, selector, fixOptions(options));
 }
 
 function recurse(

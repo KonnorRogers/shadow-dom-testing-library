@@ -6,6 +6,7 @@ import { logShadowDOM } from "./log-shadow-dom";
 import { prettyShadowDOM } from "./pretty-shadow-dom";
 import { shadowScreen } from "./shadow-screen";
 import { shadowWithin } from "./shadow-within";
+import { logRoles } from "./log-roles";
 
 configure({
   // https://github.com/testing-library/dom-testing-library/blob/39a64d4b862f706d09f0cd225ce9eda892f1e8d8/src/config.ts#L36-L51
@@ -44,4 +45,5 @@ export {
   debug,
   logShadowDOM,
   prettyShadowDOM,
+  logRoles,
 };

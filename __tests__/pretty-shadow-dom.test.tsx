@@ -53,7 +53,9 @@ test("Should test shadow roots of passing in element", async () => {
     "[36m<my-button>[39m
       [36m<ShadowRoot>[39m
         [36m<button>[39m
-          [36m<slot />[39m
+          [36m<slot>[39m
+            [0m0[0m
+          [36m</slot>[39m
         [36m</button>[39m
       [36m</ShadowRoot>[39m
       [0m0[0m
@@ -76,7 +78,9 @@ test("Should render body if passed in", () => {
         [36m<my-button>[39m
           [36m<ShadowRoot>[39m
             [36m<button>[39m
-              [36m<slot />[39m
+              [36m<slot>[39m
+                [0m0[0m
+              [36m</slot>[39m
             [36m</button>[39m
           [36m</ShadowRoot>[39m
           [0m0[0m
@@ -101,7 +105,9 @@ test("Should render HTML tag if passed in", () => {
         [36m<my-button>[39m
           [36m<ShadowRoot>[39m
             [36m<button>[39m
-              [36m<slot />[39m
+              [36m<slot>[39m
+                [0m0[0m
+              [36m</slot>[39m
             [36m</button>[39m
           [36m</ShadowRoot>[39m
           [0m0[0m
@@ -143,7 +149,8 @@ test("It should render 3 shadow root instances", () => {
                     [36m/>[39m[0m
                   [36m</ShadowRoot>[39m
                 [36m</duplicate-buttons>[39m[0m
-                [36m<slot />[39m[0m
+                [36m<slot>[39m[0m
+                [36m</slot>[39m[0m
               [36m</ShadowRoot>[39m[0m
             [36m</nested-shadow-roots>[39m[0m
           [36m</ShadowRoot>[39m

@@ -98,9 +98,9 @@ import { screen, getByShadowRole } from "shadow-dom-testing-library"
 
 test("Lets test some rendering", () => {
   render(<Button />)
-  getByShadowRole(document, "button", { shallow: true })
-  await screen.findByShadowLabelText(/Car Manufacturer/i, { shallow: true })
-  screen.queryAllByShadowTitle("delete", { shallow: true })
+  getByShadowRole(document, "button", { depth: 1 })
+  await screen.findByShadowLabelText(/Car Manufacturer/i, { depth: 1 })
+  screen.queryAllByShadowTitle("delete", { depth: 1 })
 })
 ```
 
@@ -117,7 +117,7 @@ import {
 } from "shadow-dom-testing-library";
 
 const elements = deepQuerySelectorAll(document, "my-button");
-const element = deepQuerySelector(document, "my-button", { shallow: true });
+const element = deepQuerySelector(document, "my-button", { depth: 1 });
 ```
 
 A `within` function is exported to provide the `<ByShadow>` queries
