@@ -43,7 +43,7 @@ export function patchWrap<T extends (...args: any) => any>(
       "finally" in val &&
       typeof val.finally === "function"
     ) {
-      val.finally(() => removeDOMPatch());
+      val.finally(() => removeDOMPatch(patchRemovalFunctions));
     }
 
     return val;

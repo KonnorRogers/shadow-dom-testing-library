@@ -1,8 +1,5 @@
 import { getConfig, isInaccessible } from "@testing-library/dom";
-import {
-  getImplicitAriaRoles,
-  // @ts-expect-error
-} from "@testing-library/dom/dist/role-helpers";
+import { getImplicitAriaRoles } from "@testing-library/dom/dist/role-helpers";
 
 import {
   computeAccessibleName,
