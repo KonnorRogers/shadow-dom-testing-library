@@ -18,9 +18,15 @@ patchShadowRoot();
 // https://github.com/testing-library/dom-testing-library/blob/73a5694529dbfff289f3d7a01470c45ef5c77715/src/queries/text.ts#L34-L36
 // https://github.com/testing-library/dom-testing-library/blob/73a5694529dbfff289f3d7a01470c45ef5c77715/src/pretty-dom.js#L50-L54
 export function patchDOM() {
-  const accessedNodes = new WeakMap<Node, boolean>
+  /**
+   * Tracks already accessed nodes from `.childNodes` so we don't get duplicate text nodes when using `<slot>` elements with projected content..
+   */
+  const accessedNodes = new WeakMap<Node, boolean>();
   // Return "dispose" callbacks to cleanup patchs
-  return [patchChildNodesForAllNodes(accessedNodes), patchSlotElement(accessedNodes)];
+  return [
+    patchChildNodesForAllNodes(accessedNodes),
+    patchSlotElement(accessedNodes),
+  ];
 }
 
 function removeDOMPatch(patchRemovalFunctions: Function[]) {
@@ -33,10 +39,6 @@ export function patchWrap<T extends (...args: any) => any>(
   callback: T,
 ): ReturnType<T> {
   const patchRemovalFunctions = patchDOM();
-  /**
-   * Tracks already accessed nodes from `.childNodes` so we don't get duplicate text nodes when using `<slot>` elements with projected content..
-   */
-
   try {
     const val = callback();
 
@@ -86,7 +88,7 @@ function patchShadowRoot() {
   }
 }
 
-function patchChildNodesForAllNodes (accessedNodes: WeakMap<Node, boolean>) {
+function patchChildNodesForAllNodes(accessedNodes: WeakMap<Node, boolean>) {
   const originalChildNodesDescriptor = Object.getOwnPropertyDescriptor(
     Node.prototype,
     "childNodes",
@@ -99,10 +101,10 @@ function patchChildNodesForAllNodes (accessedNodes: WeakMap<Node, boolean>) {
       const childNodes = originalChildNodesGetter!.call(this) as NodeList;
 
       for (const node of Array.from(childNodes)) {
-        accessedNodes.set(node, true)
+        accessedNodes.set(node, true);
       }
 
-      return childNodes
+      return childNodes;
     },
     enumerable: true,
     configurable: true,
@@ -116,7 +118,7 @@ function patchChildNodesForAllNodes (accessedNodes: WeakMap<Node, boolean>) {
       enumerable: true,
       configurable: true,
     });
-  }
+  };
 }
 
 function patchSlotElement(accessedNodes: WeakMap<Node, boolean>) {
@@ -140,23 +142,23 @@ function patchSlotElement(accessedNodes: WeakMap<Node, boolean>) {
       if (projectedNodes.length > 0) {
         // Remove any nodes that have already been accessed during this patch.
         const childNodes = projectedNodes.filter((node) => {
-          return !accessedNodes.has(node)
+          return !accessedNodes.has(node);
         });
 
         for (const node of childNodes) {
-          accessedNodes.set(node, true)
+          accessedNodes.set(node, true);
         }
 
-        return childNodes
+        return childNodes;
       }
       // if no assignedNodes, return original `childNodes`.
       const childNodes = originalChildNodesGetter!.call(this) as NodeList;
 
       for (const node of Array.from(childNodes)) {
-        accessedNodes.set(node, true)
+        accessedNodes.set(node, true);
       }
 
-      return childNodes
+      return childNodes;
     },
     enumerable: true,
     configurable: true,
