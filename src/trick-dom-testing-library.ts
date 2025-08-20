@@ -18,8 +18,9 @@ patchShadowRoot();
 // https://github.com/testing-library/dom-testing-library/blob/73a5694529dbfff289f3d7a01470c45ef5c77715/src/queries/text.ts#L34-L36
 // https://github.com/testing-library/dom-testing-library/blob/73a5694529dbfff289f3d7a01470c45ef5c77715/src/pretty-dom.js#L50-L54
 export function patchDOM() {
+  const accessedNodes = new WeakMap<Node, boolean>
   // Return "dispose" callbacks to cleanup patchs
-  return [patchSlotElement()];
+  return [patchChildNodesForAllNodes(accessedNodes), patchSlotElement(accessedNodes)];
 }
 
 function removeDOMPatch(patchRemovalFunctions: Function[]) {
@@ -32,6 +33,9 @@ export function patchWrap<T extends (...args: any) => any>(
   callback: T,
 ): ReturnType<T> {
   const patchRemovalFunctions = patchDOM();
+  /**
+   * Tracks already accessed nodes from `.childNodes` so we don't get duplicate text nodes when using `<slot>` elements with projected content..
+   */
 
   try {
     const val = callback();
@@ -82,7 +86,40 @@ function patchShadowRoot() {
   }
 }
 
-function patchSlotElement() {
+function patchChildNodesForAllNodes (accessedNodes: WeakMap<Node, boolean>) {
+  const originalChildNodesDescriptor = Object.getOwnPropertyDescriptor(
+    Node.prototype,
+    "childNodes",
+  );
+  const originalChildNodesGetter = originalChildNodesDescriptor!.get;
+
+  Object.defineProperty(Node.prototype, "childNodes", {
+    get() {
+      // if no assignedNodes, return original `childNodes`.
+      const childNodes = originalChildNodesGetter!.call(this) as NodeList;
+
+      for (const node of Array.from(childNodes)) {
+        accessedNodes.set(node, true)
+      }
+
+      return childNodes
+    },
+    enumerable: true,
+    configurable: true,
+  });
+  return () => {
+    // There's no way to `delete` a newly defined property, so we just call the original descriptor.
+    Object.defineProperty(HTMLSlotElement.prototype, "childNodes", {
+      get() {
+        return originalChildNodesGetter!.call(this);
+      },
+      enumerable: true,
+      configurable: true,
+    });
+  }
+}
+
+function patchSlotElement(accessedNodes: WeakMap<Node, boolean>) {
   const qsa = HTMLElement.prototype.querySelectorAll;
   const originalChildNodesDescriptor = Object.getOwnPropertyDescriptor(
     Node.prototype,
@@ -101,10 +138,25 @@ function patchSlotElement() {
 
       // Slotted elements, use those.
       if (projectedNodes.length > 0) {
-        return projectedNodes;
+        // Remove any nodes that have already been accessed during this patch.
+        const childNodes = projectedNodes.filter((node) => {
+          return !accessedNodes.has(node)
+        });
+
+        for (const node of childNodes) {
+          accessedNodes.set(node, true)
+        }
+
+        return childNodes
       }
       // if no assignedNodes, return original `childNodes`.
-      return originalChildNodesGetter!.call(this);
+      const childNodes = originalChildNodesGetter!.call(this) as NodeList;
+
+      for (const node of Array.from(childNodes)) {
+        accessedNodes.set(node, true)
+      }
+
+      return childNodes
     },
     enumerable: true,
     configurable: true,
