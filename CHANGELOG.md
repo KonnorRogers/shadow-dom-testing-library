@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.13.1](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.13.0...v1.13.1) (2025-08-20)
+
+
+### Bug Fixes
+
+* remove erroneous duplicate child nodes when checking "projected" nodes ([#67](https://github.com/konnorrogers/shadow-dom-testing-library/issues/67)) ([8b6b301](https://github.com/konnorrogers/shadow-dom-testing-library/commit/8b6b301cadb8e5297ab3e5ccf25ada79feff5dd9))
+
 ## [1.13.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.12.0...v1.13.0) (2025-08-13)
 
 ## [1.12.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.11.3...v1.12.0) (2025-02-28)
