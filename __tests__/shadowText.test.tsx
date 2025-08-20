@@ -1,6 +1,9 @@
 import { configure, findByText } from "@testing-library/dom";
 import { findByShadowText, screen } from "../src/index";
-import { html, fixture, nextFrame } from "@open-wc/testing-helpers";
+import { html, fixture, nextFrame, aTimeout } from "@open-wc/testing-helpers";
+
+// Will define <my-button>
+import "../components";
 
 export class ShadowText extends HTMLElement {
   constructor() {
@@ -56,5 +59,16 @@ describe("ShadowText()", () => {
 
     await screen.findByShadowText("Hi there");
     screen.getByShadowText("Hi there");
+  });
+
+  it("Should not detect the same nodes twice", async () => {
+    const el = (await fixture(html`
+      <my-button>Click Me</my-button>
+    `)) as HTMLElement;
+    await aTimeout(1);
+
+    const els = await screen.findAllByShadowText("Click Me");
+
+    expect(els.length).toEqual(1);
   });
 });

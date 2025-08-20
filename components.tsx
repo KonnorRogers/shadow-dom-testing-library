@@ -1,7 +1,7 @@
 import * as React from "react"
 
 /* Web Components */
-class MyButton extends HTMLElement {
+export class MyButton extends HTMLElement {
 	connectedCallback () {
     const shadow = this.attachShadow({mode: 'open'});
     shadow.innerHTML = `<button><slot></slot></button>`;
