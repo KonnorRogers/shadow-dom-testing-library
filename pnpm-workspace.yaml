@@ -1,3 +1,4 @@
 onlyBuiltDependencies:
   - esbuild
   - jest-preview
+  - unrs-resolver
