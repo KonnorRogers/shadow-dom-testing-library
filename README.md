@@ -295,8 +295,8 @@ const btn = shadowQueries.getByShadowRole<HTMLButtonElement>("button");
 By default, Shadow DOM Testing Library will override your dom-testing-library configuration's `getElementError`. If you would like to change this, you can import the `configure` function and supply your own `getElementError`.
 
 ```ts
-import { configure } from "shadow-dom-testing-library"
+import { configure } from "shadow-dom-testing-library";
 configure({
-  getElementError: (message, container) => {}
-})
+  getElementError: (message, container) => {},
+});
 ```

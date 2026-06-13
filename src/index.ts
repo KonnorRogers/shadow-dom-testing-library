@@ -8,15 +8,15 @@ import { shadowScreen } from "./shadow-screen";
 import { shadowWithin } from "./shadow-within";
 import { logRoles } from "./log-roles";
 
-export function getElementError(...params: Parameters<ReturnType<typeof getConfig>["getElementError"]>) {
-  const [message, container] = params
+export function getElementError(
+  ...params: Parameters<ReturnType<typeof getConfig>["getElementError"]>
+) {
+  const [message, container] = params;
   const prettifiedDOM = prettyShadowDOM(container);
   const error = new Error(
     [
       message,
-      `Ignored nodes: comments, ${
-        getConfig().defaultIgnore
-      }\n${prettifiedDOM}`,
+      `Ignored nodes: comments, ${getConfig().defaultIgnore}\n${prettifiedDOM}`,
     ]
       .filter(Boolean)
       .join("\n\n"),
@@ -27,13 +27,10 @@ export function getElementError(...params: Parameters<ReturnType<typeof getConfi
 
 // side-effectful configure. Assume people want to use our getElementError, but export getConfig / configure in case of mismatched dependencies or similar. Easy hook to allow configuring.
 configure({
-  getElementError
-})
+  getElementError,
+});
 
-export {
-  getConfig,
-  configure
-}
+export { getConfig, configure };
 
 export * from "./types";
 export * from "./shadow-queries";
