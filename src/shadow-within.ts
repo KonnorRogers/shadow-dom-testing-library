@@ -1,6 +1,6 @@
 import { queries, within } from "@testing-library/dom";
 
-import * as shadowQueries from "./shadow-queries";
+import * as shadowQueries from "./shadow-queries.js";
 
 const allQueries = {
   ...queries,

@@ -1,7 +1,7 @@
-import { debug } from "./debug";
+import { debug } from "./debug.js";
 import { screen } from "@testing-library/dom";
 
-import * as shadowQueries from "./shadow-queries";
+import * as shadowQueries from "./shadow-queries.js";
 import {
   AsyncScreenShadowMatcherParams,
   AsyncScreenShadowRoleMatcherParams,
@@ -9,7 +9,7 @@ import {
   ScreenShadowMatcherParams,
   ScreenShadowRoleMatcherParams,
   ScreenShadowSelectorMatcherParams,
-} from "./types";
+} from "./types.js";
 
 // Shadows the following: https://testing-library.com/docs/queries/about/#priority
 const shadowScreen = {

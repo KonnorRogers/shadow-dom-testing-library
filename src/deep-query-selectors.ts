@@ -1,5 +1,5 @@
-import { patchWrap } from "./trick-dom-testing-library";
-import { Container, ShadowOptions } from "./types";
+import { patchWrap } from "./trick-dom-testing-library.js";
+import { Container, ShadowOptions } from "./types.js";
 
 function fixOptions(options: ShadowOptions) {
   if (options.shallow === true && options.depth !== 1) {

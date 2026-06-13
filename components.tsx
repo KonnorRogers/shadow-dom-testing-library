@@ -23,7 +23,10 @@ class MyTextArea extends HTMLElement {
 
 	connectedCallback () {
     this.attachShadow({mode: 'open'});
-    this._label = String(this.getAttribute("label"))
+    // React 19 sets props as properties before connecting, so only read from
+    // the attribute if it was explicitly set (not null).
+    const labelAttr = this.getAttribute("label")
+    if (labelAttr !== null) this._label = labelAttr
     this.render()
 	}
 
@@ -64,8 +67,12 @@ class MyImage extends HTMLElement {
 
 	connectedCallback () {
     this.attachShadow({mode: 'open'});
-    this._alt = String(this.getAttribute("alt"))
-    this._src = String(this.getAttribute("src"))
+    // React 19 sets props as properties (via setters) before connecting, so only
+    // read from attributes if the property wasn't already set that way.
+    const altAttr = this.getAttribute("alt")
+    const srcAttr = this.getAttribute("src")
+    if (altAttr !== null) this._alt = altAttr
+    if (srcAttr !== null) this._src = srcAttr
     // Leaving the alt attribute on confuses dom-testing-library
     this.removeAttribute("src")
     this.removeAttribute("alt")
@@ -185,7 +192,7 @@ window.customElements.define("nested-shadow-roots", class extends NestedShadowRo
 window.customElements.define("triple-shadow-roots", class extends TripleShadowRootsElement {})
 window.customElements.define("my-select", class extends MySelect {})
 
-declare global {
+declare module "react" {
   namespace JSX {
     interface IntrinsicElements {
       ['my-button']: CustomElement<MyButton>;
@@ -194,7 +201,7 @@ declare global {
       ['duplicate-buttons']: CustomElement<DuplicateButtons>;
       ['nested-shadow-roots']: CustomElement<NestedShadowRootsElement>;
       ['triple-shadow-roots']: CustomElement<TripleShadowRootsElement>;
-      ['my-select']: CustomElement<MySelect>
+      ['my-select']: CustomElement<MySelect>;
     }
   }
 }

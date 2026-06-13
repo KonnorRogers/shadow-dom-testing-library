@@ -4,14 +4,14 @@
 
   "compilerOptions": {
     "lib": ["es2021", "ESNext", "DOM"],
-    "module": "ESNext",
+    "module": "NodeNext",
     "target": "es2021",
     "allowJs": true,
 
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
     "jsx": "react"
 
   }

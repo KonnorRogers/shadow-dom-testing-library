@@ -1,12 +1,12 @@
 import { configure, getConfig } from "@testing-library/dom";
 
-import * as shadowQueries from "./shadow-queries";
-import { debug } from "./debug";
-import { logShadowDOM } from "./log-shadow-dom";
-import { prettyShadowDOM } from "./pretty-shadow-dom";
-import { shadowScreen } from "./shadow-screen";
-import { shadowWithin } from "./shadow-within";
-import { logRoles } from "./log-roles";
+import * as shadowQueries from "./shadow-queries.js";
+import { debug } from "./debug.js";
+import { logShadowDOM } from "./log-shadow-dom.js";
+import { prettyShadowDOM } from "./pretty-shadow-dom.js";
+import { shadowScreen } from "./shadow-screen.js";
+import { shadowWithin } from "./shadow-within.js";
+import { logRoles } from "./log-roles.js";
 
 export function getElementError(
   ...params: Parameters<ReturnType<typeof getConfig>["getElementError"]>
@@ -32,16 +32,16 @@ configure({
 
 export { getConfig, configure };
 
-export * from "./types";
-export * from "./shadow-queries";
+export * from "./types.js";
+export * from "./shadow-queries.js";
 
-export { createDOMElementFilter } from "./pretty-shadow-dom";
+export { createDOMElementFilter } from "./pretty-shadow-dom.js";
 
 export {
   deepQuerySelector,
   deepQuerySelectorAll,
   getAllElementsAndShadowRoots,
-} from "./deep-query-selectors";
+} from "./deep-query-selectors.js";
 
 export {
   shadowScreen as screen,
