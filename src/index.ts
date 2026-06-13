@@ -8,24 +8,29 @@ import { shadowScreen } from "./shadow-screen";
 import { shadowWithin } from "./shadow-within";
 import { logRoles } from "./log-roles";
 
+export function getElementError(
+  ...params: Parameters<ReturnType<typeof getConfig>["getElementError"]>
+) {
+  const [message, container] = params;
+  const prettifiedDOM = prettyShadowDOM(container);
+  const error = new Error(
+    [
+      message,
+      `Ignored nodes: comments, ${getConfig().defaultIgnore}\n${prettifiedDOM}`,
+    ]
+      .filter(Boolean)
+      .join("\n\n"),
+  );
+  error.name = "ShadowDOMTestingLibraryElementError";
+  return error;
+}
+
+// side-effectful configure. Assume people want to use our getElementError, but export getConfig / configure in case of mismatched dependencies or similar. Easy hook to allow configuring.
 configure({
-  // https://github.com/testing-library/dom-testing-library/blob/39a64d4b862f706d09f0cd225ce9eda892f1e8d8/src/config.ts#L36-L51
-  getElementError(message, container) {
-    const prettifiedDOM = prettyShadowDOM(container);
-    const error = new Error(
-      [
-        message,
-        `Ignored nodes: comments, ${
-          getConfig().defaultIgnore
-        }\n${prettifiedDOM}`,
-      ]
-        .filter(Boolean)
-        .join("\n\n"),
-    );
-    error.name = "ShadowDOMTestingLibraryElementError";
-    return error;
-  },
+  getElementError,
 });
+
+export { getConfig, configure };
 
 export * from "./types";
 export * from "./shadow-queries";
