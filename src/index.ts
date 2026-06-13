@@ -8,7 +8,7 @@ import { shadowScreen } from "./shadow-screen";
 import { shadowWithin } from "./shadow-within";
 import { logRoles } from "./log-roles";
 
-export function getElementError(...params: Parameters<typeof config["getElementError"]>) {
+export function getElementError(...params: Parameters<ReturnType<typeof getConfig>["getElementError"]>) {
   const [message, container] = params
   const prettifiedDOM = prettyShadowDOM(container);
   const error = new Error(
@@ -24,8 +24,6 @@ export function getElementError(...params: Parameters<typeof config["getElementE
   error.name = "ShadowDOMTestingLibraryElementError";
   return error;
 }
-
-const config = getConfig()
 
 // side-effectful configure. Assume people want to use our getElementError, but export getConfig / configure in case of mismatched dependencies or similar. Easy hook to allow configuring.
 configure({
