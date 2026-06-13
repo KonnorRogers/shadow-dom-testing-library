@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.13.1...v1.14.0) (2026-06-13)
+
+
+### Features
+
+* add library configuration ([cc88f77](https://github.com/konnorrogers/shadow-dom-testing-library/commit/cc88f77f6da8bada492f5d3a8e96993355429d07))
+
 ### [1.13.1](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.13.0...v1.13.1) (2025-08-20)
 
 
