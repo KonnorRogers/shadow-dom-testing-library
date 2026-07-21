@@ -110,14 +110,11 @@ function patchChildNodesForAllNodes(accessedNodes: WeakMap<Node, boolean>) {
     configurable: true,
   });
   return () => {
-    // There's no way to `delete` a newly defined property, so we just call the original descriptor.
-    Object.defineProperty(HTMLSlotElement.prototype, "childNodes", {
-      get() {
-        return originalChildNodesGetter!.call(this);
-      },
-      enumerable: true,
-      configurable: true,
-    });
+    Object.defineProperty(
+      Node.prototype,
+      "childNodes",
+      originalChildNodesDescriptor!,
+    );
   };
 }
 
@@ -128,6 +125,10 @@ function patchSlotElement(accessedNodes: WeakMap<Node, boolean>) {
     "childNodes",
   );
   const originalChildNodesGetter = originalChildNodesDescriptor!.get;
+  const slotChildNodesDescriptor = Object.getOwnPropertyDescriptor(
+    HTMLSlotElement.prototype,
+    "childNodes",
+  );
 
   /**
    * This patch allows labels to get proper textContent, and most likely other text helpers by taking either the projected nodes, or the fallback nodes.
@@ -196,13 +197,16 @@ function patchSlotElement(accessedNodes: WeakMap<Node, boolean>) {
   return () => {
     HTMLSlotElement.prototype.querySelectorAll = qsa;
 
-    // There's no way to `delete` a newly defined property, so we just call the original descriptor.
-    Object.defineProperty(HTMLSlotElement.prototype, "childNodes", {
-      get() {
-        return originalChildNodesGetter!.call(this);
-      },
-      enumerable: true,
-      configurable: true,
-    });
+    if (slotChildNodesDescriptor) {
+      Object.defineProperty(
+        HTMLSlotElement.prototype,
+        "childNodes",
+        slotChildNodesDescriptor,
+      );
+    } else {
+      // `childNodes` was inherited from Node.prototype; removing the own
+      // property restores that.
+      Reflect.deleteProperty(HTMLSlotElement.prototype, "childNodes");
+    }
   };
 }
