@@ -3,8 +3,22 @@ import { render } from "@testing-library/react";
 import { screen } from "../src/index";
 import { Duplicates } from "../components";
 
-// In its own file: the leak this guards against accumulates across tests in a
-// file, which would poison the baseline measurement below.
+// Self-relative perf guard for the childNodes wrapper leak: it measures the
+// same 500 plain childNodes accesses before and after 200 queries in one
+// process, so machine speed cancels out and only growth-with-query-count can
+// fail it. Correct disposal measures ~1x; the leak measures ~300x (0.7ms ->
+// ~200ms), so the generous 25x bound cannot flake in CI yet always catches a
+// regression.
+//
+// To see it fail on an unfixed tree, this file is self-contained on purpose —
+// copy it alone onto main (or cherry-pick its test-only commit) and run it:
+//
+//   git checkout <this-branch> -- __tests__/patch-cleanup-perf.test.tsx
+//   npx vitest run __tests__/patch-cleanup-perf.test.tsx
+//
+// It lives in its own file because the leak accumulates across tests within a
+// file, which would poison the "before" baseline; vitest and jest both give
+// each file a fresh environment.
 test("childNodes access cost stays flat as query count grows", () => {
   render(<Duplicates />);
   const body = document.body;
