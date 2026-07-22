@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.1](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.14.0...v1.14.1) (2026-07-22)
+
+
+### Bug Fixes
+
+* restore Node.prototype.childNodes when removing DOM patches ([#79](https://github.com/konnorrogers/shadow-dom-testing-library/issues/79)) ([db4fdbc](https://github.com/konnorrogers/shadow-dom-testing-library/commit/db4fdbcc81a21a4a4d23a50cf91eaac2dcc61f2f))
+
 ## [1.14.0](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.13.1...v1.14.0) (2026-06-13)
 
 
