@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.2](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.14.1...v1.14.2) (2026-09-14)
+
+
+### Bug Fixes
+
+* ShadowRoot patching no longer throws when re-evaluated - [#96](https://github.com/konnorrogers/shadow-dom-testing-library/issues/96) ([cc61f61](https://github.com/konnorrogers/shadow-dom-testing-library/commit/cc61f61f36acd7524f9b2677b690e1f3b76e1ffd))
+
 ### [1.14.1](https://github.com/konnorrogers/shadow-dom-testing-library/compare/v1.14.0...v1.14.1) (2026-07-22)
 
 
