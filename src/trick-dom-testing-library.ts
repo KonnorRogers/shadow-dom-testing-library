@@ -62,7 +62,7 @@ function patchShadowRoot() {
   if (typeof ShadowRoot == "undefined")
     throw "Your environment does not support shadow roots.";
 
-  if (ShadowRoot.prototype.matches == null) {
+  if (!("matches" in ShadowRoot.prototype)) {
     Object.defineProperties(ShadowRoot.prototype, {
       matches: {
         get() {
@@ -77,7 +77,7 @@ function patchShadowRoot() {
     });
   }
 
-  if (ShadowRoot.prototype.outerHTML == null) {
+  if (!("outerHTML" in ShadowRoot.prototype)) {
     Object.defineProperties(ShadowRoot.prototype, {
       outerHTML: {
         get() {
