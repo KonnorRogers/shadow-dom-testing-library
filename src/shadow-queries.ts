@@ -27,8 +27,8 @@ import {
   FindByBoundAttribute,
 } from "@testing-library/dom";
 
-import { getAllElementsAndShadowRoots } from "./deep-query-selectors";
-import { patchWrap } from "./trick-dom-testing-library";
+import { getAllElementsAndShadowRoots } from "./deep-query-selectors.js";
+import { patchWrap } from "./trick-dom-testing-library.js";
 import {
   ScreenShadowMatcherParams,
   ScreenShadowRoleMatcherParams,
@@ -36,7 +36,7 @@ import {
   ShadowMatcherParams,
   ShadowRoleMatcherParams,
   ShadowSelectorMatcherParams,
-} from "./types";
+} from "./types.js";
 
 function toShadowQueries<T extends Function[]>(queries: T): T {
   return queries.map((query): Function => {

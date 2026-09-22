@@ -2,9 +2,9 @@ import { logDOM } from "@testing-library/dom";
 import {
   createDOMElementFilter,
   filterCommentsAndDefaultIgnoreTagsTags,
-} from "./pretty-shadow-dom";
+} from "./pretty-shadow-dom.js";
 import type { NewPlugin } from "pretty-format";
-import { patchWrap } from "./trick-dom-testing-library";
+import { patchWrap } from "./trick-dom-testing-library.js";
 
 export function logShadowDOM(
   ...args: Parameters<typeof logDOM>

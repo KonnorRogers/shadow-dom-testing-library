@@ -5,7 +5,7 @@ import {
   computeAccessibleName,
   computeAccessibleDescription,
 } from "dom-accessibility-api";
-import { prettyShadowDOM } from "./pretty-shadow-dom";
+import { prettyShadowDOM } from "./pretty-shadow-dom.js";
 
 function getRoles(container: Element, { hidden = false } = {}) {
   function getShadowChildren(node: Element, shadowChildren: Element[] = []) {

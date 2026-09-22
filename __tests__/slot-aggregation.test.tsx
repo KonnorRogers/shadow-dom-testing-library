@@ -7,7 +7,7 @@ test("Should aggregate content from slots", async () => {
   const el = render(
     <Duplicates>
       <button slot="start">
-        <img src="" /> <span>Start button</span>
+        <img /> <span>Start button</span>
       </button>
       <a href="#">Middle Link</a>
     </Duplicates>,

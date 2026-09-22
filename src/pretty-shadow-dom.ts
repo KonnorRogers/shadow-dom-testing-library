@@ -1,6 +1,6 @@
 import { prettyDOM, getConfig } from "@testing-library/dom";
 import type { Config, NewPlugin, Printer, Refs } from "pretty-format";
-import { patchWrap } from "./trick-dom-testing-library";
+import { patchWrap } from "./trick-dom-testing-library.js";
 
 // This regexp combo took way too long to figure out...
 const findWhiteSpace = /([^\S(\r\n|\r|\n)]*[\f\n\r\t\v]+)/.source;
