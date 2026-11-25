@@ -12,11 +12,18 @@ export function getElementError(
   ...params: Parameters<ReturnType<typeof getConfig>["getElementError"]>
 ) {
   const [message, container] = params;
-  const prettifiedDOM = prettyShadowDOM(container);
+  // `waitFor` sets this flag around every retry, and builds the error it
+  // finally throws with the flag cleared, so a failing test still prints the DOM.
+  const { _disableExpensiveErrorDiagnostics } = getConfig() as {
+    _disableExpensiveErrorDiagnostics?: boolean;
+  };
   const error = new Error(
     [
       message,
-      `Ignored nodes: comments, ${getConfig().defaultIgnore}\n${prettifiedDOM}`,
+      !_disableExpensiveErrorDiagnostics &&
+        `Ignored nodes: comments, ${
+          getConfig().defaultIgnore
+        }\n${prettyShadowDOM(container)}`,
     ]
       .filter(Boolean)
       .join("\n\n"),

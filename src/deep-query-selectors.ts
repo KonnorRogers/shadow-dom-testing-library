@@ -65,15 +65,35 @@ export function deepQuerySelectorAll<T extends HTMLElement>(
   });
 }
 
-// This could probably get really slow and memory intensive in large DOMs,
-// maybe an infinite generator in the future?
 export function getAllElementsAndShadowRoots(
   container: Container,
   options: ShadowOptions = { shallow: false, depth: Infinity },
 ) {
   const selector = "*";
 
-  return recurse(container, selector, fixOptions(options));
+  // `recurse` can reach a node more than once.
+  return [...new Set(recurse(container, selector, fixOptions(options)))];
+}
+
+/**
+ * The container, followed by every open shadow root and slot reachable from it
+ * within `options.depth`. A query that searches descendants reaches every
+ * element a shadow query can match when it runs on each of these: a slot's
+ * patched `querySelectorAll` is what reaches the content assigned to it.
+ */
+export function getContainerAndShadowRoots(
+  container: Container,
+  options?: ShadowOptions,
+) {
+  // The container is always the first node collected. Node types rather than
+  // `instanceof` match shadow roots and slots from another realm, such as an
+  // iframe's document.
+  return getAllElementsAndShadowRoots(container, options).filter(
+    (node, index) =>
+      index === 0 ||
+      node.nodeType === Node.DOCUMENT_FRAGMENT_NODE ||
+      node.nodeName === "SLOT",
+  );
 }
 
 function recurse(
@@ -141,6 +161,5 @@ function recurse(
       });
   });
 
-  // We can sometimes hit duplicate nodes this way, lets stop that.
-  return [...new Set(elements)];
+  return elements;
 }
